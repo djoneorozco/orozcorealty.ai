@@ -1,0 +1,9 @@
+{
+  "name": "orozcorealty-functions",
+  "version": "1.0.0",
+  "main": "netlify/functions/resend_snapshot.js",
+  "type": "commonjs",
+  "dependencies": {
+    "resend": "^3.2.0"
+  }
+}
