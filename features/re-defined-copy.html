@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Oct 20 2025 02:05:09 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Oct 22 2025 00:28:46 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68de5a1528928bb372bea36d" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -253,29 +253,20 @@
     </header>
     <section class="section-133"><img src="../images/68c7b62d4f6dd22676ce7916_luxurypool.jpg" loading="lazy" sizes="(max-width: 2505px) 100vw, 2505px" srcset="../images/68c7b62d4f6dd22676ce7916_luxurypool-p-500.jpg 500w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-800.jpg 800w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-1080.jpg 1080w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-1600.jpg 1600w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-2000.jpg 2000w, ../images/68c7b62d4f6dd22676ce7916_luxurypool.jpg 2505w" alt="" class="image-42">
       <section class="section-143">
-        <div data-w-id="4c626254-26a6-5ad8-d990-6b5e14c7a0b2" class="platform-block for--hero">
-          <div data-w-id="4c626254-26a6-5ad8-d990-6b5e14c7a0b3" style="opacity:0" class="platform-child">
-            <div class="primary-glow-wrapper-2 full-width">
-              <div data-w-id="4c626254-26a6-5ad8-d990-6b5e14c7a0b5" class="primary-glow-wrapper-2 full-width">
-                <div class="button-overflow-hidden for--third-version-features full-size ai-child">
-                  <div>
-                    <div class="pedding-stroke">
-                      <div class="inside-button none-padding ai-child">
-                        <div class="principle-second-block ai-child">
-                          <div class="code-embed-6 w-embed w-script"><!--  =========================================================
+        <div class="code-embed-13 w-embed w-script"><!--  =========================================================
   RE-Defined — Luxury Dashboard Shell (One-Image Compare Slider)
   - Single output with draggable fader (before ← / → after)
 =========================================================  -->
-                            <!doctype html>
-                            <html lang="en">
-                            <head>
-                              <!--  //#1 META & FONTS  -->
-                              <meta charset="utf-8">
-                              <meta name="viewport" content="width=device-width, initial-scale=1">
-                              <title>RE-Defined • Virtual Staging Studio</title>
-                              <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-                              <!--  //#2 THEME & LAYOUT (Luxury Dark)  -->
-                              <style>
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <!--  //#1 META & FONTS  -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>RE-Defined • Virtual Staging Studio</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+            <!--  //#2 THEME & LAYOUT (Luxury Dark)  -->
+            <style>
     :root{
       --bg:#0b0e1a;
       --panel:#0f1324;
@@ -438,106 +429,106 @@
       font-size:12px; color:#a8b0d6; text-transform:uppercase; letter-spacing:.12em;
     }
   </style>
-                            </head>
-                            <body>
-                              <div class="chrome">
-                                <!--  Top bar  -->
-                                <header class="topbar">
-                                  <div class="brand">
-                                    <div class="avatar" aria-hidden="true"></div>
-                                    <div>
-                                      RE-Defined Studio
-                                      <small>The Orozco Realty • Virtual Staging</small>
-                                    </div>
-                                  </div>
-                                  <div class="actions">
-                                    <button class="btn ghost" onclick="window.open('https://theorozcorealty.netlify.app','_blank','noopener')">Visit TOR</button>
-                                    <button class="btn" onclick="document.getElementById('safeGo')?.click()">Generate</button>
-                                  </div>
-                                </header>
-                                <!--  Main  -->
-                                <main class="wrap">
-                                  <section class="card">
-                                    <!--  Form  -->
-                                    <form id="safeForm">
-                                      <div class="card-head">
-                                        <div>
-                                          <div class="card-title">Virtual Staging — RE-Defined</div>
-                                          <div class="card-sub">Upload an empty room or paste a public image URL. Pick style, tweak options, and generate luxe staging.</div>
-                                          <div class="hint" id="studio-hint" style="margin-top:8px;">Tip: Clients get unlimited generations • Add <code>?client=1</code> once to unlock on this browser</div>
-                                        </div>
-                                        <div class="head-controls">
-                                          <label>
-                                            <span>Upload Empty Room (JPG/PNG ≤ 4MB)</span>
-                                            <input type="file" name="image" accept="image/*">
-                                          </label>
-                                          <label>
-                                            <span>Image URL (public)</span>
-                                            <input type="url" name="imageUrl" placeholder="https://...">
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div class="card-body">
-                                        <div class="studio-grid">
-                                          <!--  LEFT  -->
-                                          <div style="display:grid; gap:12px;">
-                                            <label>
-                                              <span>Room Type</span>
-                                              <select name="room_type">
-                                                <option>livingroom</option>
-                                                <option>bedroom</option>
-                                                <option>kitchen</option>
-                                                <option>bathroom</option>
-                                                <option>office</option>
-                                                <option>diningroom</option>
-                                              </select>
-                                            </label>
-                                            <label>
-                                              <span>Design Style</span>
-                                              <select name="design_style">
-                                                <option>modern</option>
-                                                <option>minimalist</option>
-                                                <option>scandinavian</option>
-                                                <option>luxury</option>
-                                                <option>farmhouse</option>
-                                                <option>japandi</option>
-                                                <option>midcentury</option>
-                                                <option>industrial</option>
-                                              </select>
-                                            </label>
-                                            <div style="display:flex; gap:12px;">
-                                              <label style="flex:1;">
-                                                <span>Variations</span>
-                                                <input type="number" name="num_images" value="1" min="1" max="4">
-                                              </label>
-                                              <label style="flex:1;">
-                                                <span>Scale Factor (1–2 recommended)</span>
-                                                <input type="number" name="scale_factor" value="2" min="1" max="8">
-                                              </label>
-                                            </div>
-                                            <details>
-                                              <summary>Advanced (optional)</summary>
-                                              <label><span>Color Scheme</span><input name="color_scheme" placeholder="COLOR_SCHEME_0" type="text"></label>
-                                              <label><span>Specialty Decor</span><input name="speciality_decor" placeholder="SPECIALITY_DECOR_0" type="text"></label>
-                                              <label><span>Extra Prompt</span><input name="prompt" placeholder="e.g., neutral textiles, warm wood" type="text"></label>
-                                              <label><span>Prompt Prefix</span><input name="prompt_prefix" placeholder="(advanced) prefix guidance" type="text"></label>
-                                            </details>
-                                            <div style="display:flex; gap:12px; align-items:center; margin-top:4px;">
-                                              <button id="safeGo" type="submit" class="btn" style="border-radius:10px;">Generate</button>
-                                              <span id="safeStatus" class="hint"></span>
-                                            </div>
-                                          </div>
-                                          <!--  RIGHT  -->
-                                          <div id="safeResults" class="placeholder"></div>
-                                        </div>
-                                      </div>
-                                    </form>
-                                  </section>
-                                  <div class="footer">© The Orozco Realty • RE-Defined — Luxury Virtual Staging</div>
-                                </main>
-                              </div>
-                              <!--  //#8 SCRIPT  -->
-                              <script>
+          </head>
+          <body>
+            <div class="chrome">
+              <!--  Top bar  -->
+              <header class="topbar">
+                <div class="brand">
+                  <div class="avatar" aria-hidden="true"></div>
+                  <div>
+                    RE-Defined Studio
+                    <small>The Orozco Realty • Virtual Staging</small>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="btn ghost" onclick="window.open('https://theorozcorealty.netlify.app','_blank','noopener')">Visit TOR</button>
+                  <button class="btn" onclick="document.getElementById('safeGo')?.click()">Generate</button>
+                </div>
+              </header>
+              <!--  Main  -->
+              <main class="wrap">
+                <section class="card">
+                  <!--  Form  -->
+                  <form id="safeForm">
+                    <div class="card-head">
+                      <div>
+                        <div class="card-title">Virtual Staging — RE-Defined</div>
+                        <div class="card-sub">Upload an empty room or paste a public image URL. Pick style, tweak options, and generate luxe staging.</div>
+                        <div class="hint" id="studio-hint" style="margin-top:8px;">Tip: Clients get unlimited generations • Add <code>?client=1</code> once to unlock on this browser</div>
+                      </div>
+                      <div class="head-controls">
+                        <label>
+                          <span>Upload Empty Room (JPG/PNG ≤ 4MB)</span>
+                          <input type="file" name="image" accept="image/*">
+                        </label>
+                        <label>
+                          <span>Image URL (public)</span>
+                          <input type="url" name="imageUrl" placeholder="https://...">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="studio-grid">
+                        <!--  LEFT  -->
+                        <div style="display:grid; gap:12px;">
+                          <label>
+                            <span>Room Type</span>
+                            <select name="room_type">
+                              <option>livingroom</option>
+                              <option>bedroom</option>
+                              <option>kitchen</option>
+                              <option>bathroom</option>
+                              <option>office</option>
+                              <option>diningroom</option>
+                            </select>
+                          </label>
+                          <label>
+                            <span>Design Style</span>
+                            <select name="design_style">
+                              <option>modern</option>
+                              <option>minimalist</option>
+                              <option>scandinavian</option>
+                              <option>luxury</option>
+                              <option>farmhouse</option>
+                              <option>japandi</option>
+                              <option>midcentury</option>
+                              <option>industrial</option>
+                            </select>
+                          </label>
+                          <div style="display:flex; gap:12px;">
+                            <label style="flex:1;">
+                              <span>Variations</span>
+                              <input type="number" name="num_images" value="1" min="1" max="4">
+                            </label>
+                            <label style="flex:1;">
+                              <span>Scale Factor (1–2 recommended)</span>
+                              <input type="number" name="scale_factor" value="2" min="1" max="8">
+                            </label>
+                          </div>
+                          <details>
+                            <summary>Advanced (optional)</summary>
+                            <label><span>Color Scheme</span><input name="color_scheme" placeholder="COLOR_SCHEME_0" type="text"></label>
+                            <label><span>Specialty Decor</span><input name="speciality_decor" placeholder="SPECIALITY_DECOR_0" type="text"></label>
+                            <label><span>Extra Prompt</span><input name="prompt" placeholder="e.g., neutral textiles, warm wood" type="text"></label>
+                            <label><span>Prompt Prefix</span><input name="prompt_prefix" placeholder="(advanced) prefix guidance" type="text"></label>
+                          </details>
+                          <div style="display:flex; gap:12px; align-items:center; margin-top:4px;">
+                            <button id="safeGo" type="submit" class="btn" style="border-radius:10px;">Generate</button>
+                            <span id="safeStatus" class="hint"></span>
+                          </div>
+                        </div>
+                        <!--  RIGHT  -->
+                        <div id="safeResults" class="placeholder"></div>
+                      </div>
+                    </div>
+                  </form>
+                </section>
+                <div class="footer">© The Orozco Realty • RE-Defined — Luxury Virtual Staging</div>
+              </main>
+            </div>
+            <!--  //#8 SCRIPT  -->
+            <script>
   (()=>{
     // Constants
     const API_STAGE = "https://theorozcorealty.netlify.app/.netlify/functions/stage";
@@ -698,22 +689,8 @@
     });
   })();
   </script>
-                            </body>
-                            </html>
-                          </div>
-                          <div data-w-id="7ef17cc6-ea4e-1a9f-9f74-ce33b0da73cd" style="opacity:0" class="integrations-grid-child global-small-box second-version"><img src="../images/68c7b62d4f6dd22676ce7937_RE-Defined.png" loading="lazy" width="540" sizes="(max-width: 767px) 100vw, 540px" alt="" srcset="../images/68c7b62d4f6dd22676ce7937_RE-Defined-p-500.png 500w, ../images/68c7b62d4f6dd22676ce7937_RE-Defined-p-800.png 800w, ../images/68c7b62d4f6dd22676ce7937_RE-Defined.png 1080w" class="image-45"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="glow-wrapper stroke for--boxes">
-                      <div class="glow-item left"></div>
-                      <div class="glow-item"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </body>
+          </html>
         </div>
       </section>
     </section>

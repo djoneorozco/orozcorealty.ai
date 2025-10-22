@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Oct 20 2025 02:05:09 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Oct 22 2025 00:28:46 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68dcd360e3426efe81144c09" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -451,7 +451,7 @@
       });
       const vslider=card.querySelector('.va-rate'); const vlabel=card.querySelector('.va-rate-label');
       vslider?.addEventListener('input',()=>{ if(vlabel) vlabel.textContent=vslider.value+'%'; if(MODE==='VET') render(); });
-      ['.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank'].forEach(sel=>{
+      ['.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank','.pf-fname'].forEach(sel=>{
         card.querySelector(sel)?.addEventListener('input',persistIdentity);
         card.querySelector(sel)?.addEventListener('change',persistIdentity);
       });
@@ -610,6 +610,7 @@
       if(score>=850) el.cs.classList.add('good');
       renderBenefits();
     }
+    /* SAVE/RECALC WIRES */
     ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#sv-current','#sv-invest','#sv-notes'].forEach(q=>{ document.querySelector(q)?.addEventListener('input',render); });
     $('#save-rate')?.addEventListener('input',()=>{$('#save-rate-label').textContent=$('#save-rate').value+'%'; render();});
     $('#cs-slider')?.addEventListener('input',()=>{ if(!$('#h-rate').dataset.touched){ $('#h-rate').value=rsAPRFromScore($('#cs-slider').value).toFixed(2); } render(); });
@@ -650,13 +651,20 @@
       return m?`${m[1].toUpperCase()}-${m[2]}`:r||'';
     }
     function persistIdentity(){
-      const last=(activeCard()?.querySelector('.pf-lname')?.value||'').trim();
+      const first=(activeCard()?.querySelector('.pf-fname')?.value||'').trim();
+      const last =(activeCard()?.querySelector('.pf-lname')?.value||'').trim();
       const email=(activeCard()?.querySelector('.pf-email')?.value||'').trim();
       const phone=(activeCard()?.querySelector('.pf-phone')?.value||'').trim();
       const paygrade=currentPaygrade();
       const title=PAYGRADE_TITLES[paygrade]||paygrade||'';
-      const ident={lastName:last,email,phone,rankPaygrade:paygrade,rankTitle:title,mode:MODE};
-      try{ localStorage.setItem('realtysass.identity', JSON.stringify(ident)); }catch(_){}
+      const name=[first,last].filter(Boolean).join(' ').trim()||'Client';
+      const ident={firstName:first,lastName:last,name,email,phone,rankPaygrade:paygrade,rankTitle:title,mode:MODE};
+      try{
+        localStorage.setItem('realtysass.identity', JSON.stringify(ident));
+        const p=getProfile()||{};
+        p.name=name; p.email=email; // augment profile for memo reader
+        localStorage.setItem('realtysass.profile', JSON.stringify(p));
+      }catch(_){}
       return ident;
     }
     persistIdentity();
@@ -666,9 +674,9 @@
       const s=compute();
       const creditScore=Number($('#cs-slider').value)||720;
       const dpPctNum=Math.max(0,Math.min(100,Number($('#dp-slider').value)||0));
-      const identity=persistIdentity();
+      const id=persistIdentity();
       return {
-        identity,
+        identity: id,
         income:Math.round(s.income),
         expenses:Math.round(s.totalExpenses),
         savings:Math.round(s.savingsTotalKPI),
@@ -682,8 +690,14 @@
         dpAmt:Math.round(s.downAmount),
         pAndI:Math.round(s.pAndI),
         housing:Math.round(s.housing),
-        itemizedRows:(function(){ try{ const rows=JSON.parse(localStorage.getItem('va.expenses.rows')||'[]'); return Array.isArray(rows)?rows.map(r=>({name:r.name,amount:Number(r.month)||0})):[]; }catch(_){ return []; } })(),
-        profile:(function(){ try{ return JSON.parse(localStorage.getItem('realtysass.profile')||'{}'); }catch(_){ return {}; } })()
+        itemizedRows:(function(){
+          try{
+            const rows=JSON.parse(localStorage.getItem('va.expenses.rows')||'[]');
+            return Array.isArray(rows)?rows.map(r=>({name:r.name,amount:Number(r.month)||0,cat:r.cat})):[];
+          }catch(_){ return []; }
+        })(),
+        profile:{ name:id.name, email:id.email, branch:'', rankTitle:id.rankTitle },
+        military:{ rank:id.rankPaygrade, branch:'' }
       };
     }
     function persistBridge(){
@@ -691,7 +705,7 @@
       try{ localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); }catch(_){}
       return payload;
     }
-    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#save-rate','#cs-slider','#dp-slider','#sv-current','.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank'].forEach(sel=>{
+    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#save-rate','#cs-slider','#dp-slider','#sv-current','.pf-fname','.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank'].forEach(sel=>{
       document.querySelector(sel)?.addEventListener('input',persistBridge);
     });
     const a=document.getElementById('btn-analyze');
@@ -713,16 +727,62 @@
 (function () {
   const a = document.getElementById('btn-analyze');
   if (!a) return;
+  /* ---------- utils ---------- */
   const b64url = s => btoa(unescape(encodeURIComponent(s)))
     .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const readJSON = (k) => {
+    try { return JSON.parse(localStorage.getItem(k) || 'null'); }
+    catch { return null; }
+  };
+  const lastNameOf = (full) => String(full||'').trim().split(/\s+/).slice(-1)[0] || '';
+  const cleanPhone = (p) => String(p||'').replace(/[^\d+]/g,'').trim();
+  /* Pull identity from the dashboard stores, with fallbacks */
+  function getIdentity() {
+    const ident = readJSON('realtysass.identity') || {};
+    const profile = readJSON('realtysass.profile') || {};
+    // Prefer explicit fields; fall back to profile.name/email
+    const firstName = ident.firstName || '';
+    const lastName  = ident.lastName  || lastNameOf(profile.name);
+    const email     = ident.email     || profile.email || '';
+    const phone     = ident.phone     || '';
+    // Rank: prefer short rank title, else paygrade, else empty
+    const rankTitle = ident.rankTitle || '';
+    const rankPay   = ident.rankPaygrade || '';
+    const rank      = rankTitle || rankPay || '';
+    return {
+      firstName,
+      lastName,
+      email,
+      phone: cleanPhone(phone),
+      rank,
+      // keep the rest in case other pages need them
+      rankTitle: rankTitle,
+      rankPaygrade: rankPay,
+      mode: ident.mode || 'VET',
+      name: ident.name || [firstName, lastName].filter(Boolean).join(' ').trim()
+    };
+  }
+  /* Existing bridge payload from dashboard computations */
   function getBridge() {
     try { return JSON.parse(localStorage.getItem('realtysass.bridge')||'{}'); }
     catch { return {}; }
   }
   a.addEventListener('click', () => {
-    const payload = getBridge();
+    const payload = getBridge() || {};
+    const who = getIdentity();
+    // Ensure the verify page (and your Netlify function) receive flat fields:
+    payload.identity = payload.identity || {};        // keep the nested identity object
+    Object.assign(payload.identity, who);             // enrich nested identity
+    // 👇 Add FLAT fields required by the SendEmail function
+    payload.email    = who.email || payload.email || '';
+    payload.phone    = who.phone || payload.phone || '';
+    payload.lastName = who.lastName || payload.lastName || lastNameOf(who.name);
+    payload.rank     = who.rank || payload.rank || '';
+    // Optional: persist the enriched bridge back to localStorage
+    try { localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); } catch (_){}
+    // Route to /verify with packed bridge
     const packed = b64url(JSON.stringify(payload));
-    a.href = '/verify#rsb=' + packed;   // <-- send them to your new page
+    a.href = '/verify#rsb=' + packed;
   });
 })();
 </script>

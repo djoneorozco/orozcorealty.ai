@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Oct 20 2025 02:05:09 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Oct 22 2025 00:28:46 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68f067ce3b1e014c2558c550" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -21,7 +21,7 @@
 <body class="body-8">
   <section>
     <section>
-      <div class="w-embed w-script"><!--  A.I.O.U • Timed Buyer Psychology Test (FULL • Dark Dashboard • Hard Portal)  -->
+      <div class="code-embed-12 w-embed w-script"><!--  A.I.O.U • Timed Buyer Psychology Test (FULL • Dark Dashboard • Hard Portal + MBTI)  -->
         <div id="aiou-shell" data-endpoint="https://theorozcorealty.netlify.app/.netlify/functions/aiou-report" style="all: initial;">
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
           <style>
@@ -128,6 +128,7 @@
           </div>
           <div id="consistency" class="note" style="margin-top:8px;"></div>
           <div id="archetype" style="margin:10px 0;font-weight:900;"></div>
+          <div id="mbti" style="margin:4px 0 2px;font-weight:800;"></div>
           <pre id="json"></pre>
           <div class="bar">
             <button class="btn primary" id="btnReport">Generate Report (OpenAI)</button>
@@ -241,9 +242,56 @@
       if(hi(s.O) && s.N<3.3) return 'Design-Forward Adventurer';
       return 'Balanced Explorer';
     }
+    /* ======== MBTI Mapping (OCEAN → 16 types) ======== */
+    function letterEI(E){ return E>=3.75 ? 'E' : (E<=3.25 ? 'I' : (E>=3.5?'E':'I')); }
+    function letterSN(O){ return O>=3.75 ? 'N' : (O<=3.25 ? 'S' : (O>=3.5?'N':'S')); }
+    function letterTF(A){ return A>=3.75 ? 'F' : (A<=3.25 ? 'T' : (A>=3.5?'F':'T')); }
+    function letterJP(C){ return C>=3.75 ? 'J' : (C<=3.25 ? 'P' : (C>=3.5?'J':'P')); }
+    function scoresToMBTI(S){
+      const ei = letterEI(S.E), sn = letterSN(S.O), tf = letterTF(S.A), jp = letterJP(S.C);
+      const type = `${ei}${sn}${tf}${jp}`;
+      const dist = (v, hi=true)=> hi? Math.max(0, v-3.5)/1.5 : Math.max(0, 3.5-v)/1.5;
+      const confParts = [
+        ei==='E'? dist(S.E,true) : dist(S.E,false),
+        sn==='N'? dist(S.O,true) : dist(S.O,false),
+        tf==='F'? dist(S.A,true) : dist(S.A,false),
+        jp==='J'? dist(S.C,true) : dist(S.C,false),
+      ];
+      const confidence = Math.max(0.35, +(confParts.reduce((a,b)=>a+b,0)/4).toFixed(2));
+      return { type, confidence };
+    }
+    const MBTI_BUYER_GUIDE = {
+      ISTJ:"Stable, detail-first. Prefers proven neighborhoods, low-variance costs, and strong inspection records.",
+      ISFJ:"Practical caretaker. Values safety, schools, and quiet streets; favors move-in-ready over projects.",
+      INFJ:"Purpose-driven. Wants harmony and meaningful space; calm areas and quality renovations matter.",
+      INTJ:"Planner/optimizer. Seeks value efficiency and long-term upside; ignores fluffy upgrades.",
+      ISTP:"Hands-on problem-solver. Open to light projects if priced right; needs clear scope/timeline.",
+      ISFP:"Aesthetic + comfort. Drawn to warm finishes, natural light, and cozy outdoor spots.",
+      INFP:"Idealistic. Wants character and story; needs guardrails so budget doesn’t drift.",
+      INTP:"Analytical. Structure/systems/future flexibility > staging glam.",
+      ESTP:"Action-oriented. Loves lively areas and entertainment spaces; avoid payment creep.",
+      ESFP:"Experience-first. Open layouts and social hubs; size payment first, then pick the fun.",
+      ENFP:"Vision + people. Creative layouts, natural light; watch impulsive upgrades.",
+      ENTP:"Options hunter. Wants flexibility/ADU potential; negotiate hard.",
+      ESTJ:"Structured operator. Predictability, commute efficiency, and low-maintenance wins.",
+      ESFJ:"Community anchor. Schools/parks close; turnkey > fixer to keep harmony.",
+      ENFJ:"Connector. Hosting flow matters; choose move-in-ready to keep momentum.",
+      ENTJ:"Decisive strategist. Location + resale math; newish or quality reno to avoid downtime.",
+    };
+    function mbtiLabel(type){
+      const map = {
+        ISTJ:"Inspector", ISFJ:"Protector", INFJ:"Sage", INTJ:"Architect",
+        ISTP:"Crafter",  ISFP:"Artist",    INFP:"Idealist", INTP:"Analyst",
+        ESTP:"Promoter", ESFP:"Performer", ENFP:"Champion", ENTP:"Debater",
+        ESTJ:"Executive",ESFJ:"Consul",    ENFJ:"Protagonist", ENTJ:"Commander"
+      };
+      return map[type] || "Persona";
+    }
+    /* ======== /MBTI ======== */
     function finish(){
       $('#quiz').style.display='none';
       const {scores,inconsistencies}=score();
+      // Paint KPIs
       $('#kO').textContent=scores.O.toFixed(2);
       $('#kC').textContent=scores.C.toFixed(2);
       $('#kE').textContent=scores.E.toFixed(2);
@@ -251,6 +299,10 @@
       $('#kN').textContent=scores.N.toFixed(2);
       const arch=archetype(scores);
       $('#archetype').textContent=`Archetype: ${arch}`;
+      // MBTI overlay
+      const mb = scoresToMBTI(scores);
+      const blurb = MBTI_BUYER_GUIDE[mb.type] || "Personality informs your tradeoffs; we’ll size budget first, then match how you live.";
+      $('#mbti').innerHTML = `MBTI: <b>${mb.type}</b> — ${mbtiLabel(mb.type)} <span style="opacity:.7">(${(mb.confidence*100).toFixed(0)}% match)</span><br/><span class="sub">${blurb}</span>`;
       $('#consistency').innerHTML = inconsistencies.length
         ? `<span class="flag">⚠ Consistency flags:</span> ${inconsistencies.join(', ')}`
         : `<span class="ok">✓ Responses appear consistent across rephrased items.</span>`;
@@ -264,7 +316,9 @@
           setting:   $('#setting').value,
           safetyPriority: Number($('#safety').value||3)
         },
-        scores, archetype: arch,
+        scores,
+        archetype: arch,
+        mbti: mb,  // include MBTI in the payload
         psych:{ totalItems: Q.length, inconsistencies }
       };
       $('#json').textContent=JSON.stringify(brief,null,2);
