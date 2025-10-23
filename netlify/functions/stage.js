@@ -1,6 +1,4 @@
 // netlify/functions/stage.js
-// Node 18+, ESM. Requires @netlify/blobs in package.json.
-
 import { getStore } from "@netlify/blobs";
 
 const ALLOW_ORIGINS = [
@@ -20,25 +18,32 @@ const cors = (origin) => ({
 const env = (k) => process.env[k];
 const parseJSON = (t) => { try { return JSON.parse(t); } catch { return null; } };
 
-// Convert a data: URL to a public Netlify Blob URL so the upstream can fetch it
-async function toPublicUrlIfDataUrl(inputUrl) {
-  if (!inputUrl || !String(inputUrl).startsWith("data:")) return inputUrl;
-  const m = /^data:(.+?);base64,(.*)$/i.exec(inputUrl);
-  if (!m) return inputUrl;
-  const mime = m[1];
-  const b64  = m[2];
-  const buf  = Buffer.from(b64, "base64");
+async function toPublicUrlIfDataUrl(inputUrl){
+  if (!inputUrl || !String(inputUrl).startsWith("data:")) return { url: inputUrl, notes: [] };
+  const notes = [];
+  try {
+    const m = /^data:(.+?);base64,(.*)$/i.exec(inputUrl);
+    if (!m) return { url: inputUrl, notes: ["dataURL-parse-failed"] };
+    const mime = m[1];
+    const b64  = m[2];
+    const buf  = Buffer.from(b64, "base64");
 
-  const store = getStore({ name: "redefined-inputs", consistency: "strong" });
-  const ext = (mime.split("/")[1] || "bin").split("+")[0];
-  const key = `upload-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const store = getStore({ name: "redefined-inputs", consistency: "strong" });
+    const ext = (mime.split("/")[1] || "bin").split("+")[0];
+    const key = `upload-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-  await store.set(key, buf, { contentType: mime, metadata: { source: "webflow" } });
-  const publicUrl = await store.getPublicUrl(key);
-  return publicUrl;
+    await store.set(key, buf, { contentType: mime, metadata: { source: "webflow" } });
+    const publicUrl = await store.getPublicUrl(key);
+    notes.push("blobs-upload-ok");
+    return { url: publicUrl, notes };
+  } catch (e) {
+    // Don’t crash — return original data URL and tell the client what happened
+    notes.push("blobs-upload-failed:" + String(e?.message || e));
+    return { url: inputUrl, notes };
+  }
 }
 
-function devImageResponse(original) {
+function devImageResponse(original, notes=[]) {
   const demo = "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop";
   return {
     ok: true,
@@ -46,12 +51,13 @@ function devImageResponse(original) {
       upstream: false,
       images: [{ url: demo, width: 1600, height: 1067 }],
       echo: { input_image_url: original },
+      notes,
     },
   };
 }
 
 export const handler = async (event) => {
-  const origin = event.headers?.origin || event.headers?.Origin || "";
+  const origin  = event.headers?.origin || event.headers?.Origin || "";
   const headers = cors(origin);
 
   if (event.httpMethod === "OPTIONS") return { statusCode: 204, headers };
@@ -78,7 +84,7 @@ export const handler = async (event) => {
 
   try {
     const qs = new URLSearchParams(event.rawQuery || "");
-    const forceDev = qs.get("forceDev") === "1" || String(env("STAGE_FORCE_DEV")).toLowerCase() === "true";
+    const forceDev = qs.get("forceDev")==="1" || String(env("STAGE_FORCE_DEV")).toLowerCase()==="true";
 
     const ct = event.headers["content-type"] || event.headers["Content-Type"] || "";
     if (!ct.toLowerCase().includes("application/json")) {
@@ -102,60 +108,65 @@ export const handler = async (event) => {
       return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing input_image_url" }) };
     }
 
-    // Ensure upstream receives a fetchable URL
-    const publicUrl = await toPublicUrlIfDataUrl(input_image_url);
+    // Make sure upstream gets a fetchable URL
+    const { url: preparedUrl, notes } = await toPublicUrlIfDataUrl(input_image_url);
 
-    // Dev demo if asked or if no upstream configured
     if (forceDev || !env("STAGE_API_URL")) {
-      return { statusCode: 200, headers, body: JSON.stringify(devImageResponse(publicUrl)) };
+      return { statusCode: 200, headers, body: JSON.stringify(devImageResponse(preparedUrl, notes)) };
     }
 
-    // --- Upstream (DECOR8) call
+    // Upstream call (DECOR8)
     const upstream = env("STAGE_API_URL");
-    const apiKey =
-      env("DECOR8_API_KEY") || env("STAGE_API_KEY") || env("OPENAI_API_KEY") || "";
+    const apiKey   = env("DECOR8_API_KEY") || env("STAGE_API_KEY") || env("OPENAI_API_KEY") || "";
 
-    // Be generous with field names; some APIs expect image_url instead
     const payload = {
-      input_image_url: publicUrl,
-      image_url: publicUrl,
-      room_type,
-      design_style,
-      num_images: Number(num_images || 1),
+      input_image_url: preparedUrl,   // keep both names to satisfy various schemas
+      image_url:       preparedUrl,
+      room_type, design_style,
+      num_images:  Number(num_images || 1),
       scale_factor: Number(scale_factor || 2),
-      color_scheme,
-      speciality_decor,
-      prompt,
-      prompt_prefix,
+      color_scheme, speciality_decor, prompt, prompt_prefix,
     };
 
-    const r = await fetch(upstream, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
-      },
-      body: JSON.stringify(payload),
-    });
+    let r;
+    try {
+      r = await fetch(upstream, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (netErr) {
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
+          error: "Network to upstream failed",
+          detail: String(netErr?.message || netErr),
+          notes,
+        }),
+      };
+    }
 
     const text = await r.text();
     const j = parseJSON(text) || { raw: text };
 
     if (!r.ok) {
-      // Bubble up the exact complaint so the client can show it
       return {
         statusCode: r.status,
         headers,
         body: JSON.stringify({
           error: "Upstream error",
           status: r.status,
-          sent: { ...payload, input_image_url: `${publicUrl.slice(0, 60)}…` },
           detail: j,
+          notes,
+          sent: { ...payload, input_image_url: `${preparedUrl.slice(0,60)}…` },
         }),
       };
     }
 
-    // Normalize likely shapes from upstream
     const images =
       j.images ||
       j.output?.images ||
@@ -165,7 +176,11 @@ export const handler = async (event) => {
       [];
 
     if (!images.length) {
-      return { statusCode: 502, headers, body: JSON.stringify({ error: "No images returned by upstream", detail: j }) };
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({ error: "No images returned by upstream", detail: j, notes }),
+      };
     }
 
     return {
@@ -173,7 +188,7 @@ export const handler = async (event) => {
       headers,
       body: JSON.stringify({
         ok: true,
-        info: { upstream: true, images, echo: { input_image_url: publicUrl } },
+        info: { upstream: true, images, echo: { input_image_url: preparedUrl }, notes },
       }),
     };
   } catch (err) {
