@@ -3,9 +3,6 @@
 
 /* =========================================================
   //#1 CONFIG & CONSTANTS
-  - CORS allowlist
-  - Model & timeouts are env-overridable
-  - Persona JSON optional (cached on cold start)
 ========================================================= */
 const fs = require("fs");
 const path = require("path");
@@ -21,8 +18,8 @@ const OPENAI_API_URL =
   process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
 
 const MODEL_DEFAULT = process.env.ASK_ELENA_MODEL || "gpt-4o-mini";
-const TEMPERATURE_DEFAULT = Number(process.env.ASK_ELENA_TEMP || 0.4);
-const MAX_TOKENS_DEFAULT = Number(process.env.ASK_ELENA_MAXTOK || 700);
+const TEMPERATURE_DEFAULT = Number(process.env.ASK_ELENA_TEMP || 0.45);
+const MAX_TOKENS_DEFAULT = Number(process.env.ASK_ELENA_MAXTOK || 750);
 const REQUEST_TIMEOUT_MS = Number(process.env.ASK_ELENA_TIMEOUT_MS || 30000);
 const PERSONA_PATH =
   process.env.PERSONA_JSON_PATH ||
@@ -33,7 +30,7 @@ const MAX_MESSAGE_CHARS = Number(process.env.ASK_ELENA_MAX_MSG_CHARS || 6000);
 const MAX_HISTORY_ITEMS = Number(process.env.ASK_ELENA_MAX_HISTORY || 6);
 
 /* =========================================================
-  //#2 MODULE-LEVEL CACHE (survives warm invocations)
+  //#2 MODULE-LEVEL CACHE (warm invocations reuse)
 ========================================================= */
 let PERSONA_CACHE = null;
 function getPersonaCached() {
@@ -85,50 +82,94 @@ function pickAddress(lead = {}) {
   const first = (lead.firstName || "").trim();
   const last = (lead.lastName || "").trim();
   const rank = (lead.rank || "").trim();
-
   if (lead.suppressRank) return first || "there";
-  const wantMilitary =
-    lead.preferMilitaryAddress || (!!rank && !!last);
-
+  const wantMilitary = lead.preferMilitaryAddress || (!!rank && !!last);
   if (wantMilitary && rank && last) return `${rank} ${last}`;
   return first || "there";
 }
 
-function buildContextHints(lead = {}, context = {}) {
-  const parts = [];
-  if (lead.financialHealthGrade) {
-    parts.push(`User financial-health grade: ${String(lead.financialHealthGrade)}.`);
-  }
-  if (lead.intent) parts.push(`User intent: ${String(lead.intent)}.`);
-  if (lead.rank || lead.yearsInService || lead.dependents || lead.zip) {
-    parts.push("Profile includes military context (Rank/Years/Dependents/ZIP). Be BAH/BAS aware.");
-  }
-  // KPI snapshot hints (optional)
-  if (typeof context.dti === "number") parts.push(`Current DTI ≈ ${Math.round(context.dti * 100)}%.`);
-  if (typeof context.savingsRate === "number") parts.push(`Savings rate ≈ ${Math.round(context.savingsRate * 100)}%.`);
-  if (typeof context.housingRatio === "number") parts.push(`Housing ratio ≈ ${Math.round(context.housingRatio * 100)}%.`);
-  return parts.join(" ");
-}
-
 function trimHistory(history = []) {
   if (!Array.isArray(history)) return [];
-  // history items: [{role: "user"|"assistant", content: "..."}, ...]
   return history
     .filter(h => h && typeof h.content === "string" && h.role)
     .slice(-MAX_HISTORY_ITEMS);
 }
 
+function buildContextHints(lead = {}, context = {}) {
+  const parts = [];
+  if (lead.financialHealthGrade)
+    parts.push(`Financial-health grade: ${String(lead.financialHealthGrade)}.`);
+  if (lead.intent) parts.push(`User intent: ${String(lead.intent)}.`);
+  if (lead.rank || lead.yearsInService || lead.dependents || lead.zip)
+    parts.push("Military profile present (Rank/Years/Dependents/ZIP). Use BAH/BAS awareness.");
+  if (typeof context.dti === "number")
+    parts.push(`DTI ≈ ${Math.round(context.dti * 100)}%.`);
+  if (typeof context.savingsRate === "number")
+    parts.push(`Savings rate ≈ ${Math.round(context.savingsRate * 100)}%.`);
+  if (typeof context.housingRatio === "number")
+    parts.push(`Housing ratio ≈ ${Math.round(context.housingRatio * 100)}%.`);
+  return parts.join(" ");
+}
+
 /* =========================================================
-  //#4 SYSTEM PROMPT BUILDER
+  //#4 LIGHT INTENT HINTS (steer tone & quick replies)
+========================================================= */
+function detectIntent(userText = "") {
+  const t = userText.toLowerCase();
+  if (/(^|\s)va( |\-)?loan|certificate of eligibility|coe/.test(t))
+    return "va_loan";
+  if (/pre[- ]?approve|preapproval|pre-approval/.test(t))
+    return "preapproval";
+  if (/home ?buy|where to start|getting started/.test(t))
+    return "start_buying";
+  if (/invest|flip|arv|70% rule|brrr/.test(t))
+    return "investing";
+  return "general";
+}
+
+function suggestedRepliesFor(intent) {
+  switch (intent) {
+    case "va_loan":
+      return [
+        "Check my COE requirements",
+        "Estimate my VA price range",
+        "Show VA funding fee basics",
+      ];
+    case "preapproval":
+      return [
+        "What docs do I need?",
+        "How long does pre-approval take?",
+        "Estimate max budget first",
+      ];
+    case "start_buying":
+      return [
+        "Set my budget with BAH/BAS",
+        "Create a step-by-step plan",
+        "What should I do this week?",
+      ];
+    case "investing":
+      return [
+        "Run a flip/BRRRR ROI check",
+        "Explain ARV and comps",
+        "What’s a safe margin today?",
+      ];
+    default:
+      return ["Show me next 3 best steps", "Estimate my budget", "Talk to a lender?"];
+  }
+}
+
+/* =========================================================
+  //#5 SYSTEM PROMPT (emotion-first, anti-generic)
 ========================================================= */
 function buildSystemPrompt(persona, addressLabel, contextHints, mode = "normal") {
   const base = [
     "You are Elena — a luxury-polished, warm, and confident real-estate advisor.",
-    "Specialties: VA-aware affordability (BAH/BAS), comps/pricing logic, investor ROI (flip/BRRRR), and calm, accurate guidance.",
-    "Tone: elegant, reassuring, emotionally intelligent; subtly playful but always professional.",
-    "Style: concise and human. Prefer clear steps, helpful lists, and plain-English explanations.",
-    "Safety: avoid explicit sexual content, medical/legal advice, or overpromising. If data may be stale, note it and offer to refresh.",
-    "Default length: 4–8 sentences. Always include one practical next step + a soft closing question.",
+    "Start with a brief, human, emotionally-intelligent bridge (acknowledge the user's situation) before giving steps.",
+    "Tone: elegant, reassuring, subtly playful; never robotic. Avoid bland boilerplate like 'Here are some steps' or 'It can be overwhelming' unless rewritten with personality.",
+    "Style: concrete, specific, and useful. Prefer crisp sentences, compact bullets when needed, and plain-English rationale.",
+    "Safety: no explicit sexual content; no legal/medical advice; if data may be stale, say so and offer to refresh.",
+    "Default length: 4–8 sentences. End with one practical next move + a soft question to continue.",
+    "Banned phrasing: 'There! Absolutely, I'd be happy to', 'Here is a simple guide', 'Next, follow these steps' — rewrite into warm, natural, and premium language.",
   ].join(" ");
 
   let extras = "";
@@ -136,9 +177,8 @@ function buildSystemPrompt(persona, addressLabel, contextHints, mode = "normal")
     const pillars = persona?.style_guidelines?.pillars || [];
     const dtiWarn = persona?.domains?.real_estate?.financial_dashboard?.knobs?.dti_threshold_warn;
     const savingsTarget = persona?.domains?.real_estate?.financial_dashboard?.knobs?.savings_target;
-
     if (pillars.length) extras += ` Core pillars: ${pillars.join(", ")}.`;
-    if (typeof dtiWarn === "number") extras += ` Treat DTI >= ${dtiWarn} as elevated risk; explain options calmly.`;
+    if (typeof dtiWarn === "number") extras += ` Treat DTI >= ${dtiWarn} as elevated risk; frame options calmly and constructively.`;
     if (typeof savingsTarget === "number") extras += ` Savings-rate reference ~ ${Math.round(savingsTarget * 100)}%.`;
   }
 
@@ -150,7 +190,7 @@ function buildSystemPrompt(persona, addressLabel, contextHints, mode = "normal")
     mode === "short"
       ? "Keep to ~4 sentences."
       : mode === "deep"
-      ? "Allow 8–12 sentences with an optional compact bullet list."
+      ? "Allow 8–12 sentences; include one compact bullet list."
       : "";
 
   return [base, address, contextHints ? `Context hints: ${contextHints}` : "", lengthHint, extras]
@@ -159,7 +199,7 @@ function buildSystemPrompt(persona, addressLabel, contextHints, mode = "normal")
 }
 
 /* =========================================================
-  //#5 OPENAI CALL WITH RETRY/BACKOFF
+  //#6 OPENAI CALL WITH RETRY/BACKOFF
 ========================================================= */
 async function openAIChat({ key, messages, model, temperature, max_tokens, timeoutMs }) {
   let attempt = 0;
@@ -189,25 +229,18 @@ async function openAIChat({ key, messages, model, temperature, max_tokens, timeo
 
       if (resp.ok) {
         const data = await resp.json();
-        return {
-          ok: true,
-          data,
-          status: resp.status,
-        };
+        return { ok: true, data, status: resp.status };
       }
 
       lastDetail = await resp.text().catch(() => "");
-      // Retry on 429/5xx
       if (resp.status === 429 || (resp.status >= 500 && resp.status <= 599)) {
         const backoff = 250 * Math.pow(2, attempt - 1);
         await new Promise(r => setTimeout(r, backoff));
         continue;
       }
-
       return { ok: false, status: resp.status, detail: lastDetail || "Upstream error" };
     } catch (err) {
       lastDetail = String(err?.message || err);
-      // retry transient network errors
       const backoff = 250 * Math.pow(2, attempt - 1);
       await new Promise(r => setTimeout(r, backoff));
     }
@@ -216,7 +249,7 @@ async function openAIChat({ key, messages, model, temperature, max_tokens, timeo
 }
 
 /* =========================================================
-  //#6 MAIN HANDLER
+  //#7 MAIN HANDLER
 ========================================================= */
 module.exports.handler = async (event) => {
   const reqId = randomUUID();
@@ -237,13 +270,13 @@ module.exports.handler = async (event) => {
     };
   }
 
-  // Parse & validate
+  // Parse
   const payload = safeJsonParse(event.body || "{}");
   const userText = (payload.message || "").toString();
   const lead = payload.lead || {};
-  const context = payload.context || {};        // optional KPI snapshot
-  const history = trimHistory(payload.history); // optional chat history
-  const mode = (payload.mode || "normal").toLowerCase(); // short|normal|deep
+  const context = payload.context || {};
+  const history = trimHistory(payload.history);
+  const mode = (payload.mode || "normal").toLowerCase();
   const modelOverride = (payload.model || "").trim();
 
   if (!userText.trim()) {
@@ -274,30 +307,44 @@ module.exports.handler = async (event) => {
         reply: `Elena (dev echo to ${address}): “${userText}”. Add OPENAI_API_KEY to enable real answers.`,
         lead,
         meta: { requestId: reqId, model: "echo" },
+        quickReplies: suggestedRepliesFor(detectIntent(userText)),
       }),
     };
   }
 
-  // Persona + system
+  // Persona + prompts
   const persona = getPersonaCached(); // optional, cached
   const addressLabel = pickAddress(lead);
   const contextHints = buildContextHints(lead, context);
   const system = buildSystemPrompt(persona, addressLabel, contextHints, mode);
 
-  // Messages (history included)
+  // Intent hints to push emotion and specificity
+  const intent = detectIntent(userText);
+  const intentNudge =
+    intent === "va_loan"
+      ? "User is asking about VA loans. Use a reassuring, expert tone; mention COE, funding fee basics at a high level, and invite to estimate price range using Rank/ZIP if they wish."
+      : intent === "start_buying"
+      ? "User needs a calm, simple path to begin buying. Provide a short phased plan (this week, next two weeks) and offer a budget estimate."
+      : intent === "preapproval"
+      ? "User is curious about pre-approval. Explain purpose, typical docs, timeline, and invite them to check budget first if they prefer."
+      : intent === "investing"
+      ? "User is investor-minded. Briefly reference ARV/comps and margin of safety; offer to run a quick ROI snapshot."
+      : "Keep it practical and tailored; avoid generic boilerplate.";
+
   const messages = [
     { role: "system", content: system },
     { role: "system", content: `When appropriate, greet "${addressLabel}" briefly and professionally.` },
+    { role: "system", content: intentNudge },
     ...history,
     { role: "user", content: userText.trim() },
   ];
 
-  // Model/params
+  // Params
   const model = modelOverride || MODEL_DEFAULT;
   const temperature = TEMPERATURE_DEFAULT;
   const max_tokens = MAX_TOKENS_DEFAULT;
 
-  // Call OpenAI with retry
+  // Call OpenAI
   const result = await openAIChat({
     key,
     messages,
@@ -341,7 +388,9 @@ module.exports.handler = async (event) => {
         requestId: reqId,
         elapsedMs,
         usedHistory: history.length,
+        intent,
       },
+      quickReplies: suggestedRepliesFor(intent),
     }),
   };
 };
