@@ -1,26 +1,25 @@
-// A.I.O.U → Executive Buyer Memo (5 paragraphs) — CORS-hardened
+// A.I.O.U → Executive Buyer Memo (Military-aware, FH Grade–aware) — CORS-hardened
+// Drop-in replacement for netlify/functions/aiou-report.js
+
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 /* ---------------- CORS helpers ---------------- */
 const corsHeaders = {
   "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",               // allow Webflow origin
-  "Access-Control-Allow-Headers": "*",              // accept any header
-  "Access-Control-Allow-Methods": "POST, OPTIONS",  // preflight & POST
-  "Access-Control-Max-Age": "86400",                // cache preflight
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Max-Age": "86400",
   "Vary": "Origin",
 };
-const ok = (bodyObj) => ({ statusCode: 200, headers: corsHeaders, body: JSON.stringify(bodyObj) });
-const bad = (code, message) => ({ statusCode: code, headers: corsHeaders, body: JSON.stringify({ error: message }) });
+const ok  = (obj) => ({ statusCode: 200, headers: corsHeaders, body: JSON.stringify(obj) });
+const bad = (code, msg) => ({ statusCode: code, headers: corsHeaders, body: JSON.stringify({ error: msg }) });
 
 /* ---------------- tiny utils ---------------- */
 const lastNameOf = (full) => String(full || "").trim().split(/\s+/).slice(-1)[0] || "Client";
-const toCurrency = (n, d = 0) => (Number(n) || 0).toLocaleString("en-US", {
-  style: "currency", currency: "USD", minimumFractionDigits: d, maximumFractionDigits: d
-});
-const housingLane = (incomeMonthly) => ({ laneMin: incomeMonthly * 0.28, laneMax: incomeMonthly * 0.33 });
+const toCurrency = (n, d = 0) =>
+  (Number(n) || 0).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: d, maximumFractionDigits: d });
 
-// ensure exactly 5 <p> blocks without dependencies
 function enforceFiveParagraphsFromText(text, fallbackBlocks) {
   let parts = String(text || "").split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
   if (parts.length < 5) parts = fallbackBlocks.slice(0, 5);
@@ -29,62 +28,111 @@ function enforceFiveParagraphsFromText(text, fallbackBlocks) {
   return parts.map(p => `<p>${p.replace(/</g, "&lt;")}</p>`).join("");
 }
 
+/* ---------------- income lane helpers ---------------- */
+const laneFromMonthlyIncome = (incomeMonthly) => ({
+  laneMin: incomeMonthly * 0.28,
+  laneMax: incomeMonthly * 0.33,
+});
+
 /* ---------------- entry ---------------- */
 exports.handler = async (event) => {
-  // Always answer preflight with CORS headers
+  // CORS preflight
   if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers: corsHeaders, body: "" };
-
   if (event.httpMethod !== "POST") return bad(405, "Use POST");
-
   if (!OPENAI_API_KEY) return bad(500, "OPENAI_API_KEY not configured");
 
   let brief = {};
   try { brief = JSON.parse(event.body || "{}"); }
   catch { return bad(400, "Invalid JSON"); }
 
-  const { profile = {}, scores = {}, archetype = "", psych = {} } = brief;
-  const first = String(profile.firstName || "").trim() || "Client";
+  // Incoming payload pieces we expect from the client UI
+  const {
+    profile = {},             // { firstName, lastName, bedrooms, budgetMax, setting, safetyPriority }
+    scores = {},              // OCEAN averages
+    archetype = "",
+    psych = {},               // { totalItems, inconsistencies, ... }
+    military = {},            // NEW: { rankTitle, rankPaygrade, yearsInService, monthlyBasePay }
+    finance = {},             // NEW: { fhGrade: 'A'|'B'|'C'|'D'|'F', dti?, reservesMonths? ... }
+    visual = {}               // OPTIONAL: { styleVsPriceSlider: -5..+5, etc. }
+  } = brief;
+
+  // Build the rank/name line
   const last  = lastNameOf(`${profile.firstName || ""} ${profile.lastName || ""}`);
-  const budgetMax = Number(profile.budgetMax || 0);
-  const bedrooms  = Number(profile.bedrooms || 0);
-  const setting   = String(profile.setting || "city");
-  const safetyPriority = Number(profile.safetyPriority || 3);
+  const rankTitle = String(military.rankTitle || military.rankPaygrade || "").trim();
+  const rankName  = rankTitle ? `${rankTitle} ${last}` : last;
 
-  // Heuristic monthly income if not provided
-  const assumedIncomeMonthly = Math.max(3500, Math.min(12000, budgetMax / 60));
-  const lane = housingLane(assumedIncomeMonthly);
+  // Monthly income (prefer exact from dashboard; otherwise estimate from budget)
+  const monthlyBase = Number(military.monthlyBasePay || 0);
+  const budgetMax   = Number(profile.budgetMax || 0);
+  const assumedIncomeMonthly = monthlyBase > 0
+    ? monthlyBase
+    : Math.max(3500, Math.min(12000, budgetMax / 60)); // fallback heuristic
 
-  // Local fallback memo (5 blocks)
+  const lane = laneFromMonthlyIncome(assumedIncomeMonthly);
+
+  // Helpful flags derived from FH Grade
+  const fhGrade = String(finance.fhGrade || "").toUpperCase(); // A..F
+  const fhTight = ["D", "F"].includes(fhGrade);   // be more conservative
+  const fhSolid = ["A", "B"].includes(fhGrade);   // more flexibility
+
+  // Build a simple “buyer style” note from visuals (optional)
+  const styleVsPrice = typeof visual.styleVsPriceSlider === "number" ? visual.styleVsPriceSlider : null; // -5..+5
+  const stylePrefNote =
+    styleVsPrice==null ? "No style-vs-price slider recorded."
+    : styleVsPrice >= 3 ? "leans style-forward over lowest payment"
+    : styleVsPrice <= -3 ? "leans price-first over style upgrades"
+    : "balanced on style vs price";
+
+  // Local fallback memo (5 blocks; military-aware greeting)
   const localBlocks = [
-    `<strong>${last}</strong>, this memo turns your A.I.O.U profile into a plan. Archetype: <strong>${archetype || "Balanced Explorer"}</strong>. We’ll match homes to how you live and avoid regret buys.`,
-    `Targets: keep housing near <strong>28–33%</strong> of income. With ~${toCurrency(assumedIncomeMonthly,0)}/mo income, aim for <strong>${toCurrency(lane.laneMin,0)}–${toCurrency(lane.laneMax,0)}</strong> all-in (PITI/HOA/PMI). Shop <strong>under</strong> your max price to leave room for inspection and upgrades.`,
-    `Key risks: stretching budget for style, thin reserves, and surprise repair costs. We size payment first, then pick homes that fit your style and hosting needs.`,
-    `Playbook: focus on <strong>5–10 year-old</strong> homes or quality renovations (clean inspection; recent roof/HVAC/water heater). Prefer open kitchen/living or outdoor space over an extra unused bedroom. Lock your <strong>top 3 must-haves</strong> (safety, location, design) before touring.`,
-    `Next steps: pre-underwrite in the lane above, preview homes that hit your must-haves, and use seller credits/points to balance cash vs rate. CFPB: https://www.consumerfinance.gov/  • Free credit reports: https://www.annualcreditreport.com/`,
+    `<strong>${rankName}</strong>, this memo turns your A.I.O.U profile into a plan. Archetype: <strong>${archetype || "Balanced Explorer"}</strong>. We’ll match homes to how you live and avoid regret buys.`,
+    `Targets: keep housing near <strong>28–33%</strong> of monthly income. With ~${toCurrency(assumedIncomeMonthly,0)}/mo income, aim for <strong>${toCurrency(lane.laneMin,0)}–${toCurrency(lane.laneMax,0)}</strong> all-in (PITI/HOA/PMI). Shop below max price to leave room for inspection findings and upgrades.`,
+    `Signals: ${stylePrefNote}. Financial Health Grade: ${fhGrade || "—"}. We’ll watch for budget creep, thin reserves, and scope drift on repairs.`,
+    `Playbook: focus on <strong>5–10 year-old</strong> homes or quality renovations (clean inspection; recent roof/HVAC/water heater). Prefer open kitchen/hosting flow over unused square-footage. Lock your <strong>top 3 must-haves</strong> before touring.`,
+    `Next steps: pre-underwrite in the lane above, preview inventory that matches your trade-offs, and use seller credits/points to balance cash vs rate. CFPB: https://www.consumerfinance.gov/ • Free credit reports: https://www.annualcreditreport.com/`
   ];
 
   const systemPrompt = `
-You are "Elena", an Executive Real Estate Strategist. Write EXACTLY 5 short paragraphs, plain English, no headings.
-P1: Greet with last name + purpose; mention archetype in one sentence.
-P2: Dollar targets: housing lane 28–33% using monthly income estimate; show min–max in USD; advise shopping below max price.
-P3: 2–3 biggest risks/blind spots tuned to scores.
-P4: Action playbook: 5–10 year-old or quality renovation, inspection strategy, open-plan/hosting vs extra bedroom, define top 3 must-haves. Include 1–2 credible links (CFPB, AnnualCreditReport).
-P5: Closing + next steps.
-Style: crisp, friendly, no jargon, whole dollars only.
-`;
+You are "Elena", an Executive Real Estate Strategist writing for a U.S. military client.
+Write EXACTLY 5 short paragraphs (no headings), addressing the client by Rank + Last Name if provided.
+Use the client's Financial Health Grade (A–F) to tune risk guidance and aggressiveness of recommendations.
+Avoid jargon; use whole-dollar amounts; keep it crisp and respectful.
+
+Rules:
+- P1: Greet with Rank + Last Name; state purpose; mention archetype in one sentence.
+- P2: Show housing lane (28–33% of monthly income). Use the provided assumedIncomeMonthly. Render laneMin/laneMax in USD.
+- P3: Top 2–3 risks tuned to FH Grade and scores (e.g., if FH=D/F, emphasize reserves, DTI, payment discipline; if FH=A/B, allow targeted flexibility). Include any visual preference note in natural language.
+- P4: Concrete playbook: age window (5–10 yrs or quality renovation), inspection strategy, trade-offs (hosting/open plan vs extra bedroom), and upfront “must-haves”.
+- P5: Closing with next steps + 1–2 credible links (CFPB and AnnualCreditReport).
+Tone: warm, concise, respectful; military-appropriate.`;
 
   const userPrompt = `
 INPUT:
 ${JSON.stringify({
-  profile: { first, last, bedrooms, budgetMax, setting, safetyPriority },
+  profile: {
+    first: String(profile.firstName || "").trim() || "Client",
+    last,
+    bedrooms: Number(profile.bedrooms || 0),
+    budgetMax: Number(profile.budgetMax || 0),
+    setting: String(profile.setting || "city"),
+    safetyPriority: Number(profile.safetyPriority || 3)
+  },
+  military: {
+    rankTitle,
+    rankPaygrade: military.rankPaygrade || "",
+    yearsInService: Number(military.yearsInService || 0),
+    monthlyBasePay: Math.round(assumedIncomeMonthly)
+  },
+  finance: { fhGrade },
   scores, archetype, psych,
+  visual: { styleVsPrice },
   computed: {
     assumedIncomeMonthly: Math.round(assumedIncomeMonthly),
     housingLaneMin: Math.round(lane.laneMin),
     housingLaneMax: Math.round(lane.laneMax),
-    guidance: { preferSetting: setting, suggestAgeWindow: "5–10 years or quality renovation" }
   }
 }, null, 2)}
+
 Write the five paragraphs now.`;
 
   async function callOpenAI() {
@@ -111,8 +159,10 @@ Write the five paragraphs now.`;
       memoHtml,
       meta: {
         archetype, scores,
+        fhGrade,
+        rankTitle,
         assumedIncomeMonthly: Math.round(assumedIncomeMonthly),
-        lane: { minMonthly: Math.round(lane.laneMin), maxMonthly: Math.round(lane.laneMax) }
+        lane: { minMonthly: Math.round(lane.laneMin), maxMonthly: Math.round(lane.laneMax) },
       }
     });
   } catch (e) {
@@ -123,7 +173,7 @@ Write the five paragraphs now.`;
       memo: localBlocks.join("\n\n"),
       memoHtml,
       meta: {
-        fallback: true, archetype, scores,
+        fallback: true, archetype, scores, fhGrade, rankTitle,
         assumedIncomeMonthly: Math.round(assumedIncomeMonthly),
         lane: { minMonthly: Math.round(lane.laneMin), maxMonthly: Math.round(lane.laneMax) }
       }
