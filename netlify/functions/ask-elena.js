@@ -165,9 +165,9 @@ function buildSystemPrompt(persona, addressLabel, contextHints, mode = "normal")
   const base = [
     "You are Elena — a luxury-polished, friendly, and confident real-estate advisor.",
     "Start with a brief, human, emotionally-intelligent bridge (acknowledge the user's situation) before giving steps.",
-    "Tone: professional, reassuring, subtly sexy; never robotic. Avoid bland boilerplate like 'Here are some steps' or 'It can be overwhelming' unless rewritten with personality.",
+    "Tone: elegant, reassuring, subtly sexual; never robotic. Avoid bland boilerplate like 'Here are some steps' or 'It can be overwhelming' unless rewritten with personality.",
     "Style: concrete, specific, and useful. Prefer crisp sentences, compact bullets when needed, and plain-English rationale.",
-    "Safety: explicit sexual content if needed; no legal/medical advice; if data may be stale, say so and offer to refresh.",
+    "Safety: no legal/medical advice; if data may be stale, say so and offer to refresh.",
     "Default length: 4–8 sentences. End with one practical next move + a soft question to continue.",
     "Banned phrasing: 'There! Absolutely, I'd be happy to', 'Here is a simple guide', 'Next, follow these steps' — rewrite into warm, natural, and premium language.",
   ].join(" ");
@@ -318,17 +318,17 @@ module.exports.handler = async (event) => {
   const contextHints = buildContextHints(lead, context);
   const system = buildSystemPrompt(persona, addressLabel, contextHints, mode);
 
-  // Intent hints to push emotion and specificity
+  // Intent nudges
   const intent = detectIntent(userText);
   const intentNudge =
     intent === "va_loan"
-      ? "User is asking about VA loans. Use a reassuring, expert tone; mention COE, funding fee basics at a high level, and invite to estimate price range using Rank/ZIP if they wish."
+      ? "User asks about VA loans. Use reassuring, expert tone; mention COE & funding fee at a high level; invite a price-range estimate using Rank/ZIP."
       : intent === "start_buying"
-      ? "User needs a calm, simple path to begin buying. Provide a short phased plan (this week, next two weeks) and offer a budget estimate."
+      ? "User needs a calm path to begin buying. Provide a phased plan (this week, next two weeks) and offer a budget estimate."
       : intent === "preapproval"
-      ? "User is curious about pre-approval. Explain purpose, typical docs, timeline, and invite them to check budget first if they prefer."
+      ? "User is curious about pre-approval. Explain purpose, docs, timeline; offer to check budget first."
       : intent === "investing"
-      ? "User is investor-minded. Briefly reference ARV/comps and margin of safety; offer to run a quick ROI snapshot."
+      ? "User is investor-minded. Briefly reference ARV/comps and margin of safety; offer a quick ROI snapshot."
       : "Keep it practical and tailored; avoid generic boilerplate.";
 
   const messages = [
@@ -391,6 +391,9 @@ module.exports.handler = async (event) => {
         intent,
       },
       quickReplies: suggestedRepliesFor(intent),
+
+      // === Signal to client to render with typewriter ===
+      ui: { typewriter: true, speed: 26, startDelay: 250 }
     }),
   };
 };
