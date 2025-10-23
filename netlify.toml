@@ -7,13 +7,13 @@
   external_node_modules = ["@netlify/blobs"]
   included_files        = []
 
-# Pretty routes → Functions
+# Optional pretty route: /api/stage → /.netlify/functions/stage
 [[redirects]]
   from   = "/api/*"
   to     = "/.netlify/functions/:splat"
   status = 200
 
-# CORS for direct function routes
+# CORS for direct functions and pretty routes
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
@@ -23,7 +23,6 @@
     Access-Control-Max-Age       = "86400"
     Vary                         = "Origin"
 
-# CORS for the pretty routes (/api/*)
 [[headers]]
   for = "/api/*"
   [headers.values]
