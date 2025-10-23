@@ -1,153 +1,162 @@
 // netlify/functions/stage.js
-// CommonJS, Node 18+ (native fetch)
+// ESM (matches package.json "type": "module") — Node 18+ with native fetch
 
-// ——— CORS ——————————————————————————————————————————
+// //#1 CORS ORIGINS
 const ALLOW_ORIGINS = [
   "https://new-real-estate-purchase.webflow.io",
   "https://theorozcorealty.netlify.app",
   "http://localhost:8888",
-  // Add any custom domains you’ll serve from:
-  // "https://theorozcorealty.com",
+  // "https://theorozcorealty.com", // add when live
 ];
 
-// If true, allow "*" when the Origin isn't in ALLOW_ORIGINS (helpful during setup)
+// If true, allow "*" when Origin isn't in ALLOW_ORIGINS (useful during setup)
 const FALLBACK_WILDCARD = true;
 
 function buildCorsHeaders(origin, acrh) {
-  const allowed = ALLOW_ORIGINS.includes(origin);
-  const allowOrigin = allowed ? origin : (FALLBACK_WILDCARD ? "*" : ALLOW_ORIGINS[0]);
-
-  const baseAllowed = ["Content-Type", "Authorization"];
-  const requested = (acrh || "").split(",").map(h => h.trim()).filter(Boolean);
-  const allowHeaders = Array.from(new Set([...baseAllowed, ...requested])).join(", ");
-
-  return {
+  const allowStar = FALLBACK_WILDCARD && (!origin || !ALLOW_ORIGINS.includes(origin));
+  const allowOrigin = allowStar ? "*" : origin || "*";
+  const base = {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Headers": allowHeaders,
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": acrh || "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
     "Access-Control-Max-Age": "86400",
-    Vary: "Origin",
-    "Content-Type": "application/json",
+    "Vary": "Origin",
+  };
+  // If we’re not echoing the incoming ACRH, still permit common headers.
+  if (!acrh) base["Access-Control-Allow-Headers"] = "Content-Type, Authorization, Accept";
+  return base;
+}
+
+// //#2 Helpers
+const parseJSON = (text) => {
+  try { return JSON.parse(text); } catch { return null; }
+};
+const pick = (obj, keys) => Object.fromEntries(keys.map(k => [k, obj?.[k]]));
+const env = (k) => process.env[k];
+
+// //#3 Dev placeholder (always returns a single enhanced image)
+function devImageResponse(original) {
+  // A static, safe image (unsplash) that reliably loads for demo/testing
+  const demo = "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop";
+  return {
+    ok: true,
+    info: {
+      env: { upstream: false, dev: true },
+      images: [
+        { url: demo, width: 1600, height: 1067, note: "Dev demo image" }
+      ],
+      echo: { input_image_url: original }
+    }
   };
 }
 
-// ——— Handler ——————————————————————————————————————
-module.exports.handler = async (event) => {
-  const origin =
-    event.headers?.origin ||
-    event.headers?.Origin ||
-    event.multiValueHeaders?.origin?.[0] ||
-    "";
-
-  const acrh =
-    event.headers?.["access-control-request-headers"] ||
-    event.headers?.["Access-Control-Request-Headers"] ||
-    "";
-
+// //#4 Handler
+export const handler = async (event) => {
+  const origin = event.headers?.origin || event.headers?.Origin || "";
+  const acrh = event.headers?.["access-control-request-headers"];
   const headers = buildCorsHeaders(origin, acrh);
 
+  // Health / info
+  if (event.httpMethod === "GET") {
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        ok: true,
+        note: "RE-Defined staging proxy: send POST with JSON to generate images.",
+        expects: {
+          method: "POST",
+          json: { input_image_url: "https://…", room_type: "livingroom", design_style: "modern" }
+        },
+        env: { upstream: !!env("STAGE_API_URL") },
+        cors: { origin, allowed: ALLOW_ORIGINS.includes(origin) },
+        tips: { forceDev: !!env("STAGE_FORCE_DEV") }
+      })
+    };
+  }
+
+  // Preflight
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers };
+  }
+
+  // Only POST beyond this point
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) };
+  }
+
   try {
-    // Preflight
-    if (event.httpMethod === "OPTIONS") {
-      return { statusCode: 204, headers, body: "" };
+    const qs = new URLSearchParams(event.rawQuery || "");
+    const forceDev = qs.get("forceDev") === "1" || String(env("STAGE_FORCE_DEV")).toLowerCase() === "true";
+
+    const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: "Content-Type must be application/json" }) };
     }
 
-    // Parse URL/search
-    const url = new URL(event.rawUrl || `https://${event.headers.host}${event.path}`);
-    const forceDev = url.searchParams.get("forceDev") === "1";
+    const bodyObj = parseJSON(event.body || "{}") || {};
+    const { input_image_url, room_type, design_style } = bodyObj;
 
-    // Health/info
-    if (event.httpMethod === "GET") {
+    if (!input_image_url) {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing input_image_url" }) };
+    }
+
+    // Dev fallback (guaranteed success to unblock UI)
+    if (forceDev || !env("STAGE_API_URL")) {
+      const out = devImageResponse(input_image_url);
+      return { statusCode: 200, headers, body: JSON.stringify(out) };
+    }
+
+    // Upstream proxy
+    const upstream = env("STAGE_API_URL");
+    const apiKey = env("DECOR8_API_KEY") || env("STAGE_API_KEY") || env("OPENAI_API_KEY") || "";
+    const reqPayload = { input_image_url, room_type, design_style };
+
+    const r = await fetch(upstream, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(apiKey ? { "Authorization": `Bearer ${apiKey}` } : {})
+      },
+      body: JSON.stringify(reqPayload),
+    });
+
+    const text = await r.text();
+    const j = parseJSON(text) || { raw: text };
+
+    if (!r.ok) {
+      // Bubble details for easier client-side debugging
       return {
-        statusCode: 200,
+        statusCode: r.status,
         headers,
         body: JSON.stringify({
-          ok: true,
-          note: "RE-Defined staging proxy: send POST with JSON to generate images.",
-          expects: {
-            method: "POST",
-            json: {
-              input_image_url: "https://…",
-              room_type: "livingroom",
-              design_style: "modern",
-            },
-          },
-          env: { upstream: !!process.env.STAGE_API_URL },
-          cors: { origin, allowed: ALLOW_ORIGINS.includes(origin) },
-          tips: { forceDev }
-        }),
+          error: "Upstream error",
+          status: r.status,
+          detail: pick(j, ["error", "message", "detail"]) ?? j
+        })
       };
     }
 
-    if (event.httpMethod !== "POST") {
-      return { statusCode: 405, headers, body: JSON.stringify({ error: "Method Not Allowed" }) };
-    }
-
-    // Parse JSON body
-    let payload = {};
-    try {
-      payload = JSON.parse(event.body || "{}");
-    } catch {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: "Invalid JSON body" }) };
-    }
-
-    // Upstream config
-    const upstream = process.env.STAGE_API_URL && !forceDev ? process.env.STAGE_API_URL : "";
-    const apiKey =
-      process.env.DECOR8_API_KEY ||
-      process.env.STAGE_API_KEY ||
-      process.env.OPENAI_API_KEY ||
-      "";
-
-    // Call upstream if configured
-    if (upstream) {
-      const upHeaders = { "Content-Type": "application/json" };
-      if (apiKey) upHeaders.Authorization = `Bearer ${apiKey}`;
-
-      const resp = await fetch(upstream, {
-        method: "POST",
-        headers: upHeaders,
-        body: JSON.stringify(payload),
-      });
-
-      const text = await resp.text();
-      let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
-
-      if (!resp.ok) {
-        return {
-          statusCode: resp.status || 502,
-          headers,
-          body: JSON.stringify({
-            error: "Upstream error",
-            status: resp.status,
-            detail: data,
-          }),
-        };
-      }
-
-      return { statusCode: 200, headers, body: JSON.stringify(data) };
-    }
-
-    // —— Dev fallback (no upstream OR forceDev=1) ——
-    const original = payload.input_image_url || "";
-    const demo =
-      original ||
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1600&q=80";
-
-    const out = {
-      info: { images: [{ url: demo, width: 1600, height: 1067 }] },
-      echo: { received: payload },
-      note:
-        "Dev fallback: set STAGE_API_URL and key env vars in Netlify to call the real staging backend.",
+    // Normalize to { info: { images: [...] } }
+    const images = j.images || j.output?.images || j.data?.images || [];
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        ok: true,
+        info: {
+          upstream: true,
+          images,
+          echo: { input_image_url, room_type, design_style }
+        }
+      })
     };
-
-    return { statusCode: 200, headers, body: JSON.stringify(out) };
 
   } catch (err) {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: "Server exception", detail: String(err?.message || err) }),
+      body: JSON.stringify({ error: "Server exception", detail: String(err?.message || err) })
     };
   }
 };
