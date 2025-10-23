@@ -1,4 +1,6 @@
 // Email Verify — VERIFY CODE (ESM)
+// Place at: netlify/functions/verify-code.js
+
 import { createHash } from 'crypto';
 import { getStore } from '@netlify/blobs';
 
@@ -7,11 +9,10 @@ const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
-  'Vary': 'Origin',
+  Vary: 'Origin',
 };
 
 export const handler = async (event) => {
-  // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: cors };
   }
@@ -51,7 +52,6 @@ export const handler = async (event) => {
       return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Invalid code' }) };
     }
 
-    // success: delete the code
     await store.delete(key);
     return { statusCode: 200, headers: cors, body: JSON.stringify({ ok: true }) };
   } catch (err) {
