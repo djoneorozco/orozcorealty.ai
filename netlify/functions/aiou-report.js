@@ -34,6 +34,22 @@ const laneFromMonthlyIncome = (incomeMonthly) => ({
   laneMax: incomeMonthly * 0.33,
 });
 
+/* ---------------- merge helpers ---------------- */
+// Pull first/last name from several possible places the Financial Dashboard might send.
+function hydrateNames(profile = {}, identity = {}, military = {}) {
+  const first =
+    (profile.firstName || "").trim() ||
+    (identity.firstName || identity.givenName || "").trim() ||
+    (military.firstName || "").trim();
+
+  const last =
+    (profile.lastName || "").trim() ||
+    (identity.lastName || identity.familyName || "").trim() ||
+    (military.lastName || "").trim();
+
+  return { firstName: first, lastName: last };
+}
+
 /* ---------------- entry ---------------- */
 exports.handler = async (event) => {
   // CORS preflight
@@ -48,22 +64,32 @@ exports.handler = async (event) => {
   // Incoming payload pieces we expect from the client UI
   const {
     profile = {},             // { firstName, lastName, bedrooms, budgetMax, setting, safetyPriority }
+    identity = {},            // NEW: Financial Dashboard identity { firstName, lastName, ... }
     scores = {},              // OCEAN averages
     archetype = "",
     psych = {},               // { totalItems, inconsistencies, ... }
-    military = {},            // NEW: { rankTitle, rankPaygrade, yearsInService, monthlyBasePay }
-    finance = {},             // NEW: { fhGrade: 'A'|'B'|'C'|'D'|'F', dti?, reservesMonths? ... }
-    visual = {}               // OPTIONAL: { styleVsPriceSlider: -5..+5, etc. }
+    military = {},            // { rankTitle, rankPaygrade, yearsInService, monthlyBasePay, [firstName,lastName]? }
+    finance = {},             // { fhGrade: 'A'|'B'|'C'|'D'|'F', dti?, reservesMonths? ... }
+    visual = {},              // { styleVsPriceSlider: -5..+5, etc. }
+    meta = {}                 // { addressMode?: 'house_of_sass' | 'default' }
   } = brief;
 
-  // Build the rank/name line
-  const last  = lastNameOf(`${profile.firstName || ""} ${profile.lastName || ""}`);
+  // ---- Hydrate profile names from identity/military if missing ----
+  const { firstName, lastName } = hydrateNames(profile, identity, military);
+  const hydratedProfile = {
+    ...profile,
+    firstName,
+    lastName
+  };
+
+  // Build the display line (House of SaSS can choose to show rank later on the client)
+  const last  = lastNameOf(`${firstName || ""} ${lastName || ""}`);
   const rankTitle = String(military.rankTitle || military.rankPaygrade || "").trim();
   const rankName  = rankTitle ? `${rankTitle} ${last}` : last;
 
   // Monthly income (prefer exact from dashboard; otherwise estimate from budget)
   const monthlyBase = Number(military.monthlyBasePay || 0);
-  const budgetMax   = Number(profile.budgetMax || 0);
+  const budgetMax   = Number(hydratedProfile.budgetMax || 0);
   const assumedIncomeMonthly = monthlyBase > 0
     ? monthlyBase
     : Math.max(3500, Math.min(12000, budgetMax / 60)); // fallback heuristic
@@ -72,10 +98,10 @@ exports.handler = async (event) => {
 
   // Helpful flags derived from FH Grade
   const fhGrade = String(finance.fhGrade || "").toUpperCase(); // A..F
-  const fhTight = ["D", "F"].includes(fhGrade);   // be more conservative
-  const fhSolid = ["A", "B"].includes(fhGrade);   // more flexibility
+  const fhTight = ["D", "F"].includes(fhGrade);   // (kept for future logic)
+  const fhSolid = ["A", "B"].includes(fhGrade);
 
-  // Build a simple “buyer style” note from visuals (optional)
+  // Visual note
   const styleVsPrice = typeof visual.styleVsPriceSlider === "number" ? visual.styleVsPriceSlider : null; // -5..+5
   const stylePrefNote =
     styleVsPrice==null ? "No style-vs-price slider recorded."
@@ -110,12 +136,12 @@ Tone: warm, concise, respectful; military-appropriate.`;
 INPUT:
 ${JSON.stringify({
   profile: {
-    first: String(profile.firstName || "").trim() || "Client",
+    first: String(firstName || "").trim() || "Client",
     last,
-    bedrooms: Number(profile.bedrooms || 0),
-    budgetMax: Number(profile.budgetMax || 0),
-    setting: String(profile.setting || "city"),
-    safetyPriority: Number(profile.safetyPriority || 3)
+    bedrooms: Number(hydratedProfile.bedrooms || 0),
+    budgetMax: Number(hydratedProfile.budgetMax || 0),
+    setting: String(hydratedProfile.setting || "city"),
+    safetyPriority: Number(hydratedProfile.safetyPriority || 3)
   },
   military: {
     rankTitle,
@@ -157,6 +183,7 @@ Write the five paragraphs now.`;
       ok: true,
       memo: memoText,
       memoHtml,
+      hydratedProfile, // <-- return for the UI to auto-fill Profile & Goals
       meta: {
         archetype, scores,
         fhGrade,
@@ -172,6 +199,7 @@ Write the five paragraphs now.`;
       error: String(e.message || e),
       memo: localBlocks.join("\n\n"),
       memoHtml,
+      hydratedProfile,
       meta: {
         fallback: true, archetype, scores, fhGrade, rankTitle,
         assumedIncomeMonthly: Math.round(assumedIncomeMonthly),
