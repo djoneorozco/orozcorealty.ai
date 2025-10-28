@@ -1,0 +1,1145 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Tue Oct 28 2025 01:20:13 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="68dcd360e3426efe81144c09" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Financial Dashboard</title>
+  <meta content="Financial Dashboard" property="og:title">
+  <meta content="Financial Dashboard" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="../css/new-real-estate-purchase.webflow.css" rel="stylesheet" type="text/css">
+  <style>@media (min-width:992px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d6"] {height:0px;opacity:0;-webkit-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3e1"] {height:0px;opacity:0;-webkit-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3f4"] {height:0px;opacity:0;-webkit-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d40b"] {height:0px;opacity:0;-webkit-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d41e"] {height:0px;opacity:0;-webkit-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);}}@media (max-width:991px) and (min-width:768px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d6"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3e1"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3f4"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d40b"] {height:0px;opacity:0;}}@media (max-width:767px) and (min-width:480px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d6"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3e1"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3f4"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d40b"] {height:0px;opacity:0;}}@media (max-width:479px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d6"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3e1"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3f4"] {height:0px;opacity:0;}html.w-mod-js:not(.w-mod-ix) [data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d40b"] {height:0px;opacity:0;}}</style>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="../images/favicon.svg" rel="shortcut icon" type="image/x-icon">
+  <link href="../images/webclip.jpg" rel="apple-touch-icon">
+</head>
+<body class="body-6">
+  <section class="section-180">
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-left-container style-three-header-container w-nav">
+      <div class="container-two">
+        <div class="navbar-wrapper">
+          <div class="style-three-nav-brand">
+            <a href="#" role="link" class="home-three-nav-menu-brand rezoid w-nav-brand"><img width="150" height="40" alt="" src="../images/TOR.png" loading="lazy" srcset="../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-500.png 500w, ../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-800.png 800w, ../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-1080.png 1080w, ../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-1600.png 1600w, ../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2000.png 2000w, ../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png 2600w, ../images/TOR.png 2851w" sizes="150px"></a>
+          </div>
+          <div class="w-layout-hflex nav-link-box">
+            <div class="w-layout-hflex nav-one-button-wrap">
+              <div class="menu-button w-nav-button"><img width="31" height="18" alt="Hambarger Menu" src="../images/Icon-nav-1.svg" loading="lazy"></div>
+            </div>
+          </div>
+          <a role="link" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3c1" href="tel:+1800456789" class="style-three-phone-button responsive-hidden w-inline-block">
+            <div class="home-three-call-button-text">
+              <div class="style-three-phone-button-txt">Lets Talk</div>
+              <div class="style-three-phone-button-txt">(800) 456 7890</div>
+            </div>
+            <div class="home-three-button-icon"><img width="46" height="46" alt="Call Icon" src="../images/Call-Icon.svg" loading="lazy" class="image"></div>
+          </a>
+          <div class="navbar-wrapper-2">
+            <div class="style-three-nav-brand">
+              <a href="#" role="link" class="home-three-nav-menu-brand rezoid w-nav-brand"></a>
+            </div>
+            <div class="w-layout-hflex nav-link-box">
+              <nav role="navigation" class="nav-menu-wrapper-3 w-nav-menu">
+                <ul role="list" class="nav-menu-two w-list-unstyled">
+                  <li class="list-item-3 nav-five-list">
+                    <div data-delay="0" data-hover="true" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d0" class="home-three-dropdaown-2 w-dropdown">
+                      <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
+                        <div class="home-three-dropdown">
+                          <div class="home-three-dropdown-menu black-color">Home </div>
+                        </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
+                      </div>
+                      <nav data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d6" class="home-three-dropdown-list w-dropdown-list"></nav>
+                    </div>
+                  </li>
+                  <li class="list-item-3 nav-five-list">
+                    <div data-delay="0" data-hover="true" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3d8" class="home-three-dropdaown-2 w-dropdown">
+                      <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
+                        <div class="home-three-dropdown">
+                          <a href="#" class="w-inline-block">
+                            <div class="home-three-dropdown-menu black-color">REalty SaSS</div>
+                          </a>
+                          <div class="home-three-dropdown-menu black-color">Properties</div>
+                        </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
+                      </div>
+                      <nav data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3e1" class="home-three-dropdown-list w-dropdown-list">
+                        <div class="home-three-dropdown-block">
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Property Two</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Property Three</a>
+                          <a href="https://rezoid.webflow.io/properties/the-mertilex-complex-3" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Property Details One</a>
+                          <a href="https://rezoid.webflow.io/property-two/house-block-renovate" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Property Details Two</a>
+                        </div>
+                      </nav>
+                    </div>
+                  </li>
+                  <li class="list-item-3 nav-five-list">
+                    <div data-delay="0" data-hover="true" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3ec" class="home-three-dropdaown-2 w-dropdown">
+                      <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
+                        <div class="home-three-dropdown">
+                          <div class="home-three-dropdown-menu black-color">ABOUT US</div>
+                          <div class="home-three-dropdown-menu black-color">Pages</div>
+                        </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
+                      </div>
+                      <nav data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d3f4" class="home-three-dropdown-list w-dropdown-list">
+                        <div class="home-three-dropdown-block">
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">About One</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">About Two</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">About Three</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Service One</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Agent Two</a>
+                          <a href="https://rezoid.webflow.io/401" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Password Protected</a>
+                        </div>
+                      </nav>
+                    </div>
+                  </li>
+                  <li class="list-item-3 nav-five-list">
+                    <div data-delay="0" data-hover="true" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d403" class="home-three-dropdaown-2 w-dropdown">
+                      <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
+                        <div class="home-three-dropdown">
+                          <div class="home-three-dropdown-menu black-color">Blog</div>
+                          <div class="home-three-dropdown-menu black-color">Blog</div>
+                        </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
+                      </div>
+                      <nav data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d40b" class="home-three-dropdown-list w-dropdown-list">
+                        <div class="home-three-dropdown-block">
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Blog One</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Blog Three</a>
+                          <a href="https://rezoid.webflow.io/blog/unlocking-home-ownership-your-ultimate-guide-to-buying-an-apartment" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Blog Details One</a>
+                          <a href="https://rezoid.webflow.io/blog-two/unlocking-homeownership-your-ultimate-guide-to-buying-an-apartment" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Blog Details Two</a>
+                        </div>
+                      </nav>
+                    </div>
+                  </li>
+                  <li class="list-item-3 nav-five-list">
+                    <div data-delay="0" data-hover="true" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d416" class="home-three-dropdaown-2 w-dropdown">
+                      <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
+                        <div class="home-three-dropdown">
+                          <div class="home-three-dropdown-menu black-color">Contact</div>
+                          <div class="home-three-dropdown-menu black-color">Contact</div>
+                        </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
+                      </div>
+                      <nav data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d41e" style="height:0px;opacity:0" class="home-three-dropdown-list w-dropdown-list">
+                        <div class="home-three-dropdown-block">
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Contact One</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Contact Two</a>
+                          <a href="#" role="link" class="home-three-dropdown-link-2 w-dropdown-link">Contact Three</a>
+                        </div>
+                      </nav>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+              <div class="w-layout-hflex nav-one-button-wrap">
+                <div data-open-product="" data-wf-cart-type="rightSidebar" data-wf-cart-query="" data-wf-page-link-href-prefix="" class="w-commerce-commercecartwrapper nav-one-card" data-node-type="commerce-cart-wrapper">
+                  <a class="w-commerce-commercecartopenlink cart-button-2 w-inline-block" role="button" aria-haspopup="dialog" aria-label="Open cart" data-node-type="commerce-cart-open-link" href="#"><img width="23" height="26" alt="Caart Icon" src="../images/Card.svg" loading="lazy">
+                    <div style="display:none" data-count-hide-rule="empty" class="w-commerce-commercecartopenlinkcount cart-quantity-2">0</div>
+                  </a>
+                  <div style="display:none" class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-rightSidebar" data-node-type="commerce-cart-container-wrapper">
+                    <div data-node-type="commerce-cart-container" role="dialog" class="w-commerce-commercecartcontainer">
+                      <div class="w-commerce-commercecartheader">
+                        <h4 class="w-commerce-commercecartheading heading-four-2">Your Cart</h4>
+                        <a class="w-commerce-commercecartcloselink w-inline-block" role="button" aria-label="Close cart" data-node-type="commerce-cart-close-link"><svg width="16px" height="16px" viewbox="0 0 16 16">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <g fill-rule="nonzero" fill="#333333">
+                                <polygon points="6.23223305 8 0.616116524 13.6161165 2.38388348 15.3838835 8 9.76776695 13.6161165 15.3838835 15.3838835 13.6161165 9.76776695 8 15.3838835 2.38388348 13.6161165 0.616116524 8 6.23223305 2.38388348 0.616116524 0.616116524 2.38388348 6.23223305 8"></polygon>
+                              </g>
+                            </g>
+                          </svg></a>
+                      </div>
+                      <div class="w-commerce-commercecartformwrapper">
+                        <form style="display:none" class="w-commerce-commercecartform" data-node-type="commerce-cart-form">
+                          <script type="text/x-wf-template" id="wf-template-337fcf21-4e49-4e21-02d2-ccb70519d434"></script>
+                          <div class="w-commerce-commercecartlist" data-wf-collection="database.commerceOrder.userItems" data-wf-template-id="wf-template-337fcf21-4e49-4e21-02d2-ccb70519d434"></div>
+                          <div class="w-commerce-commercecartfooter">
+                            <div aria-live="polite" aria-atomic="true" class="w-commerce-commercecartlineitem">
+                              <div>Subtotal</div>
+                              <div class="w-commerce-commercecartordervalue text-monstaret"></div>
+                            </div>
+                            <div>
+                              <div data-node-type="commerce-cart-quick-checkout-actions">
+                                <a role="button" aria-haspopup="dialog" aria-label="Apple Pay" data-node-type="commerce-cart-apple-pay-button" style="background-image:-webkit-named-image(apple-pay-logo-white);background-size:100% 50%;background-position:50% 50%;background-repeat:no-repeat" class="w-commerce-commercecartapplepaybutton" tabindex="0">
+                                  <div></div>
+                                </a>
+                                <a role="button" tabindex="0" aria-haspopup="dialog" data-node-type="commerce-cart-quick-checkout-button" style="display:none" class="w-commerce-commercecartquickcheckoutbutton"><svg class="w-commerce-commercequickcheckoutgoogleicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewbox="0 0 16 16">
+                                    <defs>
+                                      <polygon id="google-mark-a" points="0 .329 3.494 .329 3.494 7.649 0 7.649"></polygon>
+                                      <polygon id="google-mark-c" points=".894 0 13.169 0 13.169 6.443 .894 6.443"></polygon>
+                                    </defs>
+                                    <g fill="none" fill-rule="evenodd">
+                                      <path fill="#4285F4" d="M10.5967,12.0469 L10.5967,14.0649 L13.1167,14.0649 C14.6047,12.6759 15.4577,10.6209 15.4577,8.1779 C15.4577,7.6339 15.4137,7.0889 15.3257,6.5559 L7.8887,6.5559 L7.8887,9.6329 L12.1507,9.6329 C11.9767,10.6119 11.4147,11.4899 10.5967,12.0469"></path>
+                                      <path fill="#34A853" d="M7.8887,16 C10.0137,16 11.8107,15.289 13.1147,14.067 C13.1147,14.066 13.1157,14.065 13.1167,14.064 L10.5967,12.047 C10.5877,12.053 10.5807,12.061 10.5727,12.067 C9.8607,12.556 8.9507,12.833 7.8887,12.833 C5.8577,12.833 4.1387,11.457 3.4937,9.605 L0.8747,9.605 L0.8747,11.648 C2.2197,14.319 4.9287,16 7.8887,16"></path>
+                                      <g transform="translate(0 4)">
+                                        <mask id="google-mark-b" fill="#fff">
+                                          <use xlink:href="#google-mark-a"></use>
+                                        </mask>
+                                        <path fill="#FBBC04" d="M3.4639,5.5337 C3.1369,4.5477 3.1359,3.4727 3.4609,2.4757 L3.4639,2.4777 C3.4679,2.4657 3.4749,2.4547 3.4789,2.4427 L3.4939,0.3287 L0.8939,0.3287 C0.8799,0.3577 0.8599,0.3827 0.8459,0.4117 C-0.2821,2.6667 -0.2821,5.3337 0.8459,7.5887 L0.8459,7.5997 C0.8549,7.6167 0.8659,7.6317 0.8749,7.6487 L3.4939,5.6057 C3.4849,5.5807 3.4729,5.5587 3.4639,5.5337" mask="url(#google-mark-b)"></path>
+                                      </g>
+                                      <mask id="google-mark-d" fill="#fff">
+                                        <use xlink:href="#google-mark-c"></use>
+                                      </mask>
+                                      <path fill="#EA4335" d="M0.894,4.3291 L3.478,6.4431 C4.113,4.5611 5.843,3.1671 7.889,3.1671 C9.018,3.1451 10.102,3.5781 10.912,4.3671 L13.169,2.0781 C11.733,0.7231 9.85,-0.0219 7.889,0.0001 C4.941,0.0001 2.245,1.6791 0.894,4.3291" mask="url(#google-mark-d)"></path>
+                                    </g>
+                                  </svg><svg class="w-commerce-commercequickcheckoutmicrosofticon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16">
+                                    <g fill="none" fill-rule="evenodd">
+                                      <polygon fill="#F05022" points="7 7 1 7 1 1 7 1"></polygon>
+                                      <polygon fill="#7DB902" points="15 7 9 7 9 1 15 1"></polygon>
+                                      <polygon fill="#00A4EE" points="7 15 1 15 1 9 7 9"></polygon>
+                                      <polygon fill="#FFB700" points="15 15 9 15 9 9 15 9"></polygon>
+                                    </g>
+                                  </svg>
+                                  <div>Pay with browser.</div>
+                                </a>
+                              </div>
+                              <a href="../checkout.html" value="Continue to Checkout" class="w-commerce-commercecartcheckoutbutton hero-button-3" data-loading-text="Hang Tight..." data-node-type="cart-checkout-button">Continue to Checkout</a>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="w-commerce-commercecartemptystate">
+                          <div aria-label="This cart is empty" aria-live="polite">No items found.</div>
+                        </div>
+                        <div aria-live="assertive" style="display:none" data-node-type="commerce-cart-error" class="w-commerce-commercecarterrorstate">
+                          <div class="w-cart-error-msg" data-w-cart-quantity-error="Product is not available in this quantity." data-w-cart-general-error="Something went wrong when adding this item to the cart." data-w-cart-checkout-error="Checkout is disabled on this site." data-w-cart-cart_order_min-error="The order minimum was not met. Add more items to your cart to continue." data-w-cart-subscription_error-error="Before you purchase, please use your email invite to verify your address so we can send order updates.">Product is not available in this quantity.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" role="button" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d45b" class="hero-button-3 nav-button w-inline-block">
+                  <div class="button-mask">
+                    <div style="-webkit-transform:translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="link-text-wrp">
+                      <div>Contact us</div>
+                      <div class="secondt-btn-text">Contact us</div>
+                    </div>
+                  </div>
+                </a>
+                <div class="menu-button-2 w-nav-button"><img width="31" height="18" alt="Hambarger Menu" src="../images/Icon-nav-1.svg" loading="lazy"></div>
+              </div>
+            </div>
+            <a role="link" data-w-id="337fcf21-4e49-4e21-02d2-ccb70519d464" href="tel:+1800456789" class="style-three-phone-button responsive-hidden w-inline-block">
+              <div class="home-three-call-button-text">
+                <div class="style-three-phone-button-txt">Lets Talk</div>
+                <div class="style-three-phone-button-txt">(800) 456 7890</div>
+              </div>
+              <div class="home-three-button-icon"><img width="46" height="46" alt="Call Icon" src="../images/Call-Icon.svg" loading="lazy" class="image-71"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="code-embed-11 w-embed w-script">
+    <div id="rs-shell" style="all: initial;">
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+      <style>
+    #rs-shell, #rs-shell * { box-sizing: border-box; }
+    :root{
+      --ink:#EAF2FF;--muted:#9FB1DE;--bg:#0a0f16;--panel:#0f1623;--line:rgba(255,255,255,.08);
+      --accent:#82dff8;--accent-2:#2df5c7;--accent-3:#6aa7ff;--radius:16px;--blur:18px;--speed:.2s;
+      --on:#d9e7ff;--off:#7d8db0
+    }
+    #rs-shell{font-family:"Plus Jakarta Sans",Inter,system-ui,sans-serif;color:var(--ink)}
+    #rs-shell .app{display:grid;grid-template-columns:270px 1fr;min-height:80vh;background:
+      radial-gradient(1200px 480px at 70% -10%, rgba(130,223,248,.12), transparent 60%),
+      radial-gradient(900px 420px at 40% -6%, rgba(45,245,199,.10), transparent 55%),
+      linear-gradient(180deg,#0b1019 0%,#0a0f16 100%)}
+    .rs-sidebar{background:rgba(13,19,32,.92);backdrop-filter:blur(var(--blur));border-right:1px solid var(--line);padding:20px 16px;display:flex;flex-direction:column;gap:14px}
+    .rs-brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#cfe3ff}.rs-brand .dot{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#96f3ff,#3db4ff)}
+    .rs-section{margin-top:10px;font-size:12px;letter-spacing:.4px;color:#8aa0cf;text-transform:uppercase}
+    .rs-nav{display:flex;flex-direction:column;gap:8px}
+    .rs-item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;color:#cfe3ff;padding:12px;cursor:pointer;transition:all var(--speed);text-align:left}
+    .rs-item:hover{border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    .rs-item.active{background:linear-gradient(135deg,rgba(130,223,248,.15),rgba(45,245,199,.12));border-color:rgba(130,223,248,.4)}
+    .rs-item.enabled{color:var(--on);box-shadow:0 0 0 1px rgba(130,223,248,.25) inset,0 6px 22px rgba(0,0,0,.35);background:linear-gradient(135deg,rgba(130,223,248,.18),rgba(45,245,199,.15));border-color:rgba(130,223,248,.45)}
+    .rs-item.locked{color:var(--off);opacity:.6;pointer-events:none;background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);filter:saturate(.7)}
+    .rs-chip{display:block;text-align:center;font-weight:800;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;transition:all var(--speed)}
+    .rs-chip.enabled{box-shadow:0 0 0 1px rgba(130,223,248,.45) inset,0 6px 22px rgba(0,0,0,.35)}
+    .rs-main{padding:26px}
+    .rs-top{display:grid;grid-template-columns:1fr auto;gap:20px}
+    .rs-kpis{display:grid;grid-template-columns:repeat(5,minmax(180px,1fr));gap:16px}
+    .kpi{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:var(--radius);padding:16px;backdrop-filter:blur(calc(var(--blur)*.7))}
+    .kpi .label{font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase}
+    .kpi .value{font-size:20px;font-weight:700;color:#fff}
+    .rs-content{margin-top:24px;display:grid;grid-template-columns:1fr;gap:18px}
+    .va-card{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:18px}
+    .ap-section{display:none}.ap-section.active{display:block}
+    .va-card h2{margin:0 0 12px;font-size:18px;color:var(--accent)}
+    .va-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:700px){.va-row{grid-template-columns:1fr}}
+    .va-field{display:flex;flex-direction:column;gap:8px}
+    .va-field label{font-size:12px;color:var(--muted)}
+    .va-input,.va-select,.va-slider,.va-btn{border:1px solid rgba(255,255,255,.12);background:#0f1220;color:#e9ecff;border-radius:12px;padding:12px;font-size:14px;outline:none}
+    .va-select{appearance:none}
+    .va-btn{cursor:pointer;background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;font-weight:800}
+    .va-btn.secondary{background:linear-gradient(135deg,#7de9bd,var(--accent-2));color:#0b1a10}
+    .va-btn.ghost{background:#0f1220;border:1px dashed rgba(255,255,255,.22);color:#e9ecff}
+    .va-note{color:#9FB1DE;font-size:12px}
+    .bp-panel{margin-top:10px;border:1px dashed rgba(255,255,255,.18);border-radius:12px;padding:12px;background:#0f1326}
+    .bp-row{display:grid;grid-template-columns:110px 1fr 140px 80px;gap:8px;align-items:center}
+    @media(max-width:720px){.bp-row{grid-template-columns:1fr}}
+    .bp-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:8px}
+    .bp-tr{background:#0f1220;border:1px solid rgba(255,255,255,.12);border-radius:10px}
+    .bp-td,.bp-th{padding:8px 10px;font-size:13px}
+    .bp-th{color:#fff}
+    .bp-td{color:#fff}
+    .bp-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .bp-chip{padding:6px 10px;border-radius:999px;background:#0f1220;border:1px solid rgba(255,255,255,.18);font-size:12px;color:#fff}
+    .benefit-grid{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:12px;margin-top:10px}
+    @media(max-width:900px){.benefit-grid{grid-template-columns:1fr}}
+    .benefit{background:#0f1326;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px}
+    .benefit .t{font-size:12px;color:#9FB1DE;text-transform:uppercase;margin-bottom:6px}
+    .benefit .v{font-weight:800}
+    .benefit.ok{outline:2px solid rgba(85,211,153,.25)}
+    .benefit.warn{outline:2px solid rgba(249,199,79,.25)}
+    .mil-toggle{display:flex;gap:8px;justify-content:flex-start;margin:6px 0 2px}
+    .mil-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#0f1220;color:#cfe3ff;font-weight:700;font-size:12px;cursor:pointer;opacity:.85}
+    .mil-pill.active{background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;box-shadow:0 0 0 1px rgba(130,223,248,.4) inset}
+    .muted-help{font-size:11px;color:#9FB1DE;margin-top:-2px}
+    .ad-only{display:none}.vet-only{display:none}
+    #cs-slider{width:100%}
+    #cs-slider.bad{accent-color:#ff4d4d}
+    #cs-slider.good{accent-color:#2ddc7a}
+    .profile-stack{display:flex;flex-direction:column;gap:16px}
+    .profile-card{background:#0f1326;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px}
+    .profile-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .profile-title .idx{font-weight:800;color:#cfe3ff}
+  </style>
+      <div class="app">
+        <aside class="rs-sidebar">
+          <div class="rs-brand">
+            <div class="dot"></div>
+            <div>RealtySaSS</div>
+          </div>
+          <div class="rs-section">Dashboard</div>
+          <div class="rs-nav">
+            <div class="rs-item enabled" data-panel="profile">Profile</div>
+            <div class="rs-item enabled active" data-panel="income">Income</div>
+            <div class="rs-item enabled" data-panel="expenses">Expenses</div>
+            <div class="rs-item enabled" data-panel="savings">Savings</div>
+            <div class="rs-item enabled" data-panel="mortgage">Expected Mortgage</div>
+          </div>
+          <div class="rs-footer" style="margin-top:8px">
+            <!--  Analyze goes to Verify  -->
+            <a id="btn-analyze" class="rs-chip enabled" href="../verify.html">Analyze</a>
+          </div>
+        </aside>
+        <main class="rs-main">
+          <div class="rs-top">
+            <div class="rs-kpis">
+              <div class="kpi">
+                <div class="label">Total Monthly Income</div>
+                <div class="value" id="kpi-income">$ —</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Total Monthly Expense</div>
+                <div class="value" id="kpi-expenses">$ —</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Mortgage Estimate</div>
+                <div class="value" id="kpi-mortgage">$ —</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Total Savings</div>
+                <div class="value" id="kpi-savings">$ —</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Disposable Income</div>
+                <div class="value" id="kpi-disposable">$ —</div>
+              </div>
+            </div>
+            <div class="rs-grade"></div>
+          </div>
+          <div class="rs-content">
+            <div class="va-card">
+              <!--  PROFILE  -->
+              <section class="ap-section" id="sec-profile">
+                <h2>Profile</h2>
+                <div id="profile-stack" class="profile-stack">
+                  <div class="profile-card" data-profile-idx="1">
+                    <div class="profile-title">
+                      <div class="idx">Member 1</div>
+                    </div>
+                    <div class="va-row">
+                      <div class="va-field"><label>First Name</label><input class="va-input pf-fname"></div>
+                      <div class="va-field"><label>Last Name</label><input class="va-input pf-lname"></div>
+                    </div>
+                    <div class="va-row" style="margin-top:8px">
+                      <div class="va-field"><label>Email</label><input class="va-input pf-email" type="email" placeholder="name@example.com"></div>
+                      <div class="va-field"><label>Phone #</label><input class="va-input pf-phone" type="tel" placeholder="(xxx) xxx-xxxx"></div>
+                    </div>
+                    <div class="va-card" style="margin-top:14px;background:#0f1326">
+                      <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <h2 style="margin:0">Military Profile</h2>
+                        <div class="mil-toggle">
+                          <div class="mil-pill" data-mode="AD">ACTIVE DUTY</div>
+                          <div class="mil-pill active" data-mode="VET">VETERAN</div>
+                        </div>
+                      </div>
+                      <div class="muted-help">Choose your current status. Fields below will adjust automatically.</div>
+                      <!--  AD  -->
+                      <div class="va-row ad-only" style="margin-top:10px">
+                        <div class="va-field"><label>Rank / Pay Grade</label><select class="va-select sel-rank"></select></div>
+                        <div class="va-field"><label>Years in Service</label><select class="va-select sel-years"></select></div>
+                      </div>
+                      <div class="va-row ad-only" style="margin-top:8px">
+                        <div class="va-field"><label>Dependents</label>
+                          <select class="va-select sel-deps">
+                            <option value="with" selected="">With Dependents</option>
+                            <option value="without">Without Dependents</option>
+                          </select>
+                        </div>
+                        <div class="va-field"><label>ZIP / Duty Location</label>
+                          <select class="va-select sel-zip" disabled="">
+                            <option value="78236" selected="">78236 – Lackland AFB (San Antonio, TX)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!--  VET  -->
+                      <div class="va-row vet-only" style="margin-top:10px">
+                        <div class="va-field"><label>Retirement Rank (High-3)</label><select class="va-select ret-rank"></select></div>
+                        <div class="va-field"><label>Total Years of Service</label><input class="va-input ret-years" type="number" min="0" max="40" step="1" value="20"></div>
+                      </div>
+                      <div class="va-row vet-only" style="margin-top:8px">
+                        <div class="va-field"><label>VA Disability Rating <span class="va-rate-label">70%</span></label><input class="va-slider va-rate" type="range" min="0" max="100" step="10" value="70"></div>
+                        <div class="va-field"><label>Spouse?</label><select class="va-select va-has-spouse">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                      </div>
+                      <div class="va-row vet-only" style="margin-top:8px">
+                        <div class="va-field"><label>Children under 18</label><input class="va-input va-kids-u18" type="number" min="0" step="1" value="0"></div>
+                        <div class="va-field"><label>Children 18–23 in school</label><input class="va-input va-kids-s" type="number" min="0" step="1" value="0"></div>
+                      </div>
+                      <div class="va-row vet-only" style="margin-top:8px">
+                        <div class="va-field"><label>Parents as dependents (0–2)</label><input class="va-input va-parents" type="number" min="0" max="2" step="1" value="0"></div>
+                        <div class="va-field"><label>Spouse Needs Aid & Attendance?</label><select class="va-select va-spouse-aanda">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                      </div>
+                    </div>
+                    <div class="va-card" style="margin-top:14px;background:#0f1326">
+                      <h2>VA Benefits & Eligibility</h2>
+                      <div class="va-row">
+                        <div class="va-field"><label>Surviving Spouse Eligible?</label><select class="va-select va-survivor">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                        <div class="va-field"><label>Property State</label><select class="va-select prop-state">
+                            <option value="TX">Texas</option>
+                            <option value="Other">Other</option>
+                          </select></div>
+                      </div>
+                      <div class="va-row" style="margin-top:8px">
+                        <div class="va-field"><label>Homestead (Primary Residence)?</label><select class="va-select prop-home">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                        <div class="va-field"><label>Disabled-Vet Property-Tax Relief Likely?</label><select class="va-select prop-tax-relief">
+                            <option>Unsure</option>
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                      </div>
+                      <div class="va-row" style="margin-top:8px">
+                        <div class="va-field"><label>Accessibility Modifications Needed?</label><select class="va-select va-access">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                        <div class="va-field"><label>Plan Energy-Efficiency Upgrades?</label><select class="va-select va-eem">
+                            <option>No</option>
+                            <option>Yes</option>
+                          </select></div>
+                      </div>
+                      <div class="va-row" style="margin-top:8px">
+                        <div class="va-field"><label>EEM Amount ($, optional)</label><input class="va-input va-eem-amt" type="number" min="0" step="100" placeholder="e.g., 6000"></div>
+                        <div class="va-field"><label>Seller Concessions % (VA cap 4%)</label><input class="va-input va-seller" type="number" min="0" max="4" step="0.1" value="0"></div>
+                      </div>
+                    </div>
+                  </div><!--  /profile-card  -->
+                </div><!--  /profile-stack  -->
+                <div class="va-row" style="margin-top:12px">
+                  <div class="va-field"><label>&nbsp;</label><button class="va-btn secondary" id="pf-addprofile">Add Profile</button></div>
+                  <div class="va-field"><small class="va-note">You can add a second household member (e.g., dual-military). This duplicates all fields.</small></div>
+                </div>
+              </section>
+              <!--  INCOME  -->
+              <section class="ap-section active" id="sec-income">
+                <h2>1) Income</h2>
+                <div class="va-row ad-only">
+                  <div class="va-field"><label>Base Pay ($/mo)</label><input class="va-input" id="in-base" type="number" disabled=""></div>
+                  <div class="va-field"><label>BAH – San Antonio ($/mo)</label><input class="va-input" id="in-bah" type="number" disabled=""></div>
+                </div>
+                <div class="va-row ad-only" style="margin-top:8px">
+                  <div class="va-field"><label>BAS ($/mo)</label><input class="va-input" id="in-bas" type="number" disabled=""></div>
+                  <div class="va-field"><label>Additional Income ($/mo)</label><input class="va-input" id="in-addl" type="number" min="0" step="1" placeholder="Spouse/side income"></div>
+                </div>
+                <div class="va-row vet-only">
+                  <div class="va-field"><label>Retirement Pay ($/mo)</label><input class="va-input" id="in-ret" type="number" disabled=""></div>
+                  <div class="va-field"><label>VA Disability ($/mo)</label><input class="va-input" id="in-va" type="number" disabled=""></div>
+                </div>
+                <div class="va-row vet-only" style="margin-top:8px">
+                  <div class="va-field"><label>Additional Income ($/mo)</label><input class="va-input" id="in-addl-vet" type="number" min="0" step="1" placeholder="Spouse/side income"></div>
+                  <div class="va-field"><label>&nbsp;</label>
+                    <div class="va-note">Retirement + VA comp auto-calc from Military Profile (Veteran).</div>
+                  </div>
+                </div>
+                <small class="va-note">KPI uses AD pay (Base+BAS+BAH+Addl) or Veteran income (Retirement+VA+Addl) based on the toggle.</small>
+                <div class="va-note" id="mil-breakdown" style="margin-top:8px">—</div>
+              </section>
+              <!--  EXPENSES  -->
+              <section class="ap-section" id="sec-expenses">
+                <h2>2) Expenses</h2>
+                <div class="va-row">
+                  <div class="va-field"><label>Monthly Expenses ($)</label><input class="va-input" id="ex-core" type="number" min="0" step="1"></div>
+                  <div class="va-field"><label>Discretionary Expenses ($)</label><input class="va-input" id="ex-disc" type="number" min="0" step="1"></div>
+                </div>
+                <div class="va-note" style="margin-top:6px">Itemized budget (example loaded; edit as needed).</div>
+                <div id="bp-panel" class="bp-panel">
+                  <div class="bp-row">
+                    <select id="bp-cat" class="va-select">
+                      <option>Essentials</option>
+                      <option>Discretionary</option>
+                      <option>Debt</option>
+                      <option>Other</option>
+                    </select>
+                    <input id="bp-name" class="va-input" placeholder="Item name (e.g., Rent, Groceries)">
+                    <input id="bp-month" class="va-input" type="number" min="0" step="1" placeholder="Monthly $">
+                    <button id="bp-add" class="va-btn">Add</button>
+                  </div>
+                  <table class="bp-table">
+                    <thead>
+                      <tr class="bp-tr">
+                        <th class="bp-th">Category</th>
+                        <th class="bp-th">Item</th>
+                        <th class="bp-th">Monthly</th>
+                        <th class="bp-th">Annual</th>
+                        <th class="bp-th">Del</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bp-body"></tbody>
+                  </table>
+                  <div class="bp-controls">
+                    <span class="bp-chip">Essentials: <b id="bp-t-Essentials">$0</b></span>
+                    <span class="bp-chip">Discretionary: <b id="bp-t-Discretionary">$0</b></span>
+                    <span class="bp-chip">Debt: <b id="bp-t-Debt">$0</b></span>
+                    <span class="bp-chip">Other: <b id="bp-t-Other">$0</b></span>
+                    <span class="bp-chip">Total: <b id="bp-t-All">$0</b></span>
+                    <button id="bp-save" class="va-btn secondary" style="margin-left:auto">Save & Prefill</button>
+                  </div>
+                  <div class="va-note" id="bp-note" style="margin-top:6px">Saved totals copy up to the fields above.</div>
+                </div>
+              </section>
+              <!--  SAVINGS  -->
+              <section class="ap-section" id="sec-savings">
+                <h2>3) Savings Target</h2>
+                <div class="va-row">
+                  <div class="va-field"><label>Desired Savings Rate <span id="save-rate-label" class="va-chip">15%</span></label><input class="va-slider" id="save-rate" type="range" min="0" max="40" step="1" value="15"></div>
+                  <div class="va-field"><label>Current Savings ($)</label><input class="va-input" id="sv-current" type="number" min="0" step="1"></div>
+                </div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field"><label>Monthly Investments ($)</label><input class="va-input" id="sv-invest" type="number" min="0" step="1"></div>
+                  <div class="va-field"><label>Notes</label><input class="va-input" id="sv-notes" type="text"></div>
+                </div>
+              </section>
+              <!--  MORTGAGE  -->
+              <section class="ap-section" id="sec-mortgage">
+                <h2>4) Home Purchase (What-If)</h2>
+                <div class="va-field"><label>Credit Score <span id="cs-label">720 – Good</span></label><input class="va-slider" id="cs-slider" type="range" min="500" max="850" step="5" value="720"></div>
+                <div class="va-note">Estimated APR from credit score: <b id="apr-label">7.00%</b> (illustrative).</div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field"><label>Home Price ($)</label><input class="va-input" id="h-price" type="number" min="0" step="1000"></div>
+                  <div class="va-field"><label>Down Payment % <span id="dp-pct-label">20%</span> = <span id="dp-amt-label">$0</span></label><input class="va-slider" id="dp-slider" type="range" min="0" max="100" step="1" value="20"></div>
+                </div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field"><label>Interest Rate (APR %)</label><input class="va-input" id="h-rate" type="number" step="0.01" value="7.00"></div>
+                  <div class="va-field"><label>Down Payment ($)</label><input class="va-input" id="dp-amt" type="text" disabled=""></div>
+                </div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field"><label>Term (years)</label><input class="va-input" id="h-term" type="number" min="5" max="40" step="1" value="30"></div>
+                  <div class="va-field"><label>Taxes + Insurance + HOA ($/mo)</label><input class="va-input" id="h-tihoa" type="number" min="0" step="1" value="0"></div>
+                </div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field"><label>Include PMI? ($/mo)</label><input class="va-input" id="h-pmi" type="number" min="0" step="1" value="0"></div>
+                  <div class="va-field"><label>&nbsp;</label>
+                    <div class="va-note">APR/PMI are illustrative only; verify with your lender.</div>
+                  </div>
+                </div>
+                <div class="va-card" style="margin-top:12px;background:#0f1326">
+                  <h2>VA Benefits & Adjustments (Read-Only)</h2>
+                  <div class="benefit-grid">
+                    <div class="benefit ok" id="b-funding">
+                      <div class="t">Funding Fee</div>
+                      <div class="v">—</div>
+                    </div>
+                    <div class="benefit" id="b-tax">
+                      <div class="t">Property-Tax Relief</div>
+                      <div class="v">—</div>
+                    </div>
+                    <div class="benefit" id="b-eem">
+                      <div class="t">Energy-Efficiency (EEM)</div>
+                      <div class="v">—</div>
+                    </div>
+                    <div class="benefit" id="b-seller">
+                      <div class="t">Seller Concessions (Cap)</div>
+                      <div class="v">—</div>
+                    </div>
+                    <div class="benefit" id="b-access">
+                      <div class="t">Accessibility Grants</div>
+                      <div class="v">—</div>
+                    </div>
+                    <div class="benefit" id="b-purple">
+                      <div class="t">Purple Heart (AD)</div>
+                      <div class="v">—</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="va-row" style="justify-content:flex-end;margin-top:12px">
+                  <button class="va-btn secondary" id="btn-clear">Reset</button>
+                  <button class="va-btn" id="btn-calc">Update Calculations</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+      <script>
+  (function RS_DASHBOARD_MOUNT(){
+    if(window.__RS_DASH_MOUNTED__) return; window.__RS_DASH_MOUNTED__ = true;
+    const $=(q,root=document)=>root.querySelector(q);
+    const $$=(q,root=document)=>Array.from(root.querySelectorAll(q));
+    const fmt=n=>(Number(n)||0).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+    const rsPMTI=(P,r,n)=>{ if(r===0) return P/n; const x=Math.pow(1+r,n); return P*(r*x)/(x-1); };
+    const rsAPRFromScore=s=>{ s=+s||720; return s>=780?6.50:s>=760?6.75:s>=720?7.00:s>=700?7.20:s>=680?7.35:s>=660?7.85:s>=640?8.25:s>=620?9.25:9.95; };
+    const PAYGRADE_TITLES={
+      "E-1":"AB","E-2":"Amn","E-3":"A1C","E-4":"SrA","E-5":"SSgt","E-6":"TSgt","E-7":"MSgt","E-8":"SMSgt","E-9":"CMSgt",
+      "W-1":"WO1","W-2":"CWO2","W-3":"CWO3","W-4":"CWO4","W-5":"CWO5",
+      "O-1":"2nd Lt","O-2":"1st Lt","O-3":"Captain","O-4":"Major","O-5":"Lt Col","O-6":"Colonel",
+      "O-7":"Brig Gen","O-8":"Maj Gen","O-9":"Lt Gen","O-10":"Gen"
+    };
+    /* NAV */
+    (function(){
+      const names=['profile','income','expenses','savings','mortgage'];
+      function show(name){ names.forEach(n=>{ $('#sec-'+n)?.classList.toggle('active',n===name); $(`.rs-item[data-panel="${n}"]`)?.classList.toggle('active',n===name); }); }
+      document.addEventListener('click',e=>{const b=e.target.closest('.rs-item[data-panel]'); if(!b) return; e.preventDefault(); show(b.dataset.panel);});
+      document.addEventListener('DOMContentLoaded',()=>show('income'));
+      if(document.readyState!=='loading') show('income');
+    })();
+    /* PAY TABLE FALLBACKS */
+    const LS=k=>{ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } };
+    const BASEPAY=LS('rs.pay.BASEPAY')||{"E-6":{o8:4444}};
+    const BAS=LS('rs.pay.BAS')||{enlisted:465.77,officer:320.78};
+    const BAH78236=LS('rs.pay.BAH.78236')||{with:{E6:2154},without:{E6:1656}};
+    const VATABLE=LS('va.comp.table')||{70:{vet:1716.28,vet_spouse:1826,vet_one_child:1850,vet_spouse_one_child:1940,add_child_u18:90,add_child_s:230,spouse_aanda:110,add_parent:125},0:{vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0}};
+    const tiers=['a2','o2','o3','o4','o6','o8','o10','o12','o14','o16','o18','o20','o22','o24'];
+    const yosTier=y=>y<=2?'a2':y<=3?'o2':y<=4?'o3':y<=6?'o4':y<=8?'o6':y<=10?'o8':y<=12?'o10':y<=14?'o12':y<=16?'o14':y<=18?'o16':y<=20?'o18':y<=22?'o20':y<=24?'o22':'o24';
+    const normRankForBase=r=>{ if(!r) return 'E-1'; if(/^W-\d+$/.test(r)){const n=+r.split('-')[1]; return n<=1?'O-1':n===2?'O-2':n===3?'O-3':n===4?'O-4':'O-5'; } if(/^O-(7|8|9|10)$/.test(r)) return 'O-6'; return r; };
+    function basePayNearest(rank,years){ const use=normRankForBase(rank), t=BASEPAY[use]||{}, want=yosTier(+years||2); let i=tiers.indexOf(want); if(i<0)i=tiers.length-1; for(let k=i;k>=0;k--){ const key=tiers[k]; if(t[key]!=null) return t[key]; } const keys=Object.keys(t); return keys.length?t[keys[0]]:0; }
+    const basByRank=r=>(/^(O-|W-)/.test(r||''))?BAS.officer:BAS.enlisted;
+    const bahSATX=(rank,deps)=>{ const norm=(rank||'').replace('-','').toUpperCase(); const table=BAH78236[deps==='without'?'without':'with']; return table?.[norm]??0; };
+    let MODE='VET';
+    function applyMode(){
+      $$('.ad-only').forEach(n=>n.style.display = MODE==='AD' ? 'grid' : 'none');
+      $$('.vet-only').forEach(n=>n.style.display = MODE==='VET' ? 'grid' : 'none');
+      $$('.profile-card').forEach(card=>{
+        card.querySelectorAll('.mil-pill').forEach(p=>p.classList.toggle('active', p.dataset.mode===MODE));
+      });
+      render(); persistIdentity();
+    }
+    function hydrateProfileCard(card){
+      const selRank=card.querySelector('.sel-rank');
+      const retRank=card.querySelector('.ret-rank');
+      const selYears=card.querySelector('.sel-years');
+      const ranks=['E-1','E-2','E-3','E-4','E-5','E-6','E-7','E-8','E-9','W-1','W-2','W-3','W-4','W-5','O-1','O-2','O-3','O-4','O-5','O-6','O-7','O-8','O-9','O-10'];
+      if(selRank){ selRank.innerHTML=ranks.map(r=>`<option value="${r}">${r}</option>`).join(''); selRank.value='E-6'; }
+      if(retRank){ retRank.innerHTML=ranks.map(r=>`<option value="${r}">${r}</option>`).join(''); }
+      if(selYears){ let y=''; for(let i=2;i<=24;i++) y+=`<option value="${i}">${i}</option>`; selYears.innerHTML=y; selYears.value='10'; }
+      card.querySelector('.mil-toggle')?.addEventListener('click',e=>{
+        const pill=e.target.closest('.mil-pill'); if(!pill) return; MODE = pill.dataset.mode==='AD'?'AD':'VET'; applyMode();
+      });
+      const vslider=card.querySelector('.va-rate'); const vlabel=card.querySelector('.va-rate-label');
+      vslider?.addEventListener('input',()=>{ if(vlabel) vlabel.textContent=vslider.value+'%'; if(MODE==='VET') render(); });
+      ['.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank','.pf-fname'].forEach(sel=>{
+        card.querySelector(sel)?.addEventListener('input',persistIdentity);
+        card.querySelector(sel)?.addEventListener('change',persistIdentity);
+      });
+      ['.sel-rank','.sel-years','.sel-deps','.ret-rank','.ret-years','.va-has-spouse','.va-kids-u18','.va-kids-s','.va-parents','.va-spouse-aanda','.va-rate'].forEach(sel=>{
+        card.querySelector(sel)?.addEventListener('input',render);
+        card.querySelector(sel)?.addEventListener('change',render);
+      });
+    }
+    hydrateProfileCard($('.profile-card'));
+    $('#pf-addprofile')?.addEventListener('click',()=>{
+      const stack=$('#profile-stack'); const base=stack.querySelector('.profile-card'); const clone=base.cloneNode(true);
+      const idx=stack.querySelectorAll('.profile-card').length+1; clone.setAttribute('data-profile-idx',String(idx));
+      clone.querySelector('.idx').textContent='Member '+idx;
+      clone.querySelectorAll('input').forEach(inp=>{ if(inp.type==='range')return; if(!inp.classList.contains('ret-years')) inp.value=''; });
+      stack.appendChild(clone); hydrateProfileCard(clone);
+      const btn=$('#pf-addprofile'); const old=btn.textContent; btn.textContent='Profile Added ✓'; setTimeout(()=>btn.textContent=old,1100);
+    });
+    const el={
+      inBase:$('#in-base'), inBAH:$('#in-bah'), inBAS:$('#in-bas'),
+      addl:$('#in-addl'), addlVet:$('#in-addl-vet'),
+      inRet:$('#in-ret'), inVA:$('#in-va'),
+      exCore:$('#ex-core'), exDisc:$('#ex-disc'), saveRate:$('#save-rate'), svCurrent:$('#sv-current'),
+      kIncome:$('#kpi-income'), kExp:$('#kpi-expenses'), kMortgage:$('#kpi-mortgage'), kSave:$('#kpi-savings'), kDisp:$('#kpi-disposable'),
+      cs:$('#cs-slider'), csLabel:$('#cs-label'), aprLabel:$('#apr-label'),
+      hPrice:$('#h-price'), dpSlider:$('#dp-slider'), dpPctLabel:$('#dp-pct-label'), dpAmtLabel:$('#dp-amt-label'), dpAmt:$('#dp-amt'),
+      hRate:$('#h-rate'), hTerm:$('#h-term'), hTIHOA:$('#h-tihoa'), hPMI:$('#h-pmi')
+    };
+    function activeCard(){ return $('.profile-card'); }
+    function adRank(){ return activeCard()?.querySelector('.sel-rank')?.value || 'E-6'; }
+    function adYears(){ return +(activeCard()?.querySelector('.sel-years')?.value || 10); }
+    function adDeps(){ return activeCard()?.querySelector('.sel-deps')?.value || 'with'; }
+    function updateADIncome(){
+      const rank=adRank(), years=adYears(), deps=adDeps();
+      const base=basePayNearest(rank,years), bas=basByRank(rank), bah=bahSATX(rank,deps);
+      el.inBase.value=Math.round(base); el.inBAS.value=Math.round(bas); el.inBAH.value=Math.round(bah);
+      $('#mil-breakdown').textContent=`AD: Base ${fmt(base)} + BAS ${fmt(bas)} + BAH ${fmt(bah)} = ${fmt(base+bas+bah)}.`;
+    }
+    function retirementMonthly(rank,years){ years=Math.max(0,Math.min(40,+years||0)); const high3=basePayNearest(rank,Math.max(2,years)); const mult=years*0.025; return Math.round(high3*mult); }
+    function vaCompMonthly(opts){
+      const r=Math.max(0,Math.min(100,Number(opts.rating)||0));
+      const rating=(r===0?0:(r===100?100:Math.round(r/10)*10));
+      const row=VATABLE[rating]||VATABLE[0];
+      const spouse=opts.spouse==='Yes';
+      const kidsU18=Math.max(0,+opts.kidsU18||0), kidsS=Math.max(0,+opts.kidsS||0);
+      const parents=Math.max(0,Math.min(2,+opts.parents||0));
+      const spouseA=opts.spouseA==='Yes';
+      let base=0;
+      if(spouse){ base=(kidsU18+kidsS)>0?row.vet_spouse_one_child:row.vet_spouse; }
+      else { base=(kidsU18+kidsS)>0?row.vet_one_child:row.vet; }
+      let add=0;
+      const extra=Math.max(0,(kidsU18+kidsS)-1);
+      if(extra>0){ const takeU18=Math.max(0,Math.min(extra,Math.max(0,kidsU18-1))); const takeS=extra-takeU18; add+=takeU18*(row.add_child_u18||0)+takeS*(row.add_child_s||0); }
+      if((kidsU18+kidsS)===0){ add+=kidsU18*(row.add_child_u18||0)+kidsS*(row.add_child_s||0); }
+      add+=parents*(row.add_parent||0);
+      if(spouse && spouseA) add+=(row.spouse_aanda||0);
+      return Math.round(base+add);
+    }
+    function updateVetIncome(){
+      const card=activeCard();
+      const ret=retirementMonthly(card?.querySelector('.ret-rank')?.value || 'E-6', card?.querySelector('.ret-years')?.value || 20);
+      const vac=vaCompMonthly({
+        rating:card?.querySelector('.va-rate')?.value || 70,
+        spouse:card?.querySelector('.va-has-spouse')?.value || 'No',
+        kidsU18:card?.querySelector('.va-kids-u18')?.value || 0,
+        kidsS:card?.querySelector('.va-kids-s')?.value || 0,
+        parents:card?.querySelector('.va-parents')?.value || 0,
+        spouseA:card?.querySelector('.va-spouse-aanda')?.value || 'No'
+      });
+      el.inRet.value=ret; el.inVA.value=vac;
+      $('#mil-breakdown').textContent=`VET: Retirement ${fmt(ret)} + VA ${fmt(vac)} (rating ${card?.querySelector('.va-rate')?.value||0}%)`;
+    }
+    /* Budget */
+    let BP_ROWS=[], BP_ID=1;
+    function bpTotals(){const t={Essentials:0,Discretionary:0,Debt:0,Other:0}; BP_ROWS.forEach(r=>t[r.cat]+=+r.month||0); t.All=t.Essentials+t.Discretionary+t.Debt+t.Other; return t;}
+    function bpTotalsUI(){const t=bpTotals(); $('#bp-t-Essentials').textContent=fmt(t.Essentials); $('#bp-t-Discretionary').textContent=fmt(t.Discretionary); $('#bp-t-Debt').textContent=fmt(t.Debt); $('#bp-t-Other').textContent=fmt(t.Other); $('#bp-t-All').textContent=fmt(t.All); }
+    function bpRender(){ const tb=$('#bp-body'); tb.innerHTML=''; BP_ROWS.forEach(r=>{ const tr=document.createElement('tr'); tr.className='bp-tr'; tr.innerHTML=`
+        <td class="bp-td"><select class="va-select bp-cat" data-id="${r.id}">
+          <option ${r.cat==='Essentials'?'selected':''}>Essentials</option>
+          <option ${r.cat==='Discretionary'?'selected':''}>Discretionary</option>
+          <option ${r.cat==='Debt'?'selected':''}>Debt</option>
+          <option ${r.cat==='Other'?'selected':''}>Other</option></select></td>
+        <td class="bp-td"><input class="va-input bp-name" data-id="${r.id}" value="${r.name||''}"></td>
+        <td class="bp-td" style="width:140px"><input class="va-input bp-month" data-id="${r.id}" type="number" min="0" step="1" value="${r.month||0}"></td>
+        <td class="bp-td" style="width:120px">${fmt((r.month||0)*12)}</td>
+        <td class="bp-td" style="width:80px"><button class="va-btn ghost bp-del" data-id="${r.id}">✕</button></td>`; tb.appendChild(tr); });
+      $$('.bp-cat').forEach(x=>x.addEventListener('change',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr){rr.cat=e.target.value; bpTotalsUI();}}));
+      $$('.bp-name').forEach(x=>x.addEventListener('input',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr) rr.name=e.target.value;}));
+      $$('.bp-month').forEach(x=>x.addEventListener('input',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr){rr.month=+e.target.value||0; bpTotalsUI();}}));
+      $$('.bp-del').forEach(x=>x.addEventListener('click',e=>{BP_ROWS=BP_ROWS.filter(r=>r.id!==+e.target.dataset.id); bpRender();}));
+      bpTotalsUI();
+    }
+    $('#bp-add')?.addEventListener('click',()=>{const cat=$('#bp-cat').value; const name=$('#bp-name').value.trim()||'Item'; const m=+$('#bp-month').value||0; BP_ROWS.push({id:BP_ID++,cat,name,month:m}); $('#bp-name').value=''; $('#bp-month').value=''; bpRender();});
+    $('#bp-save')?.addEventListener('click',()=>{const t=bpTotals(); const core=t.Essentials+t.Debt+t.Other; const disc=t.Discretionary; localStorage.setItem('va.expenses.core',String(Math.round(core))); localStorage.setItem('va.expenses.disc',String(Math.round(disc))); localStorage.setItem('va.expenses.rows',JSON.stringify(BP_ROWS)); $('#bp-note').textContent='Saved! Totals copied above.'; $('#ex-core').value=Math.round(core); $('#ex-disc').value=Math.round(disc); render();});
+    (function bpRestore(){ try{ const raw=localStorage.getItem('va.expenses.rows'); if(raw){ BP_ROWS=JSON.parse(raw)||[]; BP_ID=BP_ROWS.reduce((m,r)=>Math.max(m,r.id||0),0)+1; bpRender(); const core=+localStorage.getItem('va.expenses.core')||0; const disc=+localStorage.getItem('va.expenses.disc')||0; if(core||disc){ $('#ex-core').value=core; $('#ex-disc').value=disc; } } else { BP_ROWS=[{id:1,cat:'Essentials',name:'Rent',month:1200},{id:2,cat:'Essentials',name:'Utilities',month:250},{id:3,cat:'Essentials',name:'Insurance',month:300},{id:4,cat:'Essentials',name:'Car Payment',month:400},{id:5,cat:'Discretionary',name:'Food & Dining',month:600},{id:6,cat:'Discretionary',name:'Entertainment',month:200},{id:7,cat:'Debt',name:'Credit Cards',month:300}]; BP_ID=8; bpRender(); const t=bpTotals(); $('#ex-core').value=Math.round(t.Essentials+t.Debt+t.Other); $('#ex-disc').value=Math.round(t.Discretionary); } }catch(e){} })();
+    const readNum=i=>Number.parseFloat((i&&i.value)||'0')||0;
+    const getProfile=()=>{ try{ return JSON.parse(localStorage.getItem('realtysass.profile')||'{}'); }catch(e){ return {}; } };
+    const saveProfile=d=>{ localStorage.setItem('realtysass.profile', JSON.stringify(d)); };
+    const getEEMAddOn=()=>{ const p=getProfile(); return (p.eem==='Yes') ? Math.max(0, Math.min(+p.eemAmt||0, 15000)) : 0; };
+    function compute(){
+      let income=0;
+      if(MODE==='AD'){ income = readNum(el.inBase)+readNum(el.inBAS)+readNum(el.inBAH)+readNum(el.addl); }
+      else { income = readNum(el.inRet)+readNum(el.inVA)+readNum(el.addlVet); }
+      const baseExpenses=readNum(el.exCore)+readNum(el.exDisc);
+      const saveRatePct=Math.max(0,Math.min(40,Number(el.saveRate.value)||0));
+      const saveContribution=income*(saveRatePct/100);
+      const totalExpenses=baseExpenses+saveContribution;
+      const currentSavings=readNum(el.svCurrent);
+      const savingsTotalKPI=Math.max(0,saveContribution)+currentSavings;
+      const inferredAPR=rsAPRFromScore(el.cs.value);
+      const usedAPR=Number(el.hRate.value)||inferredAPR;
+      const price=readNum(el.hPrice);
+      const dpPct=(Number(el.dpSlider.value)||0)/100;
+      const downAmount=Math.max(0,price*dpPct);
+      const loan=Math.max(0,price-downAmount+getEEMAddOn());
+      const mRate=(usedAPR||0)/100/12;
+      const nMonths=Math.max(1,(Number(el.hTerm.value)||30)*12);
+      const pAndI=loan>0?rsPMTI(loan,mRate,nMonths):0;
+      const tihoa=readNum(el.hTIHOA), pmi=readNum(el.hPMI);
+      const housing=pAndI+tihoa+pmi;
+      const disposable=income-totalExpenses;
+      return {income,baseExpenses,saveContribution,totalExpenses,savingsTotalKPI,disposable,housing,dpPct,downAmount,inferredAPR,usedAPR,pAndI,tihoa,pmi,price};
+    }
+    function renderBenefits(){
+      const p=getProfile(); const price=readNum(el.hPrice);
+      const sellerCapPct=Math.min(4,Math.max(0,+(p.seller||0)));
+      const sellerCapAmt=price*(sellerCapPct/100);
+      const vaRating=Number(activeCard()?.querySelector('.va-rate')?.value || 0);
+      const ffEx=(vaRating>0)||(p.survivor==='Yes');
+      $('#b-funding .v').textContent=ffEx?'Exempt':'Not Exempt (calc at closing)';
+      $('#b-funding').classList.toggle('ok',ffEx);
+      const txOk=(p.pstate==='TX' && p.home==='Yes' && p.taxRelief==='Yes');
+      $('#b-tax').classList.toggle('ok',txOk);
+      $('#b-tax').classList.toggle('warn',p.taxRelief==='Unsure');
+      $('#b-tax .v').textContent=txOk?'TX Homestead Disabled-Vet: Likely Exempt':(p.taxRelief==='Yes'?'Relief Likely':'No / Unsure');
+      $('#b-eem .v').textContent=(p.eem==='Yes') ? (p.eemAmt?('Financed: '+fmt(p.eemAmt)):'Enabled (no $ set)') : 'Not used';
+      $('#b-seller .v').textContent=sellerCapPct ? (sellerCapPct.toFixed(1)+'% → '+fmt(sellerCapAmt)) : '0%';
+      $('#b-access .v').textContent=p.access==='Yes'?'May qualify (SAH/SHA/HISA)':'Not indicated';
+      $('#b-purple .v').textContent='—';
+    }
+    function render(){
+      if(MODE==='AD') updateADIncome(); else updateVetIncome();
+      const s=compute();
+      el.kIncome.textContent=fmt(s.income);
+      el.kExp.textContent=fmt(s.totalExpenses);
+      el.kSave.textContent=fmt(s.savingsTotalKPI);
+      el.kMortgage.textContent=fmt(s.housing);
+      el.kDisp.textContent=s.disposable>=0?fmt(s.disposable):('-'+fmt(Math.abs(s.disposable)));
+      const score=Number(el.cs.value)||720;
+      const band=score>=760?'Excellent':score>=720?'Good':score>=680?'Fair':score>=640?'OK-ish':score>=620?'Weak':'Subprime';
+      el.csLabel.textContent=`${score} – ${band}`;
+      el.aprLabel.textContent=(s.inferredAPR||rsAPRFromScore(el.cs.value)).toFixed(2)+'%';
+      el.dpPctLabel.textContent=(s.dpPct*100).toFixed(0)+'%';
+      el.dpAmtLabel.textContent=fmt(s.downAmount); el.dpAmt.value=fmt(s.downAmount);
+      el.cs.classList.remove('good','bad');
+      if(score<=500) el.cs.classList.add('bad');
+      if(score>=850) el.cs.classList.add('good');
+      renderBenefits();
+    }
+    /* SAVE/RECALC WIRES */
+    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#sv-current','#sv-invest','#sv-notes'].forEach(q=>{ document.querySelector(q)?.addEventListener('input',render); });
+    $('#save-rate')?.addEventListener('input',()=>{$('#save-rate-label').textContent=$('#save-rate').value+'%'; render();});
+    $('#cs-slider')?.addEventListener('input',()=>{ if(!$('#h-rate').dataset.touched){ $('#h-rate').value=rsAPRFromScore($('#cs-slider').value).toFixed(2); } render(); });
+    $('#h-rate')?.addEventListener('input',()=>{$('#h-rate').dataset.touched='1'; render();});
+    const updDP=()=>{ const s=compute(); $('#dp-pct-label').textContent=(s.dpPct*100).toFixed(0)+'%'; $('#dp-amt-label').textContent=fmt(s.downAmount); $('#dp-amt').value=fmt(s.downAmount); };
+    $('#dp-slider')?.addEventListener('input',()=>{ updDP(); render(); });
+    $('#h-price')?.addEventListener('input',()=>{ updDP(); render(); });
+    $('#btn-calc')?.addEventListener('click',render);
+    $('#btn-clear')?.addEventListener('click',()=>{ Array.from(document.querySelectorAll('input')).forEach(inp=>{ if(inp.type==='range') return; if(!inp.disabled) inp.value=''; }); $('#save-rate').value=15; $('#cs-slider').value=720; $('#h-rate').value=rsAPRFromScore(720).toFixed(2); $('#dp-slider').value=20; $('#mil-breakdown').textContent='—'; render(); });
+    (function wireProfileSavers(){
+      function pfSave(){
+        const p=getProfile();
+        const card=activeCard();
+        Object.assign(p,{
+          survivor:card?.querySelector('.va-survivor')?.value,
+          pstate:card?.querySelector('.prop-state')?.value,
+          home:card?.querySelector('.prop-home')?.value,
+          taxRelief:card?.querySelector('.prop-tax-relief')?.value,
+          access:card?.querySelector('.va-access')?.value,
+          eem:card?.querySelector('.va-eem')?.value,
+          eemAmt:+(card?.querySelector('.va-eem-amt')?.value||0),
+          seller:Math.min(4, Math.max(0, +(card?.querySelector('.va-seller')?.value||0)))
+        });
+        localStorage.setItem('realtysass.profile', JSON.stringify(p));
+        renderBenefits(); render();
+      }
+      ['.va-survivor','.prop-state','.prop-home','.prop-tax-relief','.va-access','.va-eem','.va-eem-amt','.va-seller'].forEach(sel=>{
+        document.addEventListener('change',e=>{ if(e.target.matches(sel)) pfSave(); });
+        document.addEventListener('input',e=>{ if(e.target.matches(sel)) pfSave(); });
+      });
+    })();
+    /* Identity → localStorage */
+    function currentPaygrade(){
+      const r = MODE==='AD'
+        ? (activeCard()?.querySelector('.sel-rank')?.value||'')
+        : (activeCard()?.querySelector('.ret-rank')?.value||'');
+      const m = /^([EOW])[-\s]?(\d{1,2})$/i.exec(r||'');
+      return m?`${m[1].toUpperCase()}-${m[2]}`:r||'';
+    }
+    function persistIdentity(){
+      const first=(activeCard()?.querySelector('.pf-fname')?.value||'').trim();
+      const last =(activeCard()?.querySelector('.pf-lname')?.value||'').trim();
+      const email=(activeCard()?.querySelector('.pf-email')?.value||'').trim();
+      const phone=(activeCard()?.querySelector('.pf-phone')?.value||'').trim();
+      const paygrade=currentPaygrade();
+      const title=PAYGRADE_TITLES[paygrade]||paygrade||'';
+      const name=[first,last].filter(Boolean).join(' ').trim()||'Client';
+      const ident={firstName:first,lastName:last,name,email,phone,rankPaygrade:paygrade,rankTitle:title,mode:MODE};
+      try{
+        localStorage.setItem('realtysass.identity', JSON.stringify(ident));
+        const p=getProfile()||{};
+        p.name=name; p.email=email; // augment profile for memo reader
+        localStorage.setItem('realtysass.profile', JSON.stringify(p));
+      }catch(_){}
+      return ident;
+    }
+    persistIdentity();
+    /* Bridge → /verify#rsb=… */
+    function b64url(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+    function buildBridgePayload(){
+      const s=compute();
+      const creditScore=Number($('#cs-slider').value)||720;
+      const dpPctNum=Math.max(0,Math.min(100,Number($('#dp-slider').value)||0));
+      const id=persistIdentity();
+      return {
+        identity: id,
+        income:Math.round(s.income),
+        expenses:Math.round(s.totalExpenses),
+        savings:Math.round(s.savingsTotalKPI),
+        creditScore,
+        price:Math.round(s.price),
+        apr:Number($('#h-rate').value)||s.inferredAPR,
+        termYears:Math.max(1,Number($('#h-term').value)||30),
+        tihoa:Math.round(s.tihoa),
+        pmi:Math.round(s.pmi),
+        dpPct:dpPctNum,
+        dpAmt:Math.round(s.downAmount),
+        pAndI:Math.round(s.pAndI),
+        housing:Math.round(s.housing),
+        itemizedRows:(function(){
+          try{
+            const rows=JSON.parse(localStorage.getItem('va.expenses.rows')||'[]');
+            return Array.isArray(rows)?rows.map(r=>({name:r.name,amount:Number(r.month)||0,cat:r.cat})):[];
+          }catch(_){ return []; }
+        })(),
+        profile:{ name:id.name, email:id.email, branch:'', rankTitle:id.rankTitle },
+        military:{ rank:id.rankPaygrade, branch:'' }
+      };
+    }
+    function persistBridge(){
+      const payload=buildBridgePayload();
+      try{ localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); }catch(_){}
+      return payload;
+    }
+    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#save-rate','#cs-slider','#dp-slider','#sv-current','.pf-fname','.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank'].forEach(sel=>{
+      document.querySelector(sel)?.addEventListener('input',persistBridge);
+    });
+    const a=document.getElementById('btn-analyze');
+    a?.addEventListener('click',()=>{
+      const payload=persistBridge();
+      const packed=b64url(JSON.stringify(payload));
+      a.href='/verify#rsb='+packed;
+    });
+    MODE='VET';
+    applyMode(); render();
+  })();
+  </script>
+    </div>
+  </div>
+  <section>
+    <section>
+      <div class="w-embed w-script">
+        <script>
+(function () {
+  const a = document.getElementById('btn-analyze');
+  if (!a) return;
+  /* ---------- utils ---------- */
+  const b64url = s => btoa(unescape(encodeURIComponent(s)))
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const readJSON = (k) => {
+    try { return JSON.parse(localStorage.getItem(k) || 'null'); }
+    catch { return null; }
+  };
+  const lastNameOf = (full) => String(full||'').trim().split(/\s+/).slice(-1)[0] || '';
+  const cleanPhone = (p) => String(p||'').replace(/[^\d+]/g,'').trim();
+  /* Pull identity from the dashboard stores, with fallbacks */
+  function getIdentity() {
+    const ident = readJSON('realtysass.identity') || {};
+    const profile = readJSON('realtysass.profile') || {};
+    // Prefer explicit fields; fall back to profile.name/email
+    const firstName = ident.firstName || '';
+    const lastName  = ident.lastName  || lastNameOf(profile.name);
+    const email     = ident.email     || profile.email || '';
+    const phone     = ident.phone     || '';
+    // Rank: prefer short rank title, else paygrade, else empty
+    const rankTitle = ident.rankTitle || '';
+    const rankPay   = ident.rankPaygrade || '';
+    const rank      = rankTitle || rankPay || '';
+    return {
+      firstName,
+      lastName,
+      email,
+      phone: cleanPhone(phone),
+      rank,
+      // keep the rest in case other pages need them
+      rankTitle: rankTitle,
+      rankPaygrade: rankPay,
+      mode: ident.mode || 'VET',
+      name: ident.name || [firstName, lastName].filter(Boolean).join(' ').trim()
+    };
+  }
+  /* Existing bridge payload from dashboard computations */
+  function getBridge() {
+    try { return JSON.parse(localStorage.getItem('realtysass.bridge')||'{}'); }
+    catch { return {}; }
+  }
+  a.addEventListener('click', () => {
+    const payload = getBridge() || {};
+    const who = getIdentity();
+    // Ensure the verify page (and your Netlify function) receive flat fields:
+    payload.identity = payload.identity || {};        // keep the nested identity object
+    Object.assign(payload.identity, who);             // enrich nested identity
+    // 👇 Add FLAT fields required by the SendEmail function
+    payload.email    = who.email || payload.email || '';
+    payload.phone    = who.phone || payload.phone || '';
+    payload.lastName = who.lastName || payload.lastName || lastNameOf(who.name);
+    payload.rank     = who.rank || payload.rank || '';
+    // Optional: persist the enriched bridge back to localStorage
+    try { localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); } catch (_){}
+    // Route to /verify with packed bridge
+    const packed = b64url(JSON.stringify(payload));
+    a.href = '/verify#rsb=' + packed;
+  });
+})();
+</script>
+      </div>
+    </section>
+  </section>
+  <section class="section-181">
+    <div class="w-layout-blockcontainer w-container">
+      <div class="w-embed w-script"><!--  RealtySaSS Tables Loader (BasePay, BAS, BAH, VA Compensation)  -->
+        <div id="rs-tables-loader" style="all: initial;">
+          <style>
+    #rs-tables-loader, #rs-tables-loader * { box-sizing: border-box; }
+    :root{--ink:#EAF2FF;--muted:#9FB1DE;--line:rgba(255,255,255,.12);--panel:#0f1623;--accent:#82dff8;--accent2:#2df5c7}
+    #rs-tables-loader .wrap{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg,#0b1019,#0a0f16);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    #rs-tables-loader h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
+    #rs-tables-loader p{margin:8px 0;color:#cfe3ff;font-size:13px}
+    #rs-tables-loader .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    #rs-tables-loader .btn{
+      cursor:pointer;border:1px solid var(--line);
+      padding:10px 14px;border-radius:10px;font-weight:800;font-size:13px;
+      background: linear-gradient(135deg,var(--accent),#7ec8ff); color:#041125;
+    }
+    #rs-tables-loader .btn.ghost{background:#0f1220;color:#e9ecff;border-style:dashed}
+    #rs-tables-loader .msg{font-size:12px;color:var(--muted);margin-top:10px}
+    #rs-tables-loader code{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;color:#bfe3ff}
+  </style>
+          <div class="wrap">
+            <h3>RealtySaSS Tables Loader</h3>
+            <p>Loads Base Pay, BAS, San Antonio BAH (78236), and a VA Compensation table into <code>localStorage</code> for use by the Financial Dashboard.</p>
+            <div class="row">
+              <button id="loadAll" class="btn">Load / Refresh Tables</button>
+              <button id="wipeAll" class="btn ghost">Wipe Tables</button>
+            </div>
+            <div id="msg" class="msg">—</div>
+          </div>
+          <script>
+  // -----------------------------
+  // Data Constants (minified-ish)
+  // -----------------------------
+  // BAS (monthly, illustrative)
+  const RS_BAS = { enlisted: 465.77, officer: 320.78 };
+  // Base Pay (monthly, illustrative ladder used by the dashboard)
+  const RS_BASEPAY = {
+    "E-1":{a2:2319},
+    "E-2":{a2:2599},
+    "E-3":{a2:2733,o2:2905,o3:3081},
+    "E-4":{a2:3027,o2:3182,o3:3355,o4:3525,o6:3676},
+    "E-5":{a2:3221,o2:3467,o3:3638,o4:3802,o6:3959,o8:4142,o10:4235,o12:4260},
+    "E-6":{a2:3277,o2:3606,o3:3765,o4:3920,o6:4081,o8:4444,o10:4585,o12:4859},
+    "E-7":{a2:3788,o2:4134,o3:4293,o4:4502,o6:4667,o8:4948,o10:5106,o12:5387,o14:5621,o16:5781,o18:5951},
+    "E-8":{o8:5450,o10:5691,o12:5840,o14:6019,o16:6212,o18:6562,o20:6740,o22:7041,o24:7208},
+    "E-9":{o10:6657,o12:6808,o14:6998,o16:7222,o18:7448,o20:7808,o22:8115,o24:8436},
+    "O-1":{a2:3998,o2:4162,o3:5031},
+    "O-2":{a2:4607,o2:5247,o3:6043,o4:6247,o6:6375},
+    "O-3":{a2:5332,o2:6044,o3:6523,o4:7112,o6:7454,o8:7828,o10:8069},
+    "O-4":{a2:6064,o2:7020,o3:7489,o4:7592,o6:8027,o8:8494,o10:9075,o12:9526},
+    "O-5":{a2:7028,o2:7917,o3:8465,o4:8569,o6:8911,o8:9115,o10:9565,o12:9896,o14:10323,o16:10974},
+    "O-6":{a2:8431,o2:9262,o3:9870,o6:9908,o8:10332,o10:10389,o14:10979,o16:12023,o18:12635}
+  };
+  // San Antonio BAH (78236), with/without dependents (illustrative)
+  const RS_BAH_78236 = {
+    "with":{E1:1791,E2:1791,E3:1791,E4:1791,E5:1935,E6:2154,E7:2172,E8:2181,E9:2208,W1:1968,W2:2151,W3:2187,W4:2340,W5:2466,O1:1968,O2:2151,O3:2187,O4:2340,O5:2466,O6:2487,O7:2487,O8:2487,O9:2487,O10:2487},
+    "without":{E1:1344,E2:1344,E3:1344,E4:1344,E5:1530,E6:1656,E7:1794,E8:1983,E9:2037,W1:1644,W2:1890,W3:2070,W4:2148,W5:2160,O1:1644,O2:1890,O3:2070,O4:2148,O5:2160,O6:2163,O7:2163,O8:2163,O9:2163,O10:2163}
+  };
+  // VA Compensation table (2024-ish illustrative).
+  // Structure per rating (rounded to nearest 10): base variants + adders.
+  // Keys:
+  //  vet, vet_spouse, vet_one_child, vet_spouse_one_child, add_child_u18, add_child_s, spouse_aanda, add_parent
+  const RS_VA_TABLE = (function(){
+    // Base amounts for Veteran only (no dependents), by rating:
+    const baseVet = {10:171.23,20:338.49,30:524.31,40:755.28,50:1075.16,60:1361.88,70:1716.28,80:1995.01,90:2241.91,100:3737.85};
+    // Approx deltas for spouse / first child / add-ons (illustrative)
+    const spouseDelta = {10:0,20:0,30:55,40:65,50:85,60:95,70:110,80:120,90:130,100:160};
+    const firstChildDelta = {10:0,20:0,30:70,40:80,50:95,60:110,70:135,80:150,90:165,100:190};
+    const addChildU18 = {10:0,20:0,30:70,40:75,50:80,60:85,70:90,80:95,90:100,100:105};
+    const addChildS   = {10:0,20:0,30:210,40:215,50:220,60:225,70:230,80:235,90:240,100:245};
+    const spouseAandA = {10:0,20:0,30:65,40:70,50:85,60:95,70:110,80:120,90:130,100:150};
+    const addParent   = {10:0,20:0,30:120,40:120,50:120,60:125,70:125,80:130,90:130,100:135};
+    const ratings = [10,20,30,40,50,60,70,80,90,100];
+    const out = {};
+    ratings.forEach(r=>{
+      const v = baseVet[r];
+      out[r] = {
+        vet: v,
+        vet_spouse: v + (spouseDelta[r]||0),
+        vet_one_child: v + (firstChildDelta[r]||0),
+        vet_spouse_one_child: v + (spouseDelta[r]||0) + (firstChildDelta[r]||0),
+        add_child_u18: addChildU18[r]||0,
+        add_child_s: addChildS[r]||0,
+        spouse_aanda: spouseAandA[r]||0,
+        add_parent: addParent[r]||0
+      };
+    });
+    // 0% = $0 across the board
+    out[0] = {vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0};
+    return out;
+  })();
+  // -----------------------------
+  // DOM Ready + Wiring
+  // -----------------------------
+  document.addEventListener("DOMContentLoaded", function(){
+    const loadBtn = document.getElementById('loadAll');
+    const wipeBtn = document.getElementById('wipeAll');
+    const msg = document.getElementById('msg');
+    function setLS(key,obj){ localStorage.setItem(key, JSON.stringify(obj)); }
+    function fmtNum(n){ return (Number(n)||0).toLocaleString('en-US'); }
+    function loadAll(){
+      setLS("rs.pay.BASEPAY", RS_BASEPAY);
+      setLS("rs.pay.BAS", RS_BAS);
+      setLS("rs.pay.BAH.78236", RS_BAH_78236);
+      setLS("va.comp.table", RS_VA_TABLE);
+      localStorage.setItem("rs.tables.version", JSON.stringify({version:"2025-10-11", source:"Tables Loader v1"}));
+      const bpRanks = Object.keys(RS_BASEPAY).length;
+      const vaRatings = Object.keys(RS_VA_TABLE).length;
+      msg.textContent = `Tables loaded ✔  (BasePay: ${bpRanks} ranks • BAH: 2 sets • VA ratings: ${vaRatings})`;
+    }
+    function wipeAll(){
+      ["rs.pay.BASEPAY","rs.pay.BAS","rs.pay.BAH.78236","va.comp.table","rs.tables.version"].forEach(k=>localStorage.removeItem(k));
+      msg.textContent = "Tables removed ✘";
+    }
+    loadBtn?.addEventListener("click", loadAll);
+    wipeBtn?.addEventListener("click", wipeAll);
+    // Autoload on first visit
+    if(!localStorage.getItem("rs.pay.BASEPAY") || !localStorage.getItem("va.comp.table")){
+      loadAll();
+    } else {
+      const ver = (()=>{try{return JSON.parse(localStorage.getItem("rs.tables.version"))||null}catch(e){return null}})();
+      msg.textContent = ver ? `Tables present (v${ver.version}). Click “Load / Refresh” to overwrite.` : `Tables present. Click “Load / Refresh” to overwrite.`;
+    }
+  });
+  </script>
+        </div>
+      </div>
+    </div>
+    <section>
+      <div class="w-layout-blockcontainer w-container"></div>
+    </section>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=68cecb820ec3dbdca3ef9099" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="../js/webflow.js" type="text/javascript"></script>
+</body>
+</html>
