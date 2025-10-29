@@ -17981,7 +17981,7 @@ img {
 .gradient-overlay-top {
   z-index: 99;
   text-align: left;
-  background-image: linear-gradient(0deg, #0000 50%, #111);
+  background-image: linear-gradient(75deg, #0000 57%, #111);
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -17998,6 +17998,7 @@ img {
 .cta-image-wrapper-8 {
   height: 100%;
   margin-top: 51px;
+  margin-left: -152px;
   position: relative;
   overflow: hidden;
 }
@@ -18018,7 +18019,7 @@ img {
 
 .gradient-overlay-8 {
   z-index: 99;
-  background-image: linear-gradient(90deg, #111, #0000 50%);
+  background-image: linear-gradient(190deg, #111 9%, #0000 50%);
   width: 100%;
   height: 100px;
   position: absolute;
@@ -18089,7 +18090,8 @@ img {
 
 .gradient-overlay-bottom {
   z-index: 99;
-  background-image: linear-gradient(0deg, #111, #0000 50%);
+  background-color: #0000002e;
+  background-image: linear-gradient(83deg, #111 22%, #0000 50%);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -22273,6 +22275,36 @@ img {
 .second-seethrough.reviews-image.no-max-width {
   background-image: linear-gradient(#0000, #0000), url('../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600_1.png');
   background-size: auto, 1300px;
+}
+
+.gradient-overlay-bottom-copy {
+  z-index: 99;
+  background-color: #0000002e;
+  background-image: linear-gradient(248deg, #111 19%, #0000 50%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0% auto auto 0%;
+}
+
+.gradient-overlay-top-copy {
+  z-index: 99;
+  text-align: left;
+  background-image: linear-gradient(162deg, #0000 57%, #111 86%);
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0% -68px auto 0%;
+}
+
+.gradient-overlay-8-copy {
+  z-index: 99;
+  background-image: linear-gradient(190deg, #111 9%, #0000 50%);
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  inset: 0% auto auto 0%;
 }
 
 @media screen and (min-width: 1280px) {
@@ -29943,6 +29975,7 @@ img {
     background-image: none;
     margin-top: 60px;
     margin-bottom: -200px;
+    margin-left: 8px;
   }
 
   .section-209 {
@@ -30446,6 +30479,15 @@ img {
 
   .global-grid-block {
     width: 87%;
+  }
+
+  .gradient-overlay-top-copy {
+    margin-top: 3px;
+  }
+
+  .gradient-overlay-8-copy {
+    background-image: linear-gradient(182deg, #111, #0f0f0fd9 38%, #0000 50%);
+    margin-left: -74px;
   }
 }
 
@@ -33084,6 +33126,17 @@ img {
     background-image: linear-gradient(#0000, #0000), url('../images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600_1.png');
     background-size: auto, 1800px;
     max-width: 1900px;
+  }
+
+  .gradient-overlay-top-copy {
+    margin-top: -27px;
+    margin-left: 29px;
+  }
+
+  .gradient-overlay-8-copy {
+    margin-top: 200px;
+    margin-left: -35px;
+    padding-top: 0;
   }
 }
 
@@ -38257,6 +38310,15 @@ img {
 
   .global-grid-block {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .gradient-overlay-top-copy {
+    padding-left: 0;
+  }
+
+  .gradient-overlay-8-copy {
+    margin-left: -38px;
+    padding-left: 0;
   }
 }
 

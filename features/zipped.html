@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Oct 29 2025 00:55:21 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Oct 29 2025 06:47:48 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="6900a94253dbc80ee464d8a6" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -237,300 +237,380 @@
     <div class="code-embed-16 w-embed w-script">
       <!doctype html>
       <!--  =========================================================
-  ZIPPED • Segment 1 — Full-Width Landscape Layout (I–III)
-  + Section Summaries restored for I, II, III
-  - Dashboard (ZIP + category checkboxes)
-  - I) Executive Overview  + Executive Snapshot  + Summary box
-  - II) Real Estate Intelligence + metric switcher + Summary box
-  - III) Commute & Transportation + commute chart + Summary box
-  - Shared state bridge (window.ZIPPED_SHARED) for a second embed
-  Author: OrozcoRealty • SaSS™ = Naughty Realty, Serious Returns
+  ZIPPED • Segment 1 — Landscape (Part 1 • I–III) • WEBFLOW-SAFE
+  - Full-bleed landscape layout
+  - Dashboard + I) Executive (with banner + snapshot chips)
+  - II) RE Intelligence (metric switcher) + value labels on bars
+  - III) Commute chart + labels
+  - Robust init: works even if Webflow defers script loading
+  - Long summaries (match screenshots)
 =========================================================  -->
       <html lang="en">
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Zipped • Segment 1 — Landscape Dashboard (I–III + Summaries)</title>
+        <title>Zipped • Segment 1 — Landscape Dashboard (I–III)</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
         <style>
-  /* =============== THEME =============== */
-  :root {
+  /* ===== THEME ===== */
+  #z1-root{
     --bg:#0b0e1a; --panel:#0f1324; --panel-2:#0b1120;
     --ink:#e9ecff; --muted:#a8b0d6; --border:rgba(255,255,255,.10);
     --glass:rgba(255,255,255,.06); --accent:#8ef3c5;
-    --good:#b2f7ef; --warn:#ffd166; --bad:#ff9aa2;
+    color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   }
-  * { box-sizing:border-box; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
-  body { margin:0; background:var(--bg); color:var(--ink); }
-  .wrap { max-width:1600px; margin:auto; padding:32px 40px; }
-  /* =============== CARDS & TYPO =============== */
-  .card{background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--border); border-radius:16px; padding:20px 24px;}
-  .section{margin-top:24px;}
-  .h1{font-size:26px;font-weight:900;margin:0 0 8px;}
-  .h2{font-size:22px;font-weight:800;margin:0 0 12px;}
-  .h3{font-size:16px;font-weight:700;margin:0 0 6px;}
-  .muted{color:var(--muted);}
-  ul{margin:8px 0 0 20px; line-height:1.6;}
-  /* =============== DASHBOARD =============== */
-  .dash{display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:start;}
-  input[type="text"]{background:#0c1327;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:10px 12px;outline:none;width:120px;}
-  .pill{background:var(--glass);border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:12px;}
-  .checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;}
-  .checks label{display:flex;align-items:center;gap:8px;font-size:13px;}
-  /* =============== BOXES & TABLES =============== */
-  .inner{background:rgba(0,0,0,.25); border:1px dashed var(--border); border-radius:12px; padding:12px; margin-top:10px;}
-  .summary{background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:12px; padding:12px; margin-top:12px;}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
-  .chip{background:var(--glass);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:12px;}
-  .table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
-  .table th,.table td{padding:8px;border-bottom:1px dashed var(--border);}
-  .tabs{display:flex;gap:8px;margin:8px 0;}
-  .tab{padding:6px 10px;border-radius:10px;border:1px solid var(--border);background:var(--glass);cursor:pointer;font-size:12px;}
-  .tab.active{outline:1px solid var(--accent);box-shadow:0 0 0 2px rgba(142,243,197,.15) inset;}
-  canvas{max-width:100%;}
-  @media (max-width:900px){ .dash{grid-template-columns:1fr;} }
+  /* ===== FULL BLEED ===== */
+  #z1-bleed{ width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); background:var(--bg); }
+  .z1-wrap{ max-width:1600px; margin:0 auto; padding:32px 40px; }
+  .z1-card{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--border); border-radius:16px; padding:20px 24px; margin-bottom:24px; }
+  /* ===== TYPE ===== */
+  .z1-h1{font-size:26px;font-weight:900;margin:0 0 8px;}
+  .z1-h2{font-size:22px;font-weight:800;margin:0 0 12px;}
+  .z1-h3{font-size:16px;font-weight:700;margin:0 0 6px;}
+  .z1-muted{color:var(--muted);}
+  .z1-ul{margin:8px 0 0 20px;line-height:1.6;}
+  /* ===== DASHBOARD ===== */
+  .z1-dash{display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:start;}
+  .z1-input{background:#0c1327;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:10px 12px;outline:none;width:120px;}
+  .z1-pill{background:var(--glass);border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:12px;}
+  .z1-checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;}
+  .z1-checks label{display:flex;align-items:center;gap:8px;font-size:13px;}
+  /* ===== BOXES ===== */
+  .z1-inner{ background:rgba(0,0,0,.25); border:1px dashed var(--border); border-radius:12px; padding:12px; margin-top:10px; }
+  .z1-summary{ background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:12px; padding:12px; margin-top:12px; }
+  .z1-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .z1-chip{background:var(--glass);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:12px;}
+  .z1-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+  .z1-table th,.z1-table td{padding:8px;border-bottom:1px dashed var(--border);}
+  .z1-tabs{display:flex;gap:8px;margin:8px 0;}
+  .z1-tab{padding:6px 10px;border-radius:10px;border:1px solid var(--border);background:var(--glass);cursor:pointer;font-size:12px;}
+  .z1-tab.active{outline:1px solid var(--accent);box-shadow:0 0 0 2px rgba(142,243,197,.15) inset;}
+  canvas{max-width:100%;background-color:#101426;border-radius:8px;display:block;}
+  /* Explicit chart heights so bars render even before ResizeObserver fires */
+  #z1-reiBox, #z1-commuteBox { height:280px; }
+  /* ===== MEDIA ===== */
+  .z1-hero{width:100%; height:auto; border-radius:14px; border:1px solid var(--border); display:block; margin:10px 0 14px;}
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){ .z1-dash{grid-template-columns:1fr;} .z1-wrap{padding:24px 16px;} }
 </style>
       </head>
       <body>
-        <div class="wrap" id="zipped-root">
-          <!--  =============== DASHBOARD ===============  -->
-          <div class="card">
-            <div class="dash">
-              <div>
-                <div class="h1">Zipped • Segment 1 — Lackland / West-Side Corridor</div>
-                <div class="muted">Enter a ZIP from Segment 1 and choose the categories to include in your summary.</div>
-                <div style="margin-top:10px;">
-                  <label for="zipInput"><strong>ZIP:</strong>&nbsp;</label>
-                  <input id="zipInput" type="text" placeholder="78245" list="zipList">
-                  <datalist id="zipList">
-                    <option value="78245"></option>
-                    <option value="78251"></option>
-                    <option value="78227"></option>
-                    <option value="78242"></option>
-                    <option value="78252"></option>
-                  </datalist>
-                  <span class="pill">Segment 1 only</span>
+        <div id="z1-root">
+          <div id="z1-bleed">
+            <div class="z1-wrap">
+              <!--  DASHBOARD  -->
+              <div class="z1-card">
+                <div class="z1-dash">
+                  <div>
+                    <div class="z1-h1">Zipped • Segment 1 — Lackland / West-Side Corridor</div>
+                    <div class="z1-muted">Enter a ZIP from Segment 1 and choose the categories to include in your summary.</div>
+                    <div style="margin-top:10px;">
+                      <label for="z1-zip"><strong>ZIP:</strong>&nbsp;</label>
+                      <input id="z1-zip" class="z1-input" type="text" placeholder="78245" list="z1-ziplist">
+                      <datalist id="z1-ziplist">
+                        <option value="78245"></option>
+                        <option value="78251"></option>
+                        <option value="78227"></option>
+                        <option value="78242"></option>
+                        <option value="78252"></option>
+                      </datalist>
+                      <span class="z1-pill">Segment 1 only</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="z1-checks" id="z1-checks">
+                      <label><input type="checkbox" data-key="rei" checked=""> Real Estate Intelligence</label>
+                      <label><input type="checkbox" data-key="commute" checked=""> Commute & Transportation</label>
+                      <label><input type="checkbox" data-key="schools"> Schools Info</label>
+                      <label><input type="checkbox" data-key="people"> People & Economics</label>
+                      <label><input type="checkbox" data-key="culture"> Culture / Traditions / Lifestyle</label>
+                      <label><input type="checkbox" data-key="env"> Environment & Safety</label>
+                      <label><input type="checkbox" data-key="picks"> Practical Picks</label>
+                      <label><input type="checkbox" data-key="mil"> Military Specific</label>
+                      <label><input type="checkbox" id="z1-all"> ALL Categories</label>
+                    </div>
+                    <div class="z1-muted" style="font-size:12px;margin-top:6px;">Tip: “ALL Categories” toggles everything. Selections sync to other embeds.</div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <div class="checks" id="checks">
-                  <label><input type="checkbox" data-key="rei" checked=""> Real Estate Intelligence</label>
-                  <label><input type="checkbox" data-key="commute" checked=""> Commute & Transportation</label>
-                  <label><input type="checkbox" data-key="schools"> Schools Info</label>
-                  <label><input type="checkbox" data-key="people"> People & Economics</label>
-                  <label><input type="checkbox" data-key="culture"> Culture, Traditions & Lifestyle</label>
-                  <label><input type="checkbox" data-key="env"> Environment & Safety</label>
-                  <label><input type="checkbox" data-key="picks"> Practical Picks</label>
-                  <label><input type="checkbox" data-key="mil"> Military Specific</label>
-                  <label><input type="checkbox" id="allToggle"> ALL Categories</label>
+              <!--  SECTION I  -->
+              <div class="z1-card">
+                <div class="z1-h2">I) Executive Overview — “Where PCS Meets Pragmatism”</div>
+                <!--  Banner image  -->
+                <img class="z1-hero" src="../images/MilitaryCity2.png" alt="Military City USA — Lackland / West-Side Corridor">
+                <div class="z1-muted" style="line-height:1.6;">
+                  Welcome to the <strong>Lackland / West-Side Corridor</strong>, the zone where incoming JBSA-Lackland families most often land when
+                  they want <strong>short commutes</strong>, <strong>reasonable prices</strong>, and <strong>family-oriented neighborhoods</strong>.
+                  Think <strong>78245, 78251, 78227, 78242, 78252</strong>. This corridor blends <em>post-2005 master-planned subdivisions</em>
+                  (Alamo Ranch / Westover) with <em>earlier, base-adjacent housing stock</em> near Valley Hi / Military Dr. Built-in
+                  <strong>price ladder</strong> = entry → mid inside one commute shed.
                 </div>
-                <div class="muted" style="font-size:12px;margin-top:6px;">Tip: toggle “ALL Categories” to select/deselect everything. Your selection syncs across embeds.</div>
+                <!--  Executive Snapshot  -->
+                <div class="z1-inner" id="z1-execSnap">
+                  <div class="z1-h3">Executive Snapshot</div>
+                  <table class="z1-table">
+                    <thead>
+                      <tr>
+                        <th>ZIP</th>
+                        <th>Median Price</th>
+                        <th>DOM</th>
+                        <th>Owner %</th>
+                        <th>Median HH $</th>
+                      </tr>
+                    </thead>
+                    <tbody id="z1-snapRows"></tbody>
+                  </table>
+                  <div class="z1-chips">
+                    <div class="z1-chip" id="z1-chipPrice"></div>
+                    <div class="z1-chip" id="z1-chipIncome"></div>
+                    <div class="z1-chip" id="z1-chipDom"></div>
+                    <div class="z1-chip" id="z1-chipCommute"></div>
+                  </div>
+                </div>
+                <div class="z1-summary">
+                  <div class="z1-h3">Section I — Summary (What to remember)</div>
+                  <ul class="z1-ul z1-muted">
+                    <li><strong>Commute geometry:</strong> US-90, Loop-410, and SH-151 form a triangle straight to Lackland. Gate choice often beats raw distance.</li>
+                    <li><strong>School ecosystems:</strong> Segment leans NISD with wide ES/MS/HS coverage and strong charters.</li>
+                    <li><strong>Housing age mix:</strong> Newer builds dominate west; older, budget-friendly stock sits closer to base; new phases push SW (78252).</li>
+                    <li><strong>Lifestyle:</strong> Family-first amenities (parks, sports, big-box retail), SeaWorld/Alamo Ranch weekends, steady community rhythm.</li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </div>
-          <!--  =============== SECTION I ===============  -->
-          <div class="section card">
-            <div class="h2">I) Executive Overview — “Where PCS Meets Pragmatism”</div>
-            <div class="muted" style="line-height:1.6;">
-              Welcome to the <strong>Lackland / West-Side Corridor</strong> — where incoming JBSA-Lackland families most often land when they want
-              short commutes, reasonable prices, and family-oriented neighborhoods. Think
-              <strong>78245, 78251, 78227, 78242, 78252</strong>: practical to own, easy to rent, and
-              close enough that gate timing, school routines, and weekend life feel manageable from day one.
-              This corridor blends <em>post-2005 master-planned subdivisions</em> (Alamo Ranch / Westover) with
-              <em>earlier, base-adjacent housing stock</em> near Valley Hi / Military Dr. The result is a built-in
-              <strong>price ladder</strong> (entry → mid) inside a single commute shed—so you can choose price points without sacrificing base access.
-            </div>
-            <!--  Executive Snapshot  -->
-            <div class="inner" id="execSnapshot">
-              <div class="h3">Executive Snapshot</div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>ZIP</th>
-                    <th>Median Price</th>
-                    <th>DOM</th>
-                    <th>Owner %</th>
-                    <th>Median HH $</th>
-                  </tr>
-                </thead>
-                <tbody id="snapRows"></tbody>
-              </table>
-              <div class="chips">
-                <div class="chip" id="chipPrice"></div>
-                <div class="chip" id="chipIncome"></div>
-                <div class="chip" id="chipDom"></div>
-                <div class="chip" id="chipCommute"></div>
+              <!--  SECTION II  -->
+              <div class="z1-card">
+                <div class="z1-h2">II) Real Estate Intelligence — Price Ladder, Inventory Reality, and Exit Options</div>
+                <div class="z1-muted">Switch the comparison metric:</div>
+                <div class="z1-tabs" id="z1-reiTabs">
+                  <button class="z1-tab active" data-metric="price">Median Sale Price</button>
+                  <button class="z1-tab" data-metric="tenure">Owner vs Renter</button>
+                  <button class="z1-tab" data-metric="dom">Days on Market</button>
+                </div>
+                <div class="z1-inner" id="z1-reiBox">
+                  <canvas id="z1-reiChart" height="220" aria-label="Real estate chart"></canvas>
+                </div>
+                <div class="z1-summary">
+                  <div class="z1-h3">Section II — Summary</div>
+                  <ul class="z1-ul z1-muted">
+                    <li><strong>Price ladder by ZIP (illustrative medians):</strong>
+                      <ul class="z1-ul">
+                        <li><b>Entry / Base-Adjacent:</b> 78242, 78227 — older stock, smaller lots, value pricing. Great for first-time VA buyers and future buy-and-hold rentals.</li>
+                        <li><b>Mid / Newer Build Dominant:</b> 78245, 78251 — planned communities, typical 3–4 bed layouts, HOA amenities, consistent resale patterns.</li>
+                        <li><b>Newer-Growth Southwest:</b> 78252 — outward expansion, new phases, cyclical builder incentives.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Inventory & DOM dynamics:</strong>
+                      <ul class="z1-ul">
+                        <li>Near-base ZIPs often show <b>shorter DOM</b> for entry levels (dual demand from owners + investors).</li>
+                        <li>Newer subs offer <b>more homogeneous comps</b> (appraisal stability).</li>
+                        <li><b>Seasonality is distinct:</b> PCS waves and school-year turn drive spring peaks—shop 4–8 weeks before report date.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Resale / rentability thinking:</strong>
+                      <ul class="z1-ul">
+                        <li>If you’ll PCS in 3–4 years, prefer <b>floor-plan flexibility</b> (3/2 or 4/2, ~1,600–2,200 ft²), <b>low HOA friction</b>, and <b>no exotic finishes</b>.</li>
+                        <li>High-ROI owner upgrades: <b>curb appeal</b>, <b>durable flooring</b>, <b>mid-grade kitchen refresh</b>, <b>HVAC efficiency</b>.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <!--  I) Summary  -->
-            <div class="summary">
-              <div class="h3">Section I — Summary</div>
-              <ul>
-                <li><strong>Commute geometry:</strong> US-90, Loop-410, and SH-151 form a triangle straight to Lackland. Choosing the right gate often beats raw distance.</li>
-                <li><strong>School ecosystems:</strong> Segment leans NISD with broad ES/MS/HS coverage and strong charters.</li>
-                <li><strong>Housing age mix:</strong> Newer builds dominate west; budget-friendly older stock sits close to base; new phases push southwest (78252).</li>
-                <li><strong>Lifestyle:</strong> Family-first amenities (parks, sports, big-box retail), SeaWorld/Alamo Ranch weekends, steady community rhythm.</li>
-              </ul>
-            </div>
-          </div>
-          <!--  =============== SECTION II ===============  -->
-          <div class="section card">
-            <div class="h2">II) Real Estate Intelligence — Price Ladder, Inventory Reality, and Exit Options</div>
-            <div class="muted">Use the filter to switch the comparison metric.</div>
-            <div class="tabs" id="reiTabs">
-              <button class="tab active" data-metric="price">Median Sale Price</button>
-              <button class="tab" data-metric="tenure">Owner vs Renter</button>
-              <button class="tab" data-metric="dom">Days on Market</button>
-            </div>
-            <div class="inner"><canvas id="reiChart" height="120"></canvas></div>
-            <!--  II) Summary  -->
-            <div class="summary">
-              <div class="h3">Section II — Summary</div>
-              <ul>
-                <li><strong>Price ladder:</strong> Entry near base (<b>78242, 78227</b>) → mid-tier planned communities (<b>78245, 78251</b>) → SW growth phases (<b>78252</b>).</li>
-                <li><strong>Inventory & DOM:</strong> Entry points often move fast; newer subs offer comp stability; PCS & school-turn seasonality matters.</li>
-                <li><strong>Resale / rentability:</strong> Favor flexible 3–4 bed plans, neutral finishes, low-maintenance yards, investor-friendly HOAs.</li>
-                <li><strong>Owner ROI:</strong> Curb appeal, durable flooring, mid-grade kitchen refresh, and HVAC efficiency typically win.</li>
-              </ul>
-            </div>
-          </div>
-          <!--  =============== SECTION III ===============  -->
-          <div class="section card">
-            <div class="h2">III) Commute & Transportation — The Triangle That Rules Your Day</div>
-            <div class="muted" style="line-height:1.6;">
-              Your daily rhythm hangs on three corridors: <strong>US-90</strong>, <strong>Loop-410</strong>, and <strong>SH-151</strong>.
-              <ul>
-                <li><strong>US-90</strong> feeds straight to Lackland — the spine of base access for west-side residents.</li>
-                <li><strong>SH-151</strong> funnels Alamo Ranch/Westover traffic into US-90/Loop-410 — predictable but peaky around 1604 and 410.</li>
-                <li><strong>Loop-410</strong> forms the beltway; expect AM inbound congestion near southwest junctions.</li>
-              </ul>
-            </div>
-            <div class="inner">
-              <div class="h3">Commute Comparison (typical minutes to Lackland)</div>
-              <canvas id="commuteChart" height="120"></canvas>
-              <div class="muted" style="font-size:12px;margin-top:6px;">Times are illustrative averages; test at your actual report time and preferred gate.</div>
-            </div>
-            <!--  III) Summary  -->
-            <div class="summary">
-              <div class="h3">Section III — Summary</div>
-              <ul>
-                <li><strong>Gate choice matters:</strong> A home a bit farther can still save time if it aligns with the gate you’ll use at your report hour.</li>
-                <li><strong>Traffic rhythm:</strong> AM inbound and Friday PM spikes are predictable; SH-151/1604/410 interchanges are peak-sensitive.</li>
-                <li><strong>Vehicle planning:</strong> Families often prefer two vehicles; singles/couples can do one + rideshare, but school routines push to two.</li>
-              </ul>
-            </div>
-          </div>
-          <!--  =============== CONTINUE NOTE ===============  -->
-          <div class="section card">
-            <div class="h3">Continue Sections IV–IX in another Webflow Embed</div>
-            <div class="muted">
-              This code exposes <code>window.ZIPPED_SHARED</code> with the selected ZIP and category set and emits a
-              <code>zipped:state</code> event whenever selections change. Your next embed can read it to stay in sync.
+              <!--  SECTION III  -->
+              <div class="z1-card">
+                <div class="z1-h2">III) Commute & Transportation — The Triangle That Rules Your Day</div>
+                <div class="z1-muted" style="line-height:1.6;">
+                  Your daily rhythm hangs on three corridors: <strong>US-90</strong>, <strong>Loop-410</strong>, and <strong>SH-151</strong>.
+                  <ul class="z1-ul">
+                    <li><strong>US-90</strong> feeds straight to Lackland — the spine of base access for west-side residents.</li>
+                    <li><strong>SH-151</strong> funnels Alamo Ranch/Westover into US-90/Loop-410 — predictable but peaky at 1604 & 410.</li>
+                    <li><strong>Loop-410</strong> is the beltway — expect AM inbound congestion near southwest junctions.</li>
+                  </ul>
+                </div>
+                <div class="z1-inner" id="z1-commuteBox">
+                  <div class="z1-h3">Commute Comparison (typical minutes to Lackland)</div>
+                  <canvas id="z1-commuteChart" height="220" aria-label="Commute chart"></canvas>
+                  <div class="z1-muted" style="font-size:12px;margin-top:6px;">Times are illustrative; test at your report hour and preferred gate.</div>
+                </div>
+                <div class="z1-summary">
+                  <div class="z1-h3">Section III — Summary</div>
+                  <ul class="z1-ul z1-muted">
+                    <li><strong>Gate choice matters:</strong> A home 2 miles farther can still save 5–10 minutes if aligned with your gate’s flows.</li>
+                    <li><strong>Traffic rhythm:</strong> AM inbound + Friday PM/holiday spikes are predictable; watch 151/1604/410 nodes.</li>
+                    <li><strong>Second-car math:</strong> Many families prefer two vehicles; one + rideshare can work for singles/couples but school routines push to two.</li>
+                  </ul>
+                </div>
+              </div>
+              <!--  CONTINUE NOTE  -->
+              <div class="z1-card">
+                <div class="z1-h3">Continue Sections IV–IX in your second embed</div>
+                <div class="z1-muted">State is shared via <code>window.ZIPPED_SHARED</code>.</div>
+              </div>
             </div>
           </div>
         </div>
-        <!--  =============== SCRIPTS ===============  -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!--  Chart.js UMD  -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
         <script>
-/* ---------- Data (editable / replace with APIs later) ---------- */
-const ZIPS = ["78245","78251","78227","78242","78252"];
-const PROFILE = {
-  "78245": { price:285000, dom:81, owner:66, income:87900, commute:22, label:"Newer Subdivisions • Family Growth" },
-  "78251": { price:275000, dom:48, owner:62, income:78000, commute:20, label:"Westover Hills / SH-151 Access" },
-  "78227": { price:208000, dom:65, owner:55, income:48000, commute:12, label:"Base-Adjacent Entry • Value Play" },
-  "78242": { price:165000, dom:97, owner:53, income:47000, commute:15, label:"Budget Starter • Older Stock" },
-  "78252": { price:294000, dom:72, owner:70, income:69000, commute:24, label:"SW Growth • Newer Phases" }
-};
-const CITY = { medianPrice:260000, medianIncome:65000, dom:70 };
-/* ---------- Shared state bridge ---------- */
-window.ZIPPED_SHARED = window.ZIPPED_SHARED || {
-  zip:"78245",
-  categories:{rei:true,commute:true},
-  set(p){ Object.assign(this,p); window.dispatchEvent(new CustomEvent("zipped:state",{detail:{...this}})); }
-};
-const $=s=>document.querySelector(s);
-const fmtUSD=v=>"$"+Math.round(v).toLocaleString();
-/* ---------- Dashboard interactions ---------- */
-const zipInput=$("#zipInput"); zipInput.value=window.ZIPPED_SHARED.zip;
-zipInput.addEventListener("change", ()=>{
-  const val=zipInput.value.trim();
-  if (!ZIPS.includes(val)) { zipInput.value=window.ZIPPED_SHARED.zip; return; }
-  window.ZIPPED_SHARED.set({ zip: val });
-  updateChips();
-});
-const checks=$("#checks");
-checks.addEventListener("change",(e)=>{
-  const all=$("#allToggle");
-  if(e.target.id==="allToggle"){
-    const on=all.checked;
-    checks.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb=>{
-      cb.checked=on; window.ZIPPED_SHARED.categories[cb.dataset.key]=on;
-    });
-  } else if (e.target.dataset.key){
-    window.ZIPPED_SHARED.categories[e.target.dataset.key]=e.target.checked;
-    const boxes=[...checks.querySelectorAll('input[data-key]')];
-    $("#allToggle").checked = boxes.every(b=>b.checked);
-  }
-  window.ZIPPED_SHARED.set({ categories:{...window.ZIPPED_SHARED.categories} });
-});
-/* ---------- Executive Snapshot table + chips ---------- */
-function renderTable(){
-  $("#snapRows").innerHTML = ZIPS.map(z=>{
-    const p=PROFILE[z];
-    return `<tr>
-      <td><strong>${z}</strong><br><span class="muted">${p.label}</span></td>
-      <td>${fmtUSD(p.price)}</td><td>${p.dom}</td><td>${p.owner}%</td><td>${fmtUSD(p.income)}</td>
-    </tr>`;
-  }).join("");
-}
-function updateChips(){
-  const z=window.ZIPPED_SHARED.zip,p=PROFILE[z];
-  $("#chipPrice").textContent=`Price: ${fmtUSD(p.price)}`;
-  $("#chipIncome").textContent=`Income: ${fmtUSD(p.income)}`;
-  $("#chipDom").textContent=`DOM: ${p.dom}`;
-  $("#chipCommute").textContent=`Commute: ~${p.commute} min`;
-}
-/* ---------- Charts: II (metric switcher) ---------- */
-let reiChart, commuteChart;
-function buildREI(metric="price"){
-  const ctx=$("#reiChart"),labels=ZIPS;let ds;
-  if(metric==="price"){
-    ds=[{label:"Median Price",data:labels.map(z=>PROFILE[z].price)}];
-  }else if(metric==="dom"){
-    ds=[{label:"DOM (days)",data:labels.map(z=>PROFILE[z].dom)}];
-  }else{
-    ds=[{label:"Owner %",data:labels.map(z=>PROFILE[z].owner),stack:"t"},
-        {label:"Renter %",data:labels.map(z=>100-PROFILE[z].owner),stack:"t"}];
-  }
-  if(reiChart) reiChart.destroy();
-  reiChart=new Chart(ctx,{type:"bar",data:{labels,datasets:ds},
-    options:{responsive:true,plugins:{legend:{position:metric==="tenure"?"bottom":"top"}},
-      scales:{y:{beginAtZero:true,max:metric==="tenure"?100:undefined,
-        ticks:{callback:v=>metric==="price"?"$"+v.toLocaleString():metric==="tenure"?v+"%":v}}}}
-  );
-}
-document.querySelectorAll("#reiTabs .tab").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll("#reiTabs .tab").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active"); buildREI(btn.dataset.metric);
-  });
-});
-/* ---------- Chart: III Commute ---------- */
-function buildCommute(){
-  const ctx=$("#commuteChart");
-  if(commuteChart) commuteChart.destroy();
-  commuteChart=new Chart(ctx,{type:"bar",
-    data:{labels:ZIPS,datasets:[{label:"Typical minutes to Lackland (gate-neutral)",data:ZIPS.map(z=>PROFILE[z].commute)}]},
-    options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
-  });
-}
-/* ---------- Boot ---------- */
-(function boot(){
-  renderTable(); updateChips();
-  buildREI("price"); buildCommute();
-  // announce initial state
-  window.ZIPPED_SHARED.set({ zip: zipInput.value || "78245" });
+(function startWhenReady(){
+  // Some builders strip onload — so we poll until Chart is present, then boot.
+  if (window.Chart) return z1Boot();
+  var tries = 0, t = setInterval(function(){
+    if (window.Chart){ clearInterval(t); z1Boot(); }
+    else if (++tries > 200){ clearInterval(t); console.error("Chart.js failed to load."); }
+  }, 50);
 })();
+function z1Boot(){
+  /* ---------- Data ---------- */
+  const Z1_ZIPS = ["78245","78251","78227","78242","78252"];
+  const Z1_PROFILE = {
+    "78245": { price:285000, dom:81, owner:66, income:87900, commute:22, label:"Newer Subdivisions • Family Growth" },
+    "78251": { price:275000, dom:48, owner:62, income:78000, commute:20, label:"Westover Hills • SH-151 Access" },
+    "78227": { price:208000, dom:65, owner:55, income:48000, commute:12, label:"Base-Adjacent Entry • Value Play" },
+    "78242": { price:165000, dom:97, owner:53, income:47000, commute:15, label:"Budget Starter • Older Stock" },
+    "78252": { price:294000, dom:72, owner:70, income:69000, commute:24, label:"SW Growth • Newer Phases" }
+  };
+  /* ---------- Shared state ---------- */
+  window.ZIPPED_SHARED = window.ZIPPED_SHARED || {
+    zip:"78245",
+    categories:{rei:true,commute:true},
+    set(p){ Object.assign(this,p); window.dispatchEvent(new CustomEvent("zipped:state",{detail:{...this}})); }
+  };
+  /* ---------- Helpers ---------- */
+  const $ = s => document.querySelector(s);
+  const fmtUSD = v => "$"+Math.round(v).toLocaleString();
+  /* ---------- Chart theme ---------- */
+  Chart.defaults.color = "#e9ecff";
+  Chart.defaults.borderColor = "rgba(232,236,255,.15)";
+  Chart.defaults.font.family = "Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif";
+  /* ---------- Value label plugin (safe) ---------- */
+  const valueLabelPlugin = {
+    id:'valueLabels',
+    afterDatasetsDraw(chart, args, opts){
+      const {ctx} = chart;
+      ctx.save();
+      ctx.font = '12px Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif';
+      ctx.fillStyle = '#e9ecff';
+      chart.data.datasets.forEach((ds, di)=>{
+        const meta = chart.getDatasetMeta(di);
+        meta.data.forEach((bar, i)=>{
+          if(!bar || !bar.x || !bar.y) return;
+          const raw = ds.data[i];
+          let label = raw;
+          if(opts && opts.format === 'usd') label = "$"+Number(raw).toLocaleString();
+          if(opts && opts.format === 'pct') label = Math.round(raw)+"%";
+          if(opts && opts.format === 'int') label = Math.round(raw);
+          ctx.textAlign='center'; ctx.textBaseline='bottom';
+          ctx.fillText(label, bar.x, bar.y - 6);
+        });
+      });
+      ctx.restore();
+    }
+  };
+  Chart.register(valueLabelPlugin);
+  /* ---------- Dashboard wiring ---------- */
+  const zipEl=$("#z1-zip"); zipEl.value = window.ZIPPED_SHARED.zip;
+  zipEl.addEventListener("change",()=>{
+    const v=zipEl.value.trim();
+    if(!Z1_ZIPS.includes(v)){ zipEl.value=window.ZIPPED_SHARED.zip; return; }
+    window.ZIPPED_SHARED.set({zip:v}); updateChips();
+  });
+  $("#z1-checks").addEventListener("change",(e)=>{
+    const all=$("#z1-all");
+    if(e.target.id==="z1-all"){
+      const on=all.checked;
+      $("#z1-checks").querySelectorAll('input[data-key]').forEach(cb=>{
+        cb.checked=on; window.ZIPPED_SHARED.categories[cb.dataset.key]=on;
+      });
+    }else if(e.target.dataset.key){
+      window.ZIPPED_SHARED.categories[e.target.dataset.key]=e.target.checked;
+      const boxes=[...$("#z1-checks").querySelectorAll('input[data-key]')];
+      $("#z1-all").checked=boxes.every(b=>b.checked);
+    }
+    window.ZIPPED_SHARED.set({categories:{...window.ZIPPED_SHARED.categories}});
+  });
+  /* ---------- Exec snapshot + chips ---------- */
+  function renderSnap(){
+    $("#z1-snapRows").innerHTML = Z1_ZIPS.map(z=>{
+      const p=Z1_PROFILE[z];
+      return `<tr>
+        <td><strong>${z}</strong><br><span class="z1-muted">${p.label}</span></td>
+        <td>${fmtUSD(p.price)}</td><td>${p.dom}</td><td>${p.owner}%</td><td>${fmtUSD(p.income)}</td>
+      </tr>`;
+    }).join("");
+  }
+  function updateChips(){
+    const z=window.ZIPPED_SHARED.zip,p=Z1_PROFILE[z];
+    $("#z1-chipPrice").textContent  = `Price: ${fmtUSD(p.price)}`;
+    $("#z1-chipIncome").textContent = `Income: ${fmtUSD(p.income)}`;
+    $("#z1-chipDom").textContent    = `DOM: ${p.dom}`;
+    $("#z1-chipCommute").textContent= `Commute: ~${p.commute} min`;
+  }
+  /* ---------- Charts ---------- */
+  const C_PRIMARY = "rgba(142,243,197,0.9)";
+  const C_SECOND  = "rgba(142,243,197,0.35)";
+  let reiChart, commuteChart;
+  function buildREI(metric="price"){
+    const labels = Z1_ZIPS;
+    let datasets, format='int', yMax;
+    if(metric==="price"){
+      datasets=[{label:"Median Price", data:labels.map(z=>Z1_PROFILE[z].price), backgroundColor:C_PRIMARY }];
+      format='usd';
+    }else if(metric==="dom"){
+      datasets=[{label:"Days on Market", data:labels.map(z=>Z1_PROFILE[z].dom), backgroundColor:C_PRIMARY }];
+      format='int';
+    }else{ // tenure
+      datasets=[
+        {label:"Owner %",  data:labels.map(z=>Z1_PROFILE[z].owner),       backgroundColor:C_PRIMARY, stack:"t"},
+        {label:"Renter %", data:labels.map(z=>100 - Z1_PROFILE[z].owner), backgroundColor:C_SECOND,  stack:"t"}
+      ];
+      yMax=100; format='pct';
+    }
+    if(reiChart) reiChart.destroy();
+    reiChart = new Chart($("#z1-reiChart"),{
+      type:"bar",
+      data:{labels,datasets},
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position: metric==="tenure"?"bottom":"top"}, valueLabels:{format}},
+        scales:{y:{beginAtZero:true, max:yMax,
+          ticks:{callback:v=> metric==="price" ? "$"+v.toLocaleString() : (metric==="tenure"? v+"%" : v)}}}
+      }
+    });
+  }
+  function buildCommute(){
+    if(commuteChart) commuteChart.destroy();
+    commuteChart = new Chart($("#z1-commuteChart"),{
+      type:"bar",
+      data:{labels:Z1_ZIPS, datasets:[{label:"Commute (mins) to Lackland", data:Z1_ZIPS.map(z=>Z1_PROFILE[z].commute), backgroundColor:C_PRIMARY }]},
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false}, valueLabels:{format:'int'}},
+        scales:{y:{beginAtZero:true}}
+      }
+    });
+  }
+  /* ---------- Metric tabs ---------- */
+  document.querySelectorAll("#z1-reiTabs .z1-tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll("#z1-reiTabs .z1-tab").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      buildREI(btn.dataset.metric);
+    });
+  });
+  /* ---------- Visibility guard (still helpful in Webflow) ---------- */
+  function whenVisible(el, fn){
+    const tryNow=()=>{ if(el && el.offsetWidth>0){ fn(); return true; } return false; };
+    if(tryNow()) return;
+    const ro=new ResizeObserver(()=>{ if(tryNow()){ ro.disconnect(); } });
+    ro.observe(el.closest(".z1-inner") || el);
+  }
+  /* ---------- Boot ---------- */
+  renderSnap(); updateChips();
+  whenVisible($("#z1-reiChart"), ()=> buildREI("price"));
+  whenVisible($("#z1-commuteChart"), buildCommute);
+  window.ZIPPED_SHARED.set({ zip: zipEl.value || "78245" });
+}
 </script>
       </body>
       </html>
