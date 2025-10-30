@@ -1,131 +1,108 @@
-// netlify/functions/verify-code.js
-// RealitySaSS • Verify 6-digit Code
-// POST { email, code }
+//#2 verify-code.js — FULL FILE
 
-import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 
-const ALLOWED_ORIGIN = "https://new-real-estate-purchase.webflow.io"; // must match send-code.js
-
-function corsHeaders() {
-  return {
-    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Max-Age": "86400",
-  };
+async function hashCode(code) {
+  const data = new TextEncoder().encode(code);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  const bytes = Array.from(new Uint8Array(digest));
+  return bytes.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-function jsonResponse(statusCode, bodyObj) {
-  return {
-    statusCode,
+function jsonResponse(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
     headers: {
-      ...corsHeaders(),
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bodyObj),
-  };
-}
-
-// must be same hashing rule as send-code.js
-function hashCode(email, code) {
-  return crypto
-    .createHash("sha256")
-    .update(email + ":" + code)
-    .digest("hex");
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Max-Age": "86400",
+      Vary: "Origin"
+    }
+  });
 }
 
 export async function handler(event) {
-  // 1. Handle CORS preflight
+  // CORS preflight
   if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 204,
-      headers: corsHeaders(),
-      body: "",
-    };
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Max-Age": "86400",
+        Vary: "Origin"
+      }
+    });
   }
 
-  // 2. Only allow POST
   if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { error: "Method not allowed" });
+    return jsonResponse({ error: "Method not allowed" }, 405);
   }
 
-  // 3. Parse JSON body
-  let payload;
+  // 1. parse body
+  let body;
   try {
-    payload = JSON.parse(event.body || "{}");
+    body = JSON.parse(event.body || "{}");
   } catch {
-    return jsonResponse(400, { error: "Invalid JSON body" });
+    return jsonResponse({ error: "Bad JSON" }, 400);
   }
 
-  const { email, code } = payload;
-
-  if (
-    !email ||
-    !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ||
-    !code ||
-    !/^\d{6}$/.test(code)
-  ) {
-    return jsonResponse(400, { error: "Email and 6-digit code are required." });
+  const { email, code } = body;
+  if (!email || !code) {
+    return jsonResponse({ error: "Missing email or code" }, 400);
   }
 
-  // 4. Setup Supabase
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl || !supabaseServiceKey) {
-    return jsonResponse(500, { error: "Supabase env vars missing" });
-  }
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  // 2. init supabase
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY,
+    { auth: { persistSession: false } }
+  );
 
-  // 5. Get row for this email
-  const { data: row, error: readErr } = await supabase
+  // 3. get stored row for this email
+  const { data: row, error: selErr } = await supabase
     .from("email_codes")
     .select("*")
     .eq("email", email)
     .single();
 
-  if (readErr || !row) {
-    return jsonResponse(400, { error: "No code on record. Please request a new one." });
+  if (selErr || !row) {
+    // nothing on record
+    return jsonResponse({ error: "Invalid code." }, 400);
   }
 
-  // row has: code_hash, attempts, expires_at, etc.
+  // 4. check expiration
   const now = Date.now();
-  const exp = row.expires_at ? Date.parse(row.expires_at) : 0;
-  if (!exp || now > exp) {
-    // expired -> we can optionally clean it up
-    await supabase
-      .from("email_codes")
-      .delete()
-      .eq("email", email);
-    return jsonResponse(400, { error: "Code expired. Please request a new one." });
+  const deadline = row.expires_at ? Date.parse(row.expires_at) : 0;
+  if (!deadline || now > deadline) {
+    return jsonResponse({ error: "Code expired." }, 400);
   }
 
-  // 6. Compare hashes
-  const incomingHash = hashCode(email, code);
-  if (incomingHash !== row.code_hash) {
-    // wrong code -> bump attempts
+  // 5. compare hashes
+  const providedHash = await hashCode(code);
+  if (providedHash !== row.code_hash) {
+    // bump attempts to track abuse (optional)
     await supabase
       .from("email_codes")
       .update({ attempts: (row.attempts || 0) + 1 })
       .eq("email", email);
 
-    return jsonResponse(401, { error: "Invalid code." });
+    return jsonResponse({ error: "Invalid code." }, 400);
   }
 
-  // 7. SUCCESS: Code is valid.
-  // At this point you can:
-  // - delete the entry so it can't be reused
-  // - or mark it verified, etc.
-  await supabase
-    .from("email_codes")
-    .delete()
-    .eq("email", email);
+  // (Optional) you can clear the code here so it can't be reused:
+  // await supabase.from("email_codes").delete().eq("email", email);
 
-  // response can include anything you want client-side to use
-  // (for example, { verified:true } then JS can redirect to /features/analyze)
-  return jsonResponse(200, {
+  // 6. success -> this is where we "unlock" the app
+  return jsonResponse({
     ok: true,
-    verified: true,
-    message: "Email verified. Proceed.",
+    redirect: "/features/analyze",
+    identity: {
+      email: row.email,
+      ...row.context // rank / lastName / phone you stored
+    }
   });
 }
