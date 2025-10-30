@@ -1,17 +1,19 @@
-// Email Verify — SEND CODE (ESM)
+// send-code.js (TEMP NO-BLOBS VERSION)
 import { Resend } from 'resend';
 import { createHash } from 'crypto';
-import { getStore } from '@netlify/blobs';
-import { json } from '@netlify/functions';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.FROM_EMAIL || 'RealtySaSS <no-reply@theorozcorealty.com>';
 const ORIGIN = process.env.ORIGIN || 'https://new-real-estate-purchase.webflow.io';
 const TTL_MINUTES = 10;
 
-// --- helpers ---
+// -------- TEMP MEMORY STORE (server memory only) --------
+const memoryStore = {}; 
+// memoryStore[email.toLowerCase()] = { hash, attempts, expiresAt, createdAt, context }
+
 const six = () => String(Math.floor(100000 + Math.random() * 900000));
 const sha256 = (s) => createHash('sha256').update(s).digest('hex');
+
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -19,7 +21,6 @@ const cors = {
   'Vary': 'Origin',
 };
 
-// --- handler ---
 export const handler = async (event) => {
   // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
@@ -31,6 +32,8 @@ export const handler = async (event) => {
 
   try {
     const { email, phone, rank, lastName } = JSON.parse(event.body || '{}');
+
+    // 1) basic checks
     if (!email) {
       return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Missing email' }) };
     }
@@ -38,8 +41,9 @@ export const handler = async (event) => {
       return { statusCode: 500, headers: cors, body: JSON.stringify({ error: 'Missing RESEND_API_KEY' }) };
     }
 
+    // 2) generate code + stash in memory
     const code = six();
-    const payload = {
+    memoryStore[email.toLowerCase()] = {
       hash: sha256(code),
       attempts: 0,
       createdAt: Date.now(),
@@ -47,11 +51,7 @@ export const handler = async (event) => {
       context: { rank, lastName, phone },
     };
 
-    // Store per-email record
-    const store = await getStore({ name: 'email-codes' });
-    const key = `code:${email.toLowerCase()}`;
-    await store.set(key, JSON.stringify(payload));
-
+    // 3) send email
     const subject = `Your RealtySaSS verification code: ${code}`;
     const html = `
       <div style="font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6">
@@ -63,8 +63,15 @@ export const handler = async (event) => {
       </div>`;
     const text = `Your verification code is: ${code}\n\nExpires in ${TTL_MINUTES} minutes.\n${ORIGIN}`;
 
-    await resend.emails.send({ from: FROM_EMAIL, to: email, subject, html, text });
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject,
+      html,
+      text,
+    });
 
+    // 4) done
     return {
       statusCode: 200,
       headers: cors,
@@ -74,7 +81,9 @@ export const handler = async (event) => {
     return {
       statusCode: 500,
       headers: cors,
-      body: JSON.stringify({ error: err?.message || 'Failed to send code' }),
+      body: JSON.stringify({
+        error: err?.message || 'Failed to send code',
+      }),
     };
   }
 };
