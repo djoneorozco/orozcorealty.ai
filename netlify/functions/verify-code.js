@@ -1,9 +1,10 @@
-// Email Verify — VERIFY CODE (ESM, hardened)
-// #1 Imports
+// Email Verify — SEND CODE (ESM)
+// Purpose: create a 6-digit code, save hashed version in Netlify Blobs, (eventually) email it.
+
 import { createHash } from 'crypto';
 import { getStore } from '@netlify/blobs';
 
-// #2 Helpers
+// ===== helpers =====
 const sha256 = (s) => createHash('sha256').update(s).digest('hex');
 
 const cors = {
@@ -13,113 +14,89 @@ const cors = {
   'Vary': 'Origin',
 };
 
-// #3 Small util: safe JSON reply
-function reply(statusCode, bodyObj) {
-  return {
-    statusCode,
-    headers: {
-      ...cors,
-      'Content-Type': 'application/json; charset=utf-8',
-    },
-    body: JSON.stringify(bodyObj || {}),
-  };
+// generate a zero-padded 6-digit code like "042913"
+function generateCode() {
+  const n = Math.floor(Math.random() * 1_000_000); // 0 → 999999
+  return String(n).padStart(6, '0');
 }
 
-// #4 Handler
 export const handler = async (event) => {
-  // Handle browser preflight
+  // --- CORS preflight
   if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: cors };
+  }
+
+  // --- only allow POST
+  if (event.httpMethod !== 'POST') {
     return {
-      statusCode: 204,
+      statusCode: 405,
       headers: cors,
+      body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
 
-  // Only allow POST for real work
-  if (event.httpMethod !== 'POST') {
-    return reply(405, { ok: false, error: 'Method not allowed' });
-  }
-
   try {
-    // 4A. Parse incoming body
-    let email = '';
-    let code = '';
+    // --- read request JSON
+    const { email, rank, lastName, phone } = JSON.parse(event.body || '{}');
 
-    try {
-      const parsed = JSON.parse(event.body || '{}');
-      email = (parsed.email || '').toString().trim().toLowerCase();
-      code  = (parsed.code  || '').toString().trim();
-    } catch (e) {
-      return reply(400, { ok: false, error: 'Bad JSON body' });
+    if (!email) {
+      return {
+        statusCode: 400,
+        headers: cors,
+        body: JSON.stringify({ error: 'Missing email' }),
+      };
     }
 
-    if (!email || !code) {
-      return reply(400, { ok: false, error: 'Missing email or code' });
-    }
+    // --- 1) make code
+    const code = generateCode();
+    const hash = sha256(code);
 
-    // 4B. Open blob store
-    let store;
-    try {
-      store = await getStore({ name: 'email-codes' });
-    } catch (e) {
-      // If blobs not configured / not available, we should NOT 500 silently.
-      return reply(500, { ok: false, error: 'Store unavailable (email-codes). Contact admin.' });
-    }
+    // --- 2) store in Netlify Blobs
+    // store name MUST match verify-code.js
+    const store = await getStore({ name: 'email-codes' });
 
-    const key = `code:${email}`;
+    const key = `code:${email.toLowerCase()}`;
 
-    // 4C. Pull stored code info
-    let raw;
-    try {
-      raw = await store.get(key); // may be null
-    } catch (e) {
-      return reply(500, { ok: false, error: 'Could not read code store' });
-    }
+    // code valid for 10 minutes
+    const expiresAt = Date.now() + 10 * 60 * 1000;
 
-    if (!raw) {
-      // nothing stored for this email
-      return reply(400, { ok: false, error: 'No code on record. Please request a new one.' });
-    }
+    const record = {
+      hash,          // hashed code
+      expiresAt,     // timestamp ms
+      attempts: 0,   // how many failed tries so far
+      // not required for verify, but let's log context so you can inspect blobs later:
+      meta: {
+        email,
+        rank: rank || '',
+        lastName: lastName || '',
+        phone: phone || '',
+        createdAt: new Date().toISOString(),
+      },
+    };
 
-    // 4D. Parse stored metadata
-    let data;
-    try {
-      data = JSON.parse(raw);
-    } catch (e) {
-      // corrupted data, clear it so user can request again
-      await store.delete(key).catch(()=>{});
-      return reply(400, { ok: false, error: 'Code invalid. Request a new one.' });
-    }
+    await store.set(key, JSON.stringify(record));
 
-    const now = Date.now();
+    // --- 3) "send" the code
+    // Right now we're not actually emailing (you haven't given me a mail API key yet).
+    // We'll just log the code to Netlify function logs so you can see it in Netlify dashboard.
+    // Later we plug in Resend / SendGrid etc here.
+    console.log(`DEBUG verification code for ${email}: ${code}`);
 
-    // 4E. Expired?
-    if (now > (data.expiresAt || 0)) {
-      await store.delete(key).catch(()=>{});
-      return reply(400, { ok: false, error: 'Code expired. Request a new one.' });
-    }
-
-    // 4F. Too many attempts?
-    if ((data.attempts || 0) >= 10) {
-      await store.delete(key).catch(()=>{});
-      return reply(429, { ok: false, error: 'Too many attempts. Request a new code.' });
-    }
-
-    // 4G. Check hash match
-    const match = sha256(code) === data.hash;
-    if (!match) {
-      // bump attempts and persist
-      data.attempts = (data.attempts || 0) + 1;
-      await store.set(key, JSON.stringify(data)).catch(()=>{});
-      return reply(400, { ok: false, error: 'Invalid code' });
-    }
-
-    // 4H. Success — delete record, return ok
-    await store.delete(key).catch(()=>{});
-    return reply(200, { ok: true });
+    // --- 4) respond
+    return {
+      statusCode: 200,
+      headers: cors,
+      body: JSON.stringify({ ok: true }),
+    };
 
   } catch (err) {
-    // Catch-all safety
-    return reply(500, { ok: false, error: err?.message || 'Verification failed' });
+    console.error('send-code fatal:', err);
+    return {
+      statusCode: 500,
+      headers: cors,
+      body: JSON.stringify({
+        error: err?.message || 'Failed to send code',
+      }),
+    };
   }
 };
