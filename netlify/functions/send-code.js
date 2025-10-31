@@ -94,13 +94,13 @@ exports.handler = async function (event, context) {
 
   // 4. Connect Supabase (service role, so we can insert server-side)
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
+  const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE) {
     return respond(500, { error: "Supabase env not configured" });
   }
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
     auth: {
       persistSession: false
     }
