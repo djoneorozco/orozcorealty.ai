@@ -1,10 +1,30 @@
 // netlify/functions/verify-code.js
 //
 // PURPOSE:
-// - Accept POST { email, code }
-// - Check against Supabase email_codes
-// - Enforce expiration & attempt limit
-// - Return ok / error for UI
+//  - Accept POST { email, code }
+//  - Hash the code the user typed
+//  - Look up the row in Supabase (email_codes table)
+//  - Confirm: same email, hashes match, not expired, not over attempt limit
+//  - Increment attempts if wrong
+//  - Return { ok:true, profile:{...} } on success
+//
+// REQUIREMENTS (match send-code.js):
+//  - SUPABASE_URL
+//  - SUPABASE_SERVICE_KEY
+//
+// TABLE: public.email_codes
+//   email          text (PK-ish, or indexed, 1 row per active code is fine right now)
+//   code_hash      text
+//   attempts       int4
+//   expires_at     timestamptz
+//   created_at     timestamptz
+//   context        jsonb   <-- { rank, lastName, phone, ... }
+//
+// NOTE:
+//  - We’re *not* deleting the row yet. You can — but for now we’ll just
+//    return success and let you redirect the user.
+//  - We *are* limiting attempts (max 5 tries).
+//
 
 const crypto = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
@@ -16,30 +36,32 @@ const CORS_HEADERS = {
   "Content-Type": "application/json"
 };
 
-function respond(statusCode, payloadObj) {
+// helper: standard response
+function respond(statusCode, obj) {
   return {
     statusCode,
     headers: CORS_HEADERS,
-    body: JSON.stringify(payloadObj || {})
+    body: JSON.stringify(obj || {})
   };
 }
 
+// hash helper (must match send-code.js logic)
 function hashCode(code) {
   return crypto.createHash("sha256").update(code).digest("hex");
 }
 
 exports.handler = async function (event, context) {
-  // 0. CORS preflight
+  // 0. preflight
   if (event.httpMethod === "OPTIONS") {
     return respond(200, {});
   }
 
-  // 1. Method check
+  // 1. must be POST
   if (event.httpMethod !== "POST") {
     return respond(405, { error: "Method not allowed" });
   }
 
-  // 2. Parse body
+  // 2. parse body
   let body;
   try {
     body = JSON.parse(event.body || "{}");
@@ -48,84 +70,98 @@ exports.handler = async function (event, context) {
   }
 
   const email = (body.email || "").trim().toLowerCase();
-  const codeInput = (body.code || "").trim();
+  const codeRaw = (body.code || "").trim();
 
-  if (!email || !codeInput || codeInput.length !== 6) {
-    return respond(400, { error: "Email and 6-digit code required" });
+  if (!email || !codeRaw || codeRaw.length !== 6) {
+    return respond(400, { error: "Email and 6-digit code required." });
   }
 
-  // 3. Supabase client
+  // 3. env + supabase client
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
+  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY; // same var used in send-code.js
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     return respond(500, { error: "Supabase env not configured" });
   }
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
-    auth: {
-      persistSession: false
-    }
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+    auth: { persistSession: false }
   });
 
-  // 4. Find latest code for this email
-  // (you could also do "eq(email)" + "order(created_at.desc).limit(1)")
-  const { data: rows, error: selErr } = await supabase
+  // 4. load row for this email
+  const { data: rows, error: fetchErr } = await supabase
     .from("email_codes")
     .select("*")
     .eq("email", email)
     .order("created_at", { ascending: false })
     .limit(1);
 
-  if (selErr) {
-    console.error("Select error:", selErr);
-    return respond(500, { error: "Database error" });
+  if (fetchErr) {
+    console.error("Supabase fetch error:", fetchErr);
+    return respond(500, { error: "Lookup failed." });
   }
 
   if (!rows || rows.length === 0) {
-    return respond(400, { error: "No code found for this email" });
+    // no code on record for this email
+    return respond(400, { error: "Invalid or expired code." });
   }
 
-  const row = rows[0];
+  const record = rows[0];
 
-  // 5. Check attempts
-  if (row.attempts >= 5) {
-    return respond(403, { error: "Too many attempts" });
+  // 5. simple attempt lockout (optional)
+  const MAX_ATTEMPTS = 5;
+  if (record.attempts >= MAX_ATTEMPTS) {
+    return respond(400, { error: "Too many attempts. Request new code." });
   }
 
-  // 6. Check expiration
+  // 6. check expiration
   const now = Date.now();
-  const exp = row.expires_at ? Date.parse(row.expires_at) : 0;
-  if (!exp || now > exp) {
-    // increment attempts because it's still basically a failed try
-    await supabase
-      .from("email_codes")
-      .update({ attempts: row.attempts + 1 })
-      .eq("email", row.email)
-      .eq("created_at", row.created_at);
-
-    return respond(400, { error: "Expired code" });
+  const exp = new Date(record.expires_at).getTime();
+  if (isNaN(exp) || now > exp) {
+    return respond(400, { error: "Code expired. Request new code." });
   }
 
-  // 7. Check hash
-  const incomingHash = hashCode(codeInput);
+  // 7. compare hash
+  const submittedHash = hashCode(codeRaw);
 
-  if (incomingHash !== row.code_hash) {
-    // Wrong code: bump attempts
-    await supabase
+  if (submittedHash !== record.code_hash) {
+    // wrong code → bump attempts
+    const { error: attemptErr } = await supabase
       .from("email_codes")
-      .update({ attempts: row.attempts + 1 })
-      .eq("email", row.email)
-      .eq("created_at", row.created_at);
+      .update({ attempts: record.attempts + 1 })
+      .eq("email", email)
+      .eq("created_at", record.created_at);
 
-    return respond(400, { error: "Invalid code" });
+    if (attemptErr) {
+      console.error("Supabase attempt update error:", attemptErr);
+    }
+
+    return respond(400, { error: "Invalid code." });
   }
 
   // 8. SUCCESS 🎉
-  // You can optionally mark verified, or insert into a "verified_users" table, etc.
-  // For now just return ok:true and DO NOT bump attempts.
+  // you are verified. we can return whatever the app needs:
+  // - ok:true
+  // - identity info (rank, lastName, phone) pulled from context jsonb
+  // - maybe a lightweight session token later
+  const profile = {
+    email: record.email,
+    ...record.context // pulls rank / lastName / phone etc.
+  };
+
+  // OPTIONAL CLEANUP:
+  // If you want “one-time code,” you can delete the row here so
+  // it can’t be reused:
+  //
+  // await supabase
+  //   .from("email_codes")
+  //   .delete()
+  //   .eq("email", email)
+  //   .eq("created_at", record.created_at);
+
   return respond(200, {
     ok: true,
-    message: "Code verified. User is authenticated/cleared."
+    message: "Code verified.",
+    profile
   });
 };
