@@ -8,20 +8,22 @@
 // - Send code via Resend email
 // - Return {ok:true}
 //
-// REQUIREMENTS:
-// - env vars in Netlify dashboard:
+// ENV VARS (Netlify):
 //   SUPABASE_URL
-//   SUPABASE_SERVICE_ROLE
+//   SUPABASE_SERVICE_KEY     <-- you kept this name
 //   RESEND_API_KEY
-//   EMAIL_FROM   (ex: "RealtySaSS <noreply@yourdomain.com>")
+//   EMAIL_FROM or FROM_EMAIL (either works)
 //
-// TABLE (public.email_codes) needs at least columns:
+// TABLE public.email_codes must include columns:
 //   email (text)
 //   code_hash (text)
 //   attempts (int4)
 //   expires_at (timestamptz)
 //   created_at (timestamptz default now())
-//   context (jsonb)  <-- we pack rank, lastName, phone, etc
+//   rank (text)
+//   last_name (text)
+//   phone (text)
+//   context (jsonb)
 //
 // NOTE: We do not return the code to the browser.
 
@@ -36,7 +38,7 @@ const CORS_HEADERS = {
   "Content-Type": "application/json"
 };
 
-// helper: uniform response
+// uniform HTTP response helper
 function respond(statusCode, payloadObj) {
   return {
     statusCode,
@@ -45,25 +47,24 @@ function respond(statusCode, payloadObj) {
   };
 }
 
-// helper: create a 6-digit numeric code like "478182"
+// make a random 6-digit numeric code like "478182"
 function makeCode() {
-  // crypto.randomInt(0, 1_000_000) gives 0..999999
-  const n = crypto.randomInt(0, 1000000);
+  const n = crypto.randomInt(0, 1000000); // 0..999999
   return n.toString().padStart(6, "0");
 }
 
-// helper: sha256 hash so we never store the raw code
+// sha256 hash so we never store the raw code
 function hashCode(code) {
   return crypto.createHash("sha256").update(code).digest("hex");
 }
 
 exports.handler = async function (event, context) {
-  // 0. CORS preflight
+  // 0. Handle CORS preflight
   if (event.httpMethod === "OPTIONS") {
     return respond(200, {});
   }
 
-  // 1. Method check
+  // 1. Only allow POST
   if (event.httpMethod !== "POST") {
     return respond(405, { error: "Method not allowed" });
   }
@@ -85,30 +86,24 @@ exports.handler = async function (event, context) {
     return respond(400, { error: "Valid email required" });
   }
 
-  // 3. Generate code and expiration
+  // 3. Generate code + expiration timestamp (10 min)
   const code = makeCode(); // e.g. "478182"
   const code_hash = hashCode(code);
-
-  // expiry 10 min from now
   const expires_at = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-  // 4. Connect Supabase (service role, so we can insert server-side)
+  // 4. Supabase client (service key so we can insert securely)
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_KEY;
+  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     return respond(500, { error: "Supabase env not configured" });
   }
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: {
-      persistSession: false
-    }
+    auth: { persistSession: false }
   });
 
-  // 5. Insert row into email_codes
-  // We store the hashed code, not the plain code.
-  // We include rank/lastName/phone in context so we can use it later.
+  // 5. Insert code row
   const { error: insertErr } = await supabase
     .from("email_codes")
     .insert([
@@ -117,6 +112,9 @@ exports.handler = async function (event, context) {
         code_hash,
         attempts: 0,
         expires_at,
+        rank,
+        last_name: lastName,
+        phone,
         context: {
           rank,
           lastName,
@@ -132,11 +130,20 @@ exports.handler = async function (event, context) {
 
   // 6. Send email via Resend
   const resendKey = process.env.RESEND_API_KEY;
-  const fromAddress = process.env.EMAIL_FROM || "RealtySaSS <noreply@example.com>";
+  const fromAddress =
+    process.env.EMAIL_FROM ||
+    process.env.FROM_EMAIL ||
+    "RealtySaSS <noreply@example.com>";
+
   const resend = new Resend(resendKey);
 
   const subject = "Your RealtySaSS Verification Code";
-  const textBody = `Hi ${rank ? rank + " " : ""}${lastName || ""},\n\nYour verification code is: ${code}\n\nIt expires in 10 minutes.\n`;
+  const textBody = `Hi ${rank ? rank + " " : ""}${lastName || ""},
+
+Your verification code is: ${code}
+
+It expires in 10 minutes.
+`;
 
   try {
     await resend.emails.send({
@@ -147,8 +154,7 @@ exports.handler = async function (event, context) {
     });
   } catch (mailErr) {
     console.error("Resend error:", mailErr);
-    // NOTE: we already stored the code in DB.
-    // If email fails, user won't see it, but we tell frontend
+    // Code is already stored in DB, so we just surface that email failed
     return respond(500, { error: "Email send failed" });
   }
 
