@@ -1,182 +1,142 @@
-//======================================================
-// send-code.js  (Netlify Function)
-//======================================================
+// netlify/functions/send-code.js
+// Option 1 data model (context jsonb)
 
-// #1 import deps
-import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
-import crypto from "node:crypto";
+import { createClient } from "@supabase/supabase-js";
 
-// #2 pull secrets from Netlify env
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL = process.env.FROM_EMAIL;
+//-----------------------------------------
+// #1 CORS headers we ALWAYS send
+//-----------------------------------------
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Max-Age": "86400",
+  "Content-Type": "application/json"
+};
 
-// Safety check (helps debug if something is totally missing)
-function assertEnv(name, value) {
-  if (!value) {
-    console.error(`Missing required env var: ${name}`);
-    throw new Error(`Server misconfig: ${name} not set`);
-  }
-}
-assertEnv("SUPABASE_URL", SUPABASE_URL);
-assertEnv("SUPABASE_SERVICE_KEY", SUPABASE_SERVICE_KEY);
-assertEnv("RESEND_API_KEY", RESEND_API_KEY);
-assertEnv("FROM_EMAIL", FROM_EMAIL);
-
-// #3 init clients (service role so we can insert)
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-  auth: { persistSession: false }
-});
-const resend = new Resend(RESEND_API_KEY);
-
-// #4 helper: make a random 6-digit code as a string, zero-padded
-function makeCode() {
-  const n = crypto.randomInt(0, 1000000); // 0 to 999999
-  return n.toString().padStart(6, "0");   // "047812"
+// helper to respond with JSON safely
+function respond(status, bodyObj) {
+  return new Response(JSON.stringify(bodyObj), {
+    status,
+    headers: CORS_HEADERS,
+  });
 }
 
-// #5 hash code before storing (so we're not storing raw in code_hash)
-function hashCode(raw) {
-  return crypto.createHash("sha256").update(raw).digest("hex");
+//-----------------------------------------
+// #2 hash the verification code (SHA-256)
+//-----------------------------------------
+async function hashCode(code) {
+  const enc = new TextEncoder().encode(code);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
-// #6 build CORS headers for browser + Webflow
-function corsHeaders() {
-  return {
-    "Access-Control-Allow-Origin": "*", // you already opened this in netlify.toml
-    "Access-Control-Allow-Headers": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS"
-  };
-}
-
-// #7 the handler (Netlify expects a default export with {handler} OR an exported handler fn depending on runtime;
-//    in the current Netlify Edge/Functions model with ESM + `type:"module"` you want `export async function handler`.)
+//-----------------------------------------
+// #3 main handler
+//-----------------------------------------
 export async function handler(event) {
+  // Support browser preflight
+  if (event.httpMethod === "OPTIONS") {
+    return new Response("", { status: 200, headers: CORS_HEADERS });
+  }
+
+  if (event.httpMethod !== "POST") {
+    return respond(405, { error: "Method not allowed" });
+  }
+
   try {
-    // Handle OPTIONS preflight cleanly
-    if (event.httpMethod === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: corsHeaders()
-      });
-    }
-
-    if (event.httpMethod !== "POST") {
-      return new Response(
-        JSON.stringify({ error: "Method not allowed" }),
-        { status: 405, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-      );
-    }
-
-    // Parse incoming JSON
+    // Parse request body
     const body = JSON.parse(event.body || "{}");
+    const email = (body.email || "").trim();
+    const rank = body.rank || "";          // e.g. "Major"
+    const lastName = body.lastName || "";  // e.g. "Orozco"
+    const phone = body.phone || "";        // e.g. "956..."
+    // NOTE: we are not storing passcode separately right now
 
-    // We expect what the front-end is sending (from verify.js):
-    // {
-    //   email,
-    //   rank,
-    //   lastName,
-    //   phone
-    // }
-    const email = (body.email || "").trim().toLowerCase();
-    const rank = body.rank || "";
-    const lastName = body.lastName || "";
-    const phone = body.phone || "";
-
-    // basic sanity
-    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      return new Response(
-        JSON.stringify({ error: "Invalid email." }),
-        { status: 400, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-      );
+    if (!email) {
+      return respond(400, { error: "Missing email" });
     }
 
-    // Generate code
-    const rawCode = makeCode();           // e.g. "478182"
-    const codeHash = hashCode(rawCode);   // sha256 hash
+    //---------------------------------
+    // Generate a 6-digit code
+    //---------------------------------
+    const code = String(Math.floor(100000 + Math.random() * 900000));
+    const code_hash = await hashCode(code);
 
-    // Expiration = now + 10 minutes
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-    const createdAt = new Date().toISOString();
+    // Expire in 10 minutes
+    const now = new Date();
+    const expires = new Date(now.getTime() + 10 * 60 * 1000);
 
-    // Build row to insert EXACTLY matching your Supabase columns
-    // From screenshots, columns are:
-    // email (text)
-    // code_hash (text)
-    // attempts (int4)
-    // expires_at (timestamptz)
-    // created_at (timestamptz)
-    // rank (text)
-    // last_name (text)
-    // phone (text)
-    // passcode (text)
-    //
-    // NOTE: We're now storing the *raw* code in passcode for you to view,
-    // and the hash in code_hash for validation later.
-    // If you DON'T want to store raw code in DB long-term, we can drop passcode later.
-    const row = {
-      email: email,
-      code_hash: codeHash,
-      attempts: 0,
-      expires_at: expiresAt,
-      created_at: createdAt,
-      rank: rank,
-      last_name: lastName,
-      phone: phone,
-      passcode: rawCode
-    };
+    //---------------------------------
+    // Supabase client (service role)
+    //---------------------------------
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      { auth: { persistSession: false } }
+    );
 
-    // Insert row
-    const { error: insertError } = await supabase
+    //---------------------------------
+    // Insert row into email_codes
+    // Matches Option 1 table shape:
+    // email, code_hash, attempts, expires_at, created_at, context(jsonb)
+    //---------------------------------
+    const { error: dbError } = await supabase
       .from("email_codes")
-      .insert(row);
+      .insert([
+        {
+          email: email,
+          code_hash: code_hash,
+          attempts: 0,
+          expires_at: expires.toISOString(),
+          created_at: now.toISOString(),
+          context: {
+            rank: rank,
+            last_name: lastName,
+            phone: phone
+          }
+        }
+      ]);
 
-    if (insertError) {
-      console.error("Supabase insert error:", insertError);
-      return new Response(
-        JSON.stringify({ error: "DB insert failed." }),
-        { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-      );
+    if (dbError) {
+      console.error("Supabase insert failed:", dbError);
+      return respond(500, { error: "DB insert failed." });
     }
 
-    // Send email with Resend
-    const subject = "Your RealtySaSS verification code";
-    const textBody = [
-      `Hi ${rank ? rank + " " : ""}${lastName || ""},`.trim() || "Hello,",
-      "",
-      `Your verification code is: ${rawCode}`,
-      "",
-      "It expires in 10 minutes."
-    ].join("\n");
+    //---------------------------------
+    // Send the email via Resend
+    //---------------------------------
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const { error: emailError } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject,
-      text: textBody
+    // We’ll address them by rank + last name if we have it
+    const displayNameParts = [];
+    if (rank) displayNameParts.push(rank);
+    if (lastName) displayNameParts.push(lastName);
+    const greetingName = displayNameParts.length
+      ? displayNameParts.join(" ")
+      : "there";
+
+    await resend.emails.send({
+      from: "RealtySaSS <no-reply@theorozcorealty.netlify.app>",
+      to: [email],
+      subject: "Your RealtySaSS Verification Code",
+      html: `
+        <p>Hi ${greetingName},</p>
+        <p>Your verification code is: <strong>${code}</strong></p>
+        <p>It expires in 10 minutes.</p>
+      `.trim()
     });
 
-    if (emailError) {
-      console.error("Email send error:", emailError);
-      return new Response(
-        JSON.stringify({ error: "Email send failed." }),
-        { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-      );
-    }
-
-    // Success response back to browser
-    return new Response(
-      JSON.stringify({ ok: true }),
-      { status: 200, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-    );
+    //---------------------------------
+    // Success back to browser
+    //---------------------------------
+    return respond(200, { ok: true });
 
   } catch (err) {
     console.error("send-code fatal error:", err);
-    return new Response(
-      JSON.stringify({ error: "Server error." }),
-      { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
-    );
+    return respond(500, { error: "Internal error" });
   }
 }
