@@ -59,7 +59,8 @@ exports.handler = async function (event, context) {
 
   const code = makeCode();
   const code_hash = hashCode(code);
-  const now = new Date().toISOString(); // log current time
+  const now = new Date().toISOString();
+  const expiresAt = new Date("2075-01-01T00:00:00Z").toISOString(); // ✨ Fixed: no expiration
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -77,7 +78,8 @@ exports.handler = async function (event, context) {
       email,
       code_hash,
       attempts: 0,
-      created_at: now, // safely set this manually
+      created_at: now,
+      expires_at: expiresAt,
       rank,
       last_name: lastName,
       phone,
