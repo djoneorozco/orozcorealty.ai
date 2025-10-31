@@ -299,7 +299,7 @@
   // Allow-list mode: ONLY paths that match ALLOW_PATHS will be locked.
   const USE_ALLOW_LIST = true;
   const ALLOW_PATHS = [
-    /\/realtysass\/?$/i,            // exactly /realtysass (with optional trailing slash)
+    /\/realtysass(?:\.html)?$/i,            // exactly /realtysass (with optional trailing slash)
     // If you also have a subpage like /realtysass/something, add another line, e.g.:
     // /\/realtysass\/.+/i,
   ];
