@@ -1,137 +1,182 @@
-// #1 Imports / setup
+//======================================================
+// send-code.js  (Netlify Function)
+//======================================================
+
+// #1 import deps
 import { createClient } from "@supabase/supabase-js";
-import crypto from "crypto";
 import { Resend } from "resend";
+import crypto from "node:crypto";
 
-// Netlify function signature (Edge-style compatible with "type": "module")
-export default async function handler(req) {
-  // #2 CORS preflight support
-  if (req.method === "OPTIONS") {
-    return corsResponse(200, { ok: true });
+// #2 pull secrets from Netlify env
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const FROM_EMAIL = process.env.FROM_EMAIL;
+
+// Safety check (helps debug if something is totally missing)
+function assertEnv(name, value) {
+  if (!value) {
+    console.error(`Missing required env var: ${name}`);
+    throw new Error(`Server misconfig: ${name} not set`);
   }
+}
+assertEnv("SUPABASE_URL", SUPABASE_URL);
+assertEnv("SUPABASE_SERVICE_KEY", SUPABASE_SERVICE_KEY);
+assertEnv("RESEND_API_KEY", RESEND_API_KEY);
+assertEnv("FROM_EMAIL", FROM_EMAIL);
 
+// #3 init clients (service role so we can insert)
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+  auth: { persistSession: false }
+});
+const resend = new Resend(RESEND_API_KEY);
+
+// #4 helper: make a random 6-digit code as a string, zero-padded
+function makeCode() {
+  const n = crypto.randomInt(0, 1000000); // 0 to 999999
+  return n.toString().padStart(6, "0");   // "047812"
+}
+
+// #5 hash code before storing (so we're not storing raw in code_hash)
+function hashCode(raw) {
+  return crypto.createHash("sha256").update(raw).digest("hex");
+}
+
+// #6 build CORS headers for browser + Webflow
+function corsHeaders() {
+  return {
+    "Access-Control-Allow-Origin": "*", // you already opened this in netlify.toml
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS"
+  };
+}
+
+// #7 the handler (Netlify expects a default export with {handler} OR an exported handler fn depending on runtime;
+//    in the current Netlify Edge/Functions model with ESM + `type:"module"` you want `export async function handler`.)
+export async function handler(event) {
   try {
-    if (req.method !== "POST") {
-      return corsResponse(405, { error: "Method not allowed." });
+    // Handle OPTIONS preflight cleanly
+    if (event.httpMethod === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders()
+      });
     }
 
-    // #3 Parse body safely
-    let body;
-    try {
-      body = await req.json();
-    } catch (e) {
-      return corsResponse(400, { error: "Invalid JSON body." });
+    if (event.httpMethod !== "POST") {
+      return new Response(
+        JSON.stringify({ error: "Method not allowed" }),
+        { status: 405, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
+      );
     }
 
-    const { email, rank, lastName, phone } = body || {};
+    // Parse incoming JSON
+    const body = JSON.parse(event.body || "{}");
 
-    if (!email || typeof email !== "string") {
-      return corsResponse(400, { error: "Email required." });
+    // We expect what the front-end is sending (from verify.js):
+    // {
+    //   email,
+    //   rank,
+    //   lastName,
+    //   phone
+    // }
+    const email = (body.email || "").trim().toLowerCase();
+    const rank = body.rank || "";
+    const lastName = body.lastName || "";
+    const phone = body.phone || "";
+
+    // basic sanity
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid email." }),
+        { status: 400, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
+      );
     }
 
-    // #4 Generate 6-digit code
-    const code = generateCode(); // string like "478182"
+    // Generate code
+    const rawCode = makeCode();           // e.g. "478182"
+    const codeHash = hashCode(rawCode);   // sha256 hash
 
-    // #5 Hash code for DB
-    const code_hash = hashCode(code);
+    // Expiration = now + 10 minutes
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+    const createdAt = new Date().toISOString();
 
-    // #6 Expiration (10 min from now)
-    const expires_at = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-    const created_at = new Date().toISOString();
-
-    // #7 Build identity context we care about (rank, phone, etc)
-    const context = {
-      rank: rank || "",
-      lastName: lastName || "",
-      phone: phone || "",
-      userAgent: req.headers.get("user-agent") || "",
+    // Build row to insert EXACTLY matching your Supabase columns
+    // From screenshots, columns are:
+    // email (text)
+    // code_hash (text)
+    // attempts (int4)
+    // expires_at (timestamptz)
+    // created_at (timestamptz)
+    // rank (text)
+    // last_name (text)
+    // phone (text)
+    // passcode (text)
+    //
+    // NOTE: We're now storing the *raw* code in passcode for you to view,
+    // and the hash in code_hash for validation later.
+    // If you DON'T want to store raw code in DB long-term, we can drop passcode later.
+    const row = {
+      email: email,
+      code_hash: codeHash,
+      attempts: 0,
+      expires_at: expiresAt,
+      created_at: createdAt,
+      rank: rank,
+      last_name: lastName,
+      phone: phone,
+      passcode: rawCode
     };
 
-    // #8 Insert row into Supabase
-    const supabase = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_KEY
+    // Insert row
+    const { error: insertError } = await supabase
+      .from("email_codes")
+      .insert(row);
+
+    if (insertError) {
+      console.error("Supabase insert error:", insertError);
+      return new Response(
+        JSON.stringify({ error: "DB insert failed." }),
+        { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
+      );
+    }
+
+    // Send email with Resend
+    const subject = "Your RealtySaSS verification code";
+    const textBody = [
+      `Hi ${rank ? rank + " " : ""}${lastName || ""},`.trim() || "Hello,",
+      "",
+      `Your verification code is: ${rawCode}`,
+      "",
+      "It expires in 10 minutes."
+    ].join("\n");
+
+    const { error: emailError } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject,
+      text: textBody
+    });
+
+    if (emailError) {
+      console.error("Email send error:", emailError);
+      return new Response(
+        JSON.stringify({ error: "Email send failed." }),
+        { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
+      );
+    }
+
+    // Success response back to browser
+    return new Response(
+      JSON.stringify({ ok: true }),
+      { status: 200, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
     );
 
-    const { error: dbErr } = await supabase
-      .from("email_codes")
-      .insert([
-        {
-          email,
-          code_hash,
-          attempts: 0,
-          expires_at,
-          created_at,
-          context, // this column must be jsonb in Supabase
-        },
-      ]);
-
-    if (dbErr) {
-      console.error("Supabase insert error:", dbErr);
-      return corsResponse(500, { error: "DB insert failed." });
-    }
-
-    // #9 Send email via Resend
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    const msg = {
-      from: process.env.FROM_EMAIL, // e.g. "RealtySaSS <noreply@yourdomain>"
-      to: [email],
-      subject: "Your RealtySaSS verification code",
-      html: `
-        <p>Hi ${rank ? rank + " " : ""}${lastName || ""},</p>
-        <p>Your verification code is: <b>${code}</b></p>
-        <p>It expires in 10 minutes.</p>
-      `,
-    };
-
-    const { error: emailErr } = await resend.emails.send(msg);
-    if (emailErr) {
-      console.error("Resend error:", emailErr);
-      return corsResponse(500, { error: "Email send failed." });
-    }
-
-    // #10 Return success
-    return corsResponse(200, {
-      ok: true,
-      message: "Code sent.",
-      expires_at,
-    });
   } catch (err) {
-    console.error("Unhandled send-code error:", err);
-    return corsResponse(500, { error: "Server error." });
+    console.error("send-code fatal error:", err);
+    return new Response(
+      JSON.stringify({ error: "Server error." }),
+      { status: 500, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
+    );
   }
 }
-
-// #A helper: make 6-digit code
-function generateCode() {
-  // crypto.randomInt(0, 1000000) gives 0..999999
-  const n = crypto.randomInt(0, 1000000);
-  return n.toString().padStart(6, "0");
-}
-
-// #B helper: hash code with sha256
-function hashCode(code) {
-  return crypto.createHash("sha256").update(code).digest("hex");
-}
-
-// #C helper: wrap JSON with CORS headers
-function corsResponse(status, obj) {
-  return new Response(JSON.stringify(obj), {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-      // CORS allow all for now
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-      Vary: "Origin",
-    },
-  });
-}
-
-// Netlify edge/runtime compatibility
-export const config = {
-  path: "/api/send-code",
-};
