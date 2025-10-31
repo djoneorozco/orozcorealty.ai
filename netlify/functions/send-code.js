@@ -7,23 +7,6 @@
 // - Insert row into Supabase (email_codes table)
 // - Send code via Resend email (HTML + text)
 // - Return {ok:true}
-//
-// ENV VARS (Netlify):
-//   SUPABASE_URL
-//   SUPABASE_SERVICE_KEY     <-- you kept this name
-//   RESEND_API_KEY
-//   EMAIL_FROM or FROM_EMAIL (either works)
-//
-// TABLE public.email_codes must include columns:
-//   email (text)
-//   code_hash (text)
-//   attempts (int4)
-//   expires_at (timestamptz)
-//   created_at (timestamptz default now())
-//   rank (text)
-//   last_name (text)
-//   phone (text)
-//   context (jsonb)
 
 const crypto = require("crypto");
 const { Resend } = require("resend");
@@ -33,14 +16,14 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Content-Type": "application/json"
+  "Content-Type": "application/json",
 };
 
 function respond(statusCode, payloadObj) {
   return {
     statusCode,
     headers: CORS_HEADERS,
-    body: JSON.stringify(payloadObj || {})
+    body: JSON.stringify(payloadObj || {}),
   };
 }
 
@@ -55,7 +38,8 @@ function hashCode(code) {
 
 exports.handler = async function (event, context) {
   if (event.httpMethod === "OPTIONS") return respond(200, {});
-  if (event.httpMethod !== "POST") return respond(405, { error: "Method not allowed" });
+  if (event.httpMethod !== "POST")
+    return respond(405, { error: "Method not allowed" });
 
   let body;
   try {
@@ -73,10 +57,9 @@ exports.handler = async function (event, context) {
     return respond(400, { error: "Valid email required" });
   }
 
-  // Generate code (no expiration now)
   const code = makeCode();
   const code_hash = hashCode(code);
-  const expires_at = null; // removed 10-min limit
+  const now = new Date().toISOString(); // log current time
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -86,23 +69,21 @@ exports.handler = async function (event, context) {
   }
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-    auth: { persistSession: false }
+    auth: { persistSession: false },
   });
 
-  const { error: insertErr } = await supabase
-    .from("email_codes")
-    .insert([
-      {
-        email,
-        code_hash,
-        attempts: 0,
-        expires_at,
-        rank,
-        last_name: lastName,
-        phone,
-        context: { rank, lastName, phone }
-      }
-    ]);
+  const { error: insertErr } = await supabase.from("email_codes").insert([
+    {
+      email,
+      code_hash,
+      attempts: 0,
+      created_at: now, // safely set this manually
+      rank,
+      last_name: lastName,
+      phone,
+      context: { rank, lastName, phone },
+    },
+  ]);
 
   if (insertErr) {
     console.error("Supabase insert error:", insertErr);
@@ -111,7 +92,9 @@ exports.handler = async function (event, context) {
 
   const resendKey = process.env.RESEND_API_KEY;
   const fromAddress =
-    process.env.EMAIL_FROM || process.env.FROM_EMAIL || "RealtySaSS <noreply@example.com>";
+    process.env.EMAIL_FROM ||
+    process.env.FROM_EMAIL ||
+    "RealtySaSS <noreply@example.com>";
 
   const resend = new Resend(resendKey);
 
@@ -120,7 +103,7 @@ exports.handler = async function (event, context) {
 
 Your verification code is: ${code}
 
-Please keep this code secure — it does not expire.
+Do not share this code. It is for you only.
 `;
 
   const htmlEmailBody = `
@@ -187,7 +170,7 @@ Please keep this code secure — it does not expire.
         .signature img {
           max-height: 60px;
           margin-top: 12px;
-          border-radius: 6px;
+          border-radius: 8px;
         }
       </style>
     </head>
@@ -198,12 +181,12 @@ Please keep this code secure — it does not expire.
         <p><strong>Hi ${rank} ${lastName},</strong></p>
         <p>Your unique verification code for <strong>OrozcoRealty</strong> is:</p>
         <div class="code-box">${code}</div>
-        <p>Please safeguard this code and do not share it with anyone.<br>This code <strong>does not expire</strong>.</p>
+        <p>Please safeguard this code and do not share it with anyone.</p>
         <div class="signature">
           Sincerely Yours,<br />
           <strong>Elena</strong><br />
           <em>"A.I. Concierge"</em><br />
-          <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" alt="Elena AI Concierge" />
+          <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" alt="Elena Signature Image" />
         </div>
         <div class="footer">
           SaSS™ — Naughty Realty, Serious Returns<br />
@@ -220,7 +203,7 @@ Please keep this code secure — it does not expire.
       to: [email],
       subject,
       text: textBody,
-      html: htmlEmailBody
+      html: htmlEmailBody,
     });
   } catch (mailErr) {
     console.error("Resend error:", mailErr);
@@ -229,6 +212,6 @@ Please keep this code secure — it does not expire.
 
   return respond(200, {
     ok: true,
-    message: "Code created, stored, and emailed."
+    message: "Code created, stored, and emailed.",
   });
 };
