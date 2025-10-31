@@ -217,7 +217,7 @@ Please keep this code secure — it does not expire.`;
         Sincerely Yours,<br />
         <strong>Elena</strong><br />
         <em>"A.I. Concierge"</em><br />
-        <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/690045801fe6ec061af6b131_1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png" alt="Orozco Logo" />
+        <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" />
       </div>
       <div class="footer">
         SaSS™ — Naughty Realty, Serious Returns<br />
