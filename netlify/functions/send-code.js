@@ -1,31 +1,4 @@
 // netlify/functions/send-code.js
-//
-// PURPOSE:
-// - Accept POST { email, rank, lastName, phone }
-// - Generate 6-digit code
-// - Hash code (never store raw code)
-// - Insert row into Supabase (email_codes table)
-// - Send code via Resend email
-// - Return {ok:true}
-//
-// ENV VARS (Netlify):
-//   SUPABASE_URL
-//   SUPABASE_SERVICE_KEY     <-- you kept this name
-//   RESEND_API_KEY
-//   EMAIL_FROM or FROM_EMAIL (either works)
-//
-// TABLE public.email_codes must include columns:
-//   email (text)
-//   code_hash (text)
-//   attempts (int4)
-//   expires_at (timestamptz)
-//   created_at (timestamptz default now())
-//   rank (text)
-//   last_name (text)
-//   phone (text)
-//   context (jsonb)
-//
-// NOTE: We do not return the code to the browser.
 
 const crypto = require("crypto");
 const { Resend } = require("resend");
@@ -38,7 +11,6 @@ const CORS_HEADERS = {
   "Content-Type": "application/json"
 };
 
-// uniform HTTP response helper
 function respond(statusCode, payloadObj) {
   return {
     statusCode,
@@ -47,29 +19,19 @@ function respond(statusCode, payloadObj) {
   };
 }
 
-// make a random 6-digit numeric code like "478182"
 function makeCode() {
-  const n = crypto.randomInt(0, 1000000); // 0..999999
+  const n = crypto.randomInt(0, 1000000);
   return n.toString().padStart(6, "0");
 }
 
-// sha256 hash so we never store the raw code
 function hashCode(code) {
   return crypto.createHash("sha256").update(code).digest("hex");
 }
 
 exports.handler = async function (event, context) {
-  // 0. Handle CORS preflight
-  if (event.httpMethod === "OPTIONS") {
-    return respond(200, {});
-  }
+  if (event.httpMethod === "OPTIONS") return respond(200, {});
+  if (event.httpMethod !== "POST") return respond(405, { error: "Method not allowed" });
 
-  // 1. Only allow POST
-  if (event.httpMethod !== "POST") {
-    return respond(405, { error: "Method not allowed" });
-  }
-
-  // 2. Parse body
   let body;
   try {
     body = JSON.parse(event.body || "{}");
@@ -86,15 +48,12 @@ exports.handler = async function (event, context) {
     return respond(400, { error: "Valid email required" });
   }
 
-  // 3. Generate code + expiration timestamp (10 min)
-  const code = makeCode(); // e.g. "478182"
+  const code = makeCode();
   const code_hash = hashCode(code);
   const expires_at = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-  // 4. Supabase client (service key so we can insert securely)
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     return respond(500, { error: "Supabase env not configured" });
   }
@@ -103,7 +62,6 @@ exports.handler = async function (event, context) {
     auth: { persistSession: false }
   });
 
-  // 5. Insert code row
   const { error: insertErr } = await supabase
     .from("email_codes")
     .insert([
@@ -115,11 +73,7 @@ exports.handler = async function (event, context) {
         rank,
         last_name: lastName,
         phone,
-        context: {
-          rank,
-          lastName,
-          phone
-        }
+        context: { rank, lastName, phone }
       }
     ]);
 
@@ -128,37 +82,58 @@ exports.handler = async function (event, context) {
     return respond(500, { error: "DB insert failed." });
   }
 
-  // 6. Send email via Resend
   const resendKey = process.env.RESEND_API_KEY;
   const fromAddress =
-    process.env.EMAIL_FROM ||
-    process.env.FROM_EMAIL ||
-    "RealtySaSS <noreply@example.com>";
-
+    process.env.EMAIL_FROM || process.env.FROM_EMAIL || "RealtySaSS <noreply@example.com>";
   const resend = new Resend(resendKey);
 
-  const subject = "Your RealtySaSS Verification Code";
-  const textBody = `Hi ${rank ? rank + " " : ""}${lastName || ""},
+  const subject = "Your Unique OrozcoRealty Verification Code";
+
+  const textBody = `Hi ${rank} ${lastName},
 
 Your verification code is: ${code}
 
-It expires in 10 minutes.
-`;
+This code expires in 10 minutes.`;
+
+  const htmlBody = `
+  <div style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px;">
+    <div style="max-width: 600px; margin: auto; background: white; border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+      <h2 style="color: #3b715b; margin-top: 0;">Welcome to The Orozco Realty:</h2>
+      <p style="font-size: 16px; margin: 20px 0;">Hi <strong>${rank} ${lastName}</strong>,</p>
+      <p style="font-size: 16px;">Your Unique verification code for <strong>OrozcoRealty</strong> is:</p>
+
+      <div style="background: #f0f2f7; padding: 25px; text-align: center; border-radius: 8px; font-size: 30px; font-weight: bold; letter-spacing: 2px; margin: 20px 0;">
+        ${code}
+      </div>
+
+      <p style="font-size: 14px; color: #666;">Please safeguard this code and do not share it with anyone.</p>
+
+      <hr style="margin: 40px 0; border: none; border-top: 1px solid #eee;" />
+
+      <div style="display: flex; align-items: center;">
+        <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/690045801fe6ec061af6b131_1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png" width="100" height="100" style="margin-right: 20px; border-radius: 12px;" alt="The Orozco Realty logo" />
+        <div>
+          <p style="margin: 0; font-size: 15px;">Sincerely Yours,</p>
+          <p style="margin: 5px 0 0; font-weight: bold;">Elena</p>
+          <p style="margin: 0;">“A.I. Concierge”</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
 
   try {
     await resend.emails.send({
       from: fromAddress,
       to: [email],
       subject,
-      text: textBody
+      text: textBody,
+      html: htmlBody
     });
   } catch (mailErr) {
     console.error("Resend error:", mailErr);
-    // Code is already stored in DB, so we just surface that email failed
     return respond(500, { error: "Email send failed" });
   }
 
-  // 7. Success
   return respond(200, {
     ok: true,
     message: "Code created, stored, and emailed."
