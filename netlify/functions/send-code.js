@@ -73,9 +73,10 @@ exports.handler = async function (event, context) {
     return respond(400, { error: "Valid email required" });
   }
 
+  // Generate code (no expiration now)
   const code = makeCode();
   const code_hash = hashCode(code);
-  const expires_at = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+  const expires_at = null; // removed 10-min limit
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -119,7 +120,7 @@ exports.handler = async function (event, context) {
 
 Your verification code is: ${code}
 
-It expires in 10 minutes.
+Please keep this code secure — it does not expire.
 `;
 
   const htmlEmailBody = `
@@ -184,8 +185,9 @@ It expires in 10 minutes.
           color: #333;
         }
         .signature img {
-          max-height: 40px;
+          max-height: 60px;
           margin-top: 12px;
+          border-radius: 6px;
         }
       </style>
     </head>
@@ -196,12 +198,12 @@ It expires in 10 minutes.
         <p><strong>Hi ${rank} ${lastName},</strong></p>
         <p>Your unique verification code for <strong>OrozcoRealty</strong> is:</p>
         <div class="code-box">${code}</div>
-        <p>Please safeguard this code and do not share it with anyone.<br>This code expires in <strong>10 minutes</strong>.</p>
+        <p>Please safeguard this code and do not share it with anyone.<br>This code <strong>does not expire</strong>.</p>
         <div class="signature">
           Sincerely Yours,<br />
           <strong>Elena</strong><br />
           <em>"A.I. Concierge"</em><br />
-          <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/690045801fe6ec061af6b131_1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png" alt="Orozco Logo" />
+          <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" alt="Elena AI Concierge" />
         </div>
         <div class="footer">
           SaSS™ — Naughty Realty, Serious Returns<br />
