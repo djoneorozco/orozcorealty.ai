@@ -26,8 +26,8 @@
 //   context (jsonb)
 //
 // CHANGE LOG:
-// - Removed 10-min expiration (code now has no expiry time)
-// - Cleaned email HTML with professional layout & logo
+// - Removed 10-min expiration (code never expires)
+// - Upgraded HTML email styling with top logo and Elena image in signature
 
 const crypto = require("crypto");
 const { Resend } = require("resend");
@@ -48,13 +48,11 @@ function respond(statusCode, payloadObj) {
   };
 }
 
-// Generate random 6-digit code
 function makeCode() {
   const n = crypto.randomInt(0, 1000000);
   return n.toString().padStart(6, "0");
 }
 
-// Hash the code before saving
 function hashCode(code) {
   return crypto.createHash("sha256").update(code).digest("hex");
 }
@@ -79,14 +77,10 @@ exports.handler = async function (event, context) {
     return respond(400, { error: "Valid email required" });
   }
 
-  // Generate unique OrozcoRealty# code
   const code = makeCode();
   const code_hash = hashCode(code);
+  const expires_at = null; // no expiration (permanent OrozcoRealty ID)
 
-  // 🧠 No expiration: set to NULL
-  const expires_at = null;
-
-  // Setup Supabase
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
@@ -98,7 +92,6 @@ exports.handler = async function (event, context) {
     auth: { persistSession: false }
   });
 
-  // Save the permanent code
   const { error: insertErr } = await supabase
     .from("email_codes")
     .insert([
@@ -120,7 +113,6 @@ exports.handler = async function (event, context) {
     return respond(500, { error: "DB insert failed." });
   }
 
-  // Email setup
   const resendKey = process.env.RESEND_API_KEY;
   const fromAddress =
     process.env.EMAIL_FROM ||
@@ -129,13 +121,13 @@ exports.handler = async function (event, context) {
 
   const resend = new Resend(resendKey);
   const subject = `Your Unique OrozcoRealty ID is Ready, ${rank} ${lastName}`;
+
   const textBody = `Hi ${rank ? rank + " " : ""}${lastName || ""},
 
 Your permanent OrozcoRealty ID is: ${code}
 
 Please keep this code secure — it does not expire.`;
 
-  // Elegant HTML email
   const htmlEmailBody = `
 <!DOCTYPE html>
 <html lang="en">
@@ -149,17 +141,17 @@ Please keep this code secure — it does not expire.`;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       }
       .container {
-        max-width: 480px;
+        max-width: 520px;
         margin: 40px auto;
         background: white;
-        border-radius: 8px;
-        padding: 32px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       }
-      .logo {
+      .logo-top {
         display: block;
         margin: 0 auto 24px;
-        max-height: 60px;
+        max-height: 70px;
       }
       h1 {
         font-size: 20px;
@@ -168,7 +160,7 @@ Please keep this code secure — it does not expire.`;
         margin-bottom: 0.5rem;
       }
       p {
-        font-size: 14px;
+        font-size: 15px;
         color: #333;
         text-align: center;
         margin: 8px 0;
@@ -177,48 +169,52 @@ Please keep this code secure — it does not expire.`;
         margin: 24px auto;
         background: #f0f4f8;
         border-radius: 8px;
-        font-size: 28px;
+        font-size: 30px;
         font-weight: bold;
         letter-spacing: 4px;
         padding: 16px;
         text-align: center;
         color: #1a1a1a;
         width: fit-content;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .signature {
+        margin-top: 32px;
+        text-align: center;
+        font-size: 13px;
+        color: #333;
+      }
+      .signature img {
+        max-height: 60px;
+        display: block;
+        margin: 14px auto 0;
+        border-radius: 6px;
       }
       .footer {
         font-size: 12px;
         color: #777;
         text-align: center;
-        margin-top: 24px;
-      }
-      .signature {
-        margin-top: 24px;
-        text-align: left;
-        font-size: 13px;
-        color: #333;
-      }
-      .signature img {
-        max-height: 40px;
-        margin-top: 12px;
+        margin-top: 30px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/690045801fe6ec061af6b131_1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png" alt="OrozcoRealty Logo" class="logo" />
+      <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/690045801fe6ec061af6b131_1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png" alt="The Orozco Realty" class="logo-top" />
       <h1>Welcome to The Orozco Realty</h1>
       <p><strong>Hi ${rank} ${lastName},</strong></p>
       <p>Your unique OrozcoRealty ID is:</p>
       <div class="code-box">${code}</div>
       <p>Please safeguard this code and do not share it with anyone.<br>
       This code <strong>does not expire</strong>.</p>
+
       <div class="signature">
         Sincerely Yours,<br />
         <strong>Elena</strong><br />
         <em>"A.I. Concierge"</em><br />
-        <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" />
+        <img src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/68db342a77ed69fc1044ebee_5aaaff2bff71a700da3fa14548ad049f_Landing%20Footer%20Background.png" alt="Elena AI Concierge" />
       </div>
+
       <div class="footer">
         SaSS™ — Naughty Realty, Serious Returns<br />
         © 2025 The Orozco Realty. All rights reserved.
