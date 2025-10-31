@@ -1,30 +1,35 @@
-//#2 verify-code.js — FULL FILE
-
+//#1 imports
 import { createClient } from "@supabase/supabase-js";
 
+//#2 env
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
+
+// helper: same hash as send-code
 async function hashCode(code) {
-  const data = new TextEncoder().encode(code);
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  const bytes = Array.from(new Uint8Array(digest));
+  const enc = new TextEncoder().encode(code);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  const bytes = Array.from(new Uint8Array(buf));
   return bytes.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-function jsonResponse(body, status = 200) {
-  return new Response(JSON.stringify(body), {
+// CORS-aware JSON reply
+function jsonResponse(status, bodyObj) {
+  return new Response(JSON.stringify(bodyObj), {
     status,
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-      Vary: "Origin"
-    }
+    },
   });
 }
 
 export async function handler(event) {
-  // CORS preflight
+  // preflight
   if (event.httpMethod === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -32,77 +37,60 @@ export async function handler(event) {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Max-Age": "86400",
-        Vary: "Origin"
-      }
+      },
     });
   }
 
   if (event.httpMethod !== "POST") {
-    return jsonResponse({ error: "Method not allowed" }, 405);
+    return jsonResponse(405, { error: "Method not allowed" });
   }
 
-  // 1. parse body
-  let body;
   try {
-    body = JSON.parse(event.body || "{}");
-  } catch {
-    return jsonResponse({ error: "Bad JSON" }, 400);
-  }
+    const { email, code } = JSON.parse(event.body || "{}");
 
-  const { email, code } = body;
-  if (!email || !code) {
-    return jsonResponse({ error: "Missing email or code" }, 400);
-  }
-
-  // 2. init supabase
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY,
-    { auth: { persistSession: false } }
-  );
-
-  // 3. get stored row for this email
-  const { data: row, error: selErr } = await supabase
-    .from("email_codes")
-    .select("*")
-    .eq("email", email)
-    .single();
-
-  if (selErr || !row) {
-    // nothing on record
-    return jsonResponse({ error: "Invalid code." }, 400);
-  }
-
-  // 4. check expiration
-  const now = Date.now();
-  const deadline = row.expires_at ? Date.parse(row.expires_at) : 0;
-  if (!deadline || now > deadline) {
-    return jsonResponse({ error: "Code expired." }, 400);
-  }
-
-  // 5. compare hashes
-  const providedHash = await hashCode(code);
-  if (providedHash !== row.code_hash) {
-    // bump attempts to track abuse (optional)
-    await supabase
-      .from("email_codes")
-      .update({ attempts: (row.attempts || 0) + 1 })
-      .eq("email", email);
-
-    return jsonResponse({ error: "Invalid code." }, 400);
-  }
-
-  // (Optional) you can clear the code here so it can't be reused:
-  // await supabase.from("email_codes").delete().eq("email", email);
-
-  // 6. success -> this is where we "unlock" the app
-  return jsonResponse({
-    ok: true,
-    redirect: "/features/analyze",
-    identity: {
-      email: row.email,
-      ...row.context // rank / lastName / phone you stored
+    if (!email || !code) {
+      return jsonResponse(400, { error: "Missing email or code." });
     }
-  });
+
+    const hashed = await hashCode(code);
+
+    // Pull the most recent matching row
+    const { data, error: dbErr } = await supabase
+      .from("email_codes")
+      .select("*")
+      .eq("email", email)
+      .eq("code_hash", hashed)
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    if (dbErr) {
+      console.error("DB read failed:", dbErr);
+      return jsonResponse(500, { error: "DB read failed" });
+    }
+
+    if (!data || data.length === 0) {
+      return jsonResponse(401, { error: "Invalid code." });
+    }
+
+    const row = data[0];
+
+    // check expiry
+    const now = Date.now();
+    const exp = Date.parse(row.expires_at);
+    if (Number.isFinite(exp) && now > exp) {
+      return jsonResponse(401, { error: "Code expired." });
+    }
+
+    // Passed ✅
+    // At this point you can mark them verified, unlock dashboard, redirect, etc.
+    // We'll just return success + context we stored.
+    return jsonResponse(200, {
+      ok: true,
+      verified: true,
+      context: row.context || {},
+    });
+  } catch (err) {
+    console.error("verify-code crashed:", err);
+    return jsonResponse(500, { error: "Server error" });
+  }
 }
