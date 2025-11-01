@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Fri Oct 31 2025 03:23:53 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Sat Nov 01 2025 16:45:00 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68dcd360e3426efe81144c09" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -231,83 +231,678 @@
       </div>
     </div>
   </section>
-  <div class="code-embed-11 w-embed w-script">
+  <div class="code-embed-11 w-embed w-script"><!--  ============================
+ OrozcoRealty • Financial Dashboard v4.0
+ EMBED #1 of 2  (HTML + CSS ONLY)
+ - Monthly budgeting UI (with month selector)
+ - Matches Analysis Dashboard visual style
+ - DO NOT add <script> logic here except what's already inside this block
+ - Place this Embed FIRST on the page
+============================  -->
     <div id="rs-shell" style="all: initial;">
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+      <!--  Fonts  -->
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
       <style>
-    #rs-shell, #rs-shell * { box-sizing: border-box; }
-    :root{
-      --ink:#EAF2FF;--muted:#9FB1DE;--bg:#0a0f16;--panel:#0f1623;--line:rgba(255,255,255,.08);
-      --accent:#82dff8;--accent-2:#2df5c7;--accent-3:#6aa7ff;--radius:16px;--blur:18px;--speed:.2s;
-      --on:#d9e7ff;--off:#7d8db0
+    /* ========== TOKENS / THEME ========== */
+    #rs-shell, #rs-shell * {
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
-    #rs-shell{font-family:"Plus Jakarta Sans",Inter,system-ui,sans-serif;color:var(--ink)}
-    #rs-shell .app{display:grid;grid-template-columns:270px 1fr;min-height:80vh;background:
-      radial-gradient(1200px 480px at 70% -10%, rgba(130,223,248,.12), transparent 60%),
-      radial-gradient(900px 420px at 40% -6%, rgba(45,245,199,.10), transparent 55%),
-      linear-gradient(180deg,#0b1019 0%,#0a0f16 100%)}
-    .rs-sidebar{background:rgba(13,19,32,.92);backdrop-filter:blur(var(--blur));border-right:1px solid var(--line);padding:20px 16px;display:flex;flex-direction:column;gap:14px}
-    .rs-brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#cfe3ff}.rs-brand .dot{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#96f3ff,#3db4ff)}
-    .rs-section{margin-top:10px;font-size:12px;letter-spacing:.4px;color:#8aa0cf;text-transform:uppercase}
-    .rs-nav{display:flex;flex-direction:column;gap:8px}
-    .rs-item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;color:#cfe3ff;padding:12px;cursor:pointer;transition:all var(--speed);text-align:left}
-    .rs-item:hover{border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,.4)}
-    .rs-item.active{background:linear-gradient(135deg,rgba(130,223,248,.15),rgba(45,245,199,.12));border-color:rgba(130,223,248,.4)}
-    .rs-item.enabled{color:var(--on);box-shadow:0 0 0 1px rgba(130,223,248,.25) inset,0 6px 22px rgba(0,0,0,.35);background:linear-gradient(135deg,rgba(130,223,248,.18),rgba(45,245,199,.15));border-color:rgba(130,223,248,.45)}
-    .rs-item.locked{color:var(--off);opacity:.6;pointer-events:none;background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);filter:saturate(.7)}
-    .rs-chip{display:block;text-align:center;font-weight:800;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;transition:all var(--speed)}
-    .rs-chip.enabled{box-shadow:0 0 0 1px rgba(130,223,248,.45) inset,0 6px 22px rgba(0,0,0,.35)}
-    .rs-main{padding:26px}
-    .rs-top{display:grid;grid-template-columns:1fr auto;gap:20px}
-    .rs-kpis{display:grid;grid-template-columns:repeat(5,minmax(180px,1fr));gap:16px}
-    .kpi{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:var(--radius);padding:16px;backdrop-filter:blur(calc(var(--blur)*.7))}
-    .kpi .label{font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase}
-    .kpi .value{font-size:20px;font-weight:700;color:#fff}
-    .rs-content{margin-top:24px;display:grid;grid-template-columns:1fr;gap:18px}
-    .va-card{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:18px}
-    .ap-section{display:none}.ap-section.active{display:block}
-    .va-card h2{margin:0 0 12px;font-size:18px;color:var(--accent)}
-    .va-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media(max-width:700px){.va-row{grid-template-columns:1fr}}
-    .va-field{display:flex;flex-direction:column;gap:8px}
-    .va-field label{font-size:12px;color:var(--muted)}
-    .va-input,.va-select,.va-slider,.va-btn{border:1px solid rgba(255,255,255,.12);background:#0f1220;color:#e9ecff;border-radius:12px;padding:12px;font-size:14px;outline:none}
-    .va-select{appearance:none}
-    .va-btn{cursor:pointer;background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;font-weight:800}
-    .va-btn.secondary{background:linear-gradient(135deg,#7de9bd,var(--accent-2));color:#0b1a10}
-    .va-btn.ghost{background:#0f1220;border:1px dashed rgba(255,255,255,.22);color:#e9ecff}
-    .va-note{color:#9FB1DE;font-size:12px}
-    .bp-panel{margin-top:10px;border:1px dashed rgba(255,255,255,.18);border-radius:12px;padding:12px;background:#0f1326}
-    .bp-row{display:grid;grid-template-columns:110px 1fr 140px 80px;gap:8px;align-items:center}
-    @media(max-width:720px){.bp-row{grid-template-columns:1fr}}
-    .bp-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:8px}
-    .bp-tr{background:#0f1220;border:1px solid rgba(255,255,255,.12);border-radius:10px}
-    .bp-td,.bp-th{padding:8px 10px;font-size:13px}
-    .bp-th{color:#fff}
-    .bp-td{color:#fff}
-    .bp-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .bp-chip{padding:6px 10px;border-radius:999px;background:#0f1220;border:1px solid rgba(255,255,255,.18);font-size:12px;color:#fff}
-    .benefit-grid{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:12px;margin-top:10px}
-    @media(max-width:900px){.benefit-grid{grid-template-columns:1fr}}
-    .benefit{background:#0f1326;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px}
-    .benefit .t{font-size:12px;color:#9FB1DE;text-transform:uppercase;margin-bottom:6px}
-    .benefit .v{font-weight:800}
-    .benefit.ok{outline:2px solid rgba(85,211,153,.25)}
-    .benefit.warn{outline:2px solid rgba(249,199,79,.25)}
-    .mil-toggle{display:flex;gap:8px;justify-content:flex-start;margin:6px 0 2px}
-    .mil-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#0f1220;color:#cfe3ff;font-weight:700;font-size:12px;cursor:pointer;opacity:.85}
-    .mil-pill.active{background:linear-gradient(135deg,var(--accent),#7ec8ff);color:#041125;box-shadow:0 0 0 1px rgba(130,223,248,.4) inset}
-    .muted-help{font-size:11px;color:#9FB1DE;margin-top:-2px}
-    .ad-only{display:none}.vet-only{display:none}
-    #cs-slider{width:100%}
-    #cs-slider.bad{accent-color:#ff4d4d}
-    #cs-slider.good{accent-color:#2ddc7a}
-    .profile-stack{display:flex;flex-direction:column;gap:16px}
-    .profile-card{background:#0f1326;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px}
-    .profile-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-    .profile-title .idx{font-weight:800;color:#cfe3ff}
+    :root{
+      --ink:#EAF2FF;
+      --ink-strong:#fff;
+      --muted:#9FB1DE;
+      --bg:#0a0f16;
+      --panel:#0f1623;
+      --line:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.14);
+      --accent:#82dff8;
+      --accent-2:#2df5c7;
+      --accent-3:#6aa7ff;
+      --radius:16px;
+      --blur:18px;
+      --speed:.2s;
+      --on:#d9e7ff;
+      --off:#7d8db0;
+      --warn:#f9c74f;
+      --bad:#ff6b6b;
+      --ok:#55d399;
+      --panel-2:#0f1326;
+    }
+    /* ========== APP BACKDROP ========== */
+    #rs-shell{
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 480px at 70% -10%, rgba(130,223,248,.12), transparent 60%),
+        radial-gradient(900px 420px at 40% -6%, rgba(45,245,199,.10), transparent 55%),
+        linear-gradient(180deg,#0b1019 0%,#0a0f16 100%);
+      min-height:80vh;
+      padding:0;
+      margin:0;
+    }
+    /* 2-col layout: Sidebar + Main */
+    #rs-shell .app{
+      display:grid;
+      grid-template-columns:270px 1fr;
+      min-height:80vh;
+    }
+    @media(max-width:800px){
+      #rs-shell .app{
+        grid-template-columns:1fr;
+      }
+    }
+    /* ========== SIDEBAR ========== */
+    .rs-sidebar{
+      background:rgba(13,19,32,.92);
+      backdrop-filter:blur(var(--blur));
+      border-right:1px solid var(--line);
+      padding:20px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    @media(max-width:800px){
+      .rs-sidebar{
+        border-right:0;
+        border-bottom:1px solid var(--line);
+        position:relative;
+      }
+    }
+    .rs-brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      color:#cfe3ff;
+      font-size:14px;
+      line-height:1.2;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+    }
+    .rs-brand .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#96f3ff,#3db4ff);
+      box-shadow:0 0 8px rgba(130,223,248,.8);
+    }
+    .rs-section{
+      margin-top:10px;
+      font-size:11px;
+      letter-spacing:.4px;
+      color:#8aa0cf;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+    .rs-nav{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .rs-item{
+      position:relative;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:#cfe3ff;
+      padding:12px;
+      cursor:pointer;
+      transition:all var(--speed);
+      text-align:left;
+      font-size:13px;
+      font-weight:600;
+      line-height:1.3;
+      box-shadow:0 10px 24px rgba(0,0,0,.4);
+    }
+    .rs-item:hover{
+      border-color:var(--accent);
+      box-shadow:
+        0 4px 12px rgba(0,0,0,.4),
+        0 0 12px rgba(130,223,248,.35);
+    }
+    .rs-item.active{
+      background:linear-gradient(135deg,rgba(130,223,248,.15),rgba(45,245,199,.12));
+      border-color:rgba(130,223,248,.4);
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.6),
+        0 0 18px rgba(130,223,248,.4);
+    }
+    .rs-item.enabled{
+      color:var(--on);
+      box-shadow:
+        0 0 0 1px rgba(130,223,248,.25) inset,
+        0 6px 22px rgba(0,0,0,.35);
+      background:linear-gradient(135deg,rgba(130,223,248,.18),rgba(45,245,199,.15));
+      border-color:rgba(130,223,248,.45);
+    }
+    .rs-item.locked{
+      color:var(--off);
+      opacity:.6;
+      pointer-events:none;
+      background:rgba(255,255,255,.03);
+      border-color:rgba(255,255,255,.05);
+      filter:saturate(.7);
+    }
+    /* Analyze button (→ Verify / Analysis Dashboard) */
+    .rs-chip{
+      display:block;
+      text-align:center;
+      font-weight:800;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      cursor:pointer;
+      background:linear-gradient(135deg,var(--accent),#7ec8ff);
+      color:#041125;
+      transition:all var(--speed);
+      font-size:13px;
+      line-height:1.2;
+      text-decoration:none;
+      box-shadow:0 10px 24px rgba(0,0,0,.6),0 0 20px rgba(130,223,248,.4);
+    }
+    .rs-chip.enabled{
+      box-shadow:
+        0 0 0 1px rgba(130,223,248,.45) inset,
+        0 6px 22px rgba(0,0,0,.35),
+        0 0 28px rgba(130,223,248,.6);
+    }
+    .rs-footer{
+      margin-top:8px;
+    }
+    /* ========== MAIN BODY ========== */
+    .rs-main{
+      padding:26px;
+      color:var(--ink);
+    }
+    .rs-top{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+    }
+    @media(max-width:800px){
+      .rs-top{
+        grid-template-columns:1fr;
+      }
+    }
+    /* KPI row */
+    .rs-kpis{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(180px,1fr));
+      gap:16px;
+    }
+    @media(max-width:1000px){
+      .rs-kpis{ grid-template-columns:repeat(3,minmax(180px,1fr)); }
+    }
+    @media(max-width:600px){
+      .rs-kpis{ grid-template-columns:repeat(2,minmax(160px,1fr)); }
+    }
+    @media(max-width:420px){
+      .rs-kpis{ grid-template-columns:1fr; }
+    }
+    .kpi{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      backdrop-filter:blur(calc(var(--blur)*.7));
+      color:var(--ink);
+      box-shadow:
+        0 16px 32px rgba(0,0,0,.6),
+        0 0 32px rgba(130,223,248,.15) inset;
+      position:relative;
+    }
+    .kpi .label{
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      font-weight:600;
+    }
+    .kpi .value{
+      font-size:20px;
+      font-weight:700;
+      color:var(--ink-strong);
+      line-height:1.2;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    /* Grade pill placeholder */
+    .rs-grade{
+      min-width:180px;
+      background:var(--panel-2);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      color:var(--ink);
+      font-size:13px;
+      font-weight:600;
+      line-height:1.4;
+      box-shadow:
+        0 16px 32px rgba(0,0,0,.6),
+        0 0 32px rgba(130,223,248,.15) inset;
+    }
+    @media(max-width:800px){
+      .rs-grade{ min-width:auto; }
+    }
+    .rs-grade-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .grade-main{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      line-height:1.2;
+    }
+    .grade-dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#888;
+      box-shadow:0 0 8px rgba(255,255,255,.4);
+    }
+    .grade-letter{
+      font-size:16px;
+      font-weight:800;
+      color:var(--ink-strong);
+    }
+    .grade-desc{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:500;
+    }
+    .grade-meter-shell{
+      width:160px;
+      height:8px;
+      border-radius:999px;
+      background:#0b0f23;
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+    }
+    .grade-meter-bar{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent-2),#f9c74f,#ff6b6b);
+    }
+    .grade-net{
+      font-size:12px;
+      color:var(--ink);
+      font-weight:600;
+    }
+    /* ========== CONTENT BODY SECTIONS ========== */
+    .rs-content{
+      margin-top:24px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+    .va-card{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:
+        0 24px 48px rgba(0,0,0,.8),
+        0 0 40px rgba(130,223,248,.18) inset;
+      background-clip:padding-box;
+    }
+    .ap-section{ display:none; }
+    .ap-section.active{ display:block; }
+    .va-card h2{
+      margin:0 0 12px;
+      font-size:18px;
+      color:var(--accent);
+      font-weight:700;
+      letter-spacing:.2px;
+      text-transform:none;
+      line-height:1.3;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .va-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:700px){
+      .va-row{ grid-template-columns:1fr; }
+    }
+    .va-field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .va-field label{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.3;
+      font-weight:500;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:6px;
+    }
+    .va-chip{
+      font-size:11px;
+      font-weight:700;
+      color:var(--ink);
+      background:#0f1623;
+      border:1px solid var(--line);
+      padding:2px 6px;
+      border-radius:8px;
+      line-height:1.2;
+    }
+    .va-input,
+    .va-select,
+    .va-slider,
+    .va-btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:#0f1220;
+      color:#e9ecff;
+      border-radius:12px;
+      padding:12px;
+      font-size:14px;
+      outline:none;
+      width:100%;
+      line-height:1.3;
+      font-family:inherit;
+    }
+    .va-input[disabled],
+    .va-select[disabled]{
+      background:#1a2035;
+      color:#9FB1DE;
+      opacity:.75;
+    }
+    .va-select{ appearance:none; cursor:pointer; }
+    .va-slider{ padding:0; height:38px; cursor:pointer; }
+    .va-btn{
+      cursor:pointer;
+      font-weight:800;
+      background:linear-gradient(135deg,var(--accent),#7ec8ff);
+      color:#041125;
+      line-height:1.2;
+      text-align:center;
+      box-shadow:0 16px 32px rgba(0,0,0,.6),0 0 24px rgba(130,223,248,.5);
+      border-radius:12px;
+    }
+    .va-btn.secondary{
+      background:linear-gradient(135deg,#7de9bd,var(--accent-2));
+      color:#0b1a10;
+      box-shadow:0 16px 32px rgba(0,0,0,.6),0 0 24px rgba(45,245,199,.5);
+    }
+    .va-btn.ghost{
+      background:#0f1220;
+      border:1px dashed rgba(255,255,255,.22);
+      color:#e9ecff;
+      box-shadow:none;
+      font-weight:600;
+    }
+    .va-note{
+      color:#9FB1DE;
+      font-size:12px;
+      line-height:1.4;
+      font-weight:400;
+    }
+    .muted-help{
+      font-size:11px;
+      color:#9FB1DE;
+      margin-top:-2px;
+      line-height:1.4;
+    }
+    /* Profile stack card-within-card */
+    .profile-stack{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .profile-card{
+      background:#0f1326;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:14px;
+      box-shadow:
+        0 24px 48px rgba(0,0,0,.8),
+        0 0 32px rgba(130,223,248,.2) inset;
+    }
+    .profile-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:6px;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .profile-title .idx{
+      font-weight:800;
+      color:#cfe3ff;
+      font-size:14px;
+      line-height:1.3;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    /* Active Duty / Veteran toggle pills */
+    .mil-toggle{
+      display:flex;
+      gap:8px;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+      margin:6px 0 2px;
+    }
+    .mil-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#0f1220;
+      color:#cfe3ff;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      opacity:.85;
+      line-height:1.2;
+      box-shadow:0 16px 32px rgba(0,0,0,.8);
+    }
+    .mil-pill.active{
+      background:linear-gradient(135deg,var(--accent),#7ec8ff);
+      color:#041125;
+      box-shadow:
+        0 0 0 1px rgba(130,223,248,.4) inset,
+        0 16px 32px rgba(0,0,0,.8),
+        0 0 24px rgba(130,223,248,.6);
+    }
+    .ad-only{ display:none; }
+    .vet-only{ display:none; }
+    #cs-slider.good{ accent-color:#2ddc7a; }
+    #cs-slider.bad{ accent-color:#ff4d4d; }
+    /* ===== VA BENEFITS GRID (Mortgage section) ===== */
+    .benefit-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(220px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    @media(max-width:900px){
+      .benefit-grid{ grid-template-columns:1fr; }
+    }
+    .benefit{
+      background:#0f1326;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:
+        0 24px 48px rgba(0,0,0,.8),
+        0 0 32px rgba(130,223,248,.18) inset;
+      font-size:13px;
+      line-height:1.4;
+      color:var(--ink);
+    }
+    .benefit .t{
+      font-size:11px;
+      color:#9FB1DE;
+      text-transform:uppercase;
+      margin-bottom:6px;
+      letter-spacing:.3px;
+      font-weight:600;
+    }
+    .benefit .v{
+      font-weight:800;
+      color:var(--ink-strong);
+      font-size:13px;
+      line-height:1.3;
+    }
+    .benefit.ok{
+      outline:2px solid rgba(85,211,153,.25);
+      box-shadow:0 0 24px rgba(85,211,153,.4);
+    }
+    .benefit.warn{
+      outline:2px solid rgba(249,199,79,.25);
+      box-shadow:0 0 24px rgba(249,199,79,.4);
+    }
+    /* ===== EXPENSE BUILDER TABLE ===== */
+    .bp-panel{
+      margin-top:10px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:12px;
+      padding:12px;
+      background:#0f1326;
+      color:var(--ink);
+      box-shadow:
+        0 24px 48px rgba(0,0,0,.8),
+        0 0 32px rgba(130,223,248,.18) inset;
+    }
+    .bp-row{
+      display:grid;
+      grid-template-columns:110px 1fr 140px 100px;
+      gap:8px;
+      align-items:center;
+    }
+    @media(max-width:720px){
+      .bp-row{ grid-template-columns:1fr; }
+    }
+    .bp-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0 8px;
+      margin-top:8px;
+    }
+    .bp-tr{
+      background:#0f1220;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px;
+      box-shadow:0 10px 24px rgba(0,0,0,.7);
+    }
+    .bp-th,
+    .bp-td{
+      padding:8px 10px;
+      font-size:13px;
+      color:#fff;
+      text-align:left;
+      line-height:1.3;
+    }
+    .bp-th{
+      color:#fff;
+      font-weight:600;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+    }
+    .bp-td .va-input,
+    .bp-td .va-select{
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .bp-td .va-btn.ghost{
+      padding:8px 10px;
+      font-size:13px;
+      line-height:1.2;
+      border-radius:10px;
+      min-width:40px;
+      text-align:center;
+    }
+    .bp-controls{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+      align-items:flex-start;
+    }
+    .bp-chip{
+      padding:6px 10px;
+      border-radius:999px;
+      background:#0f1220;
+      border:1px solid rgba(255,255,255,.18);
+      font-size:12px;
+      color:#fff;
+      font-weight:600;
+      line-height:1.2;
+      box-shadow:0 10px 24px rgba(0,0,0,.7);
+    }
+    /* small helper text row under table */
+    #bp-note{
+      font-size:12px;
+      line-height:1.4;
+      color:#9FB1DE;
+    }
+    /* ===== MONTH PICKER (Expenses section) ===== */
+    .month-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .month-col{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:160px;
+    }
+    .month-col label{
+      font-size:12px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:500;
+    }
+    .month-saved-hint{
+      font-size:11px;
+      line-height:1.3;
+      color:var(--muted);
+      font-weight:400;
+    }
+    /* ===== MORTGAGE SLIDERS / FIELDS ===== */
+    .va-card-inner{
+      background:#0f1326;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      padding:14px;
+      margin-top:14px;
+      box-shadow:
+        0 24px 48px rgba(0,0,0,.8),
+        0 0 32px rgba(130,223,248,.2) inset;
+    }
+    /* print cleanup */
+    @media print {
+      body, html {
+        background:#fff !important;
+      }
+    }
   </style>
+      <!--  ========== APP BODY / PANELS / FIELDS ==========  -->
       <div class="app">
+        <!--  SIDEBAR  -->
         <aside class="rs-sidebar">
           <div class="rs-brand">
             <div class="dot"></div>
@@ -319,14 +914,16 @@
             <div class="rs-item enabled active" data-panel="income">Income</div>
             <div class="rs-item enabled" data-panel="expenses">Expenses</div>
             <div class="rs-item enabled" data-panel="savings">Savings</div>
-            <div class="rs-item enabled" data-panel="mortgage">Expected Mortgage</div>
+            <div class="rs-item enabled" data-panel="mortgage">Home Purchase</div>
           </div>
-          <div class="rs-footer" style="margin-top:8px">
-            <!--  Analyze goes to Verify  -->
+          <div class="rs-footer">
+            <!--  This button builds bridge + sends user to /verify  -->
             <a id="btn-analyze" class="rs-chip enabled" href="../verify.html">Analyze</a>
           </div>
         </aside>
+        <!--  MAIN  -->
         <main class="rs-main">
+          <!--  KPI STRIP + GRADE  -->
           <div class="rs-top">
             <div class="rs-kpis">
               <div class="kpi">
@@ -350,166 +947,315 @@
                 <div class="value" id="kpi-disposable">$ —</div>
               </div>
             </div>
-            <div class="rs-grade"></div>
+            <!--  Grade / Health  -->
+            <div class="rs-grade" id="grade-card">
+              <div class="rs-grade-top">
+                <div class="grade-main">
+                  <div class="grade-dot" id="grade-dot"></div>
+                  <div>
+                    <div class="grade-letter" id="grade-letter">—</div>
+                    <div class="grade-desc" id="grade-band">Spending Load</div>
+                  </div>
+                </div>
+                <div class="grade-meter-shell">
+                  <div class="grade-meter-bar" id="grade-meter"></div>
+                </div>
+              </div>
+              <div class="grade-net" style="margin-top:10px;">
+                Net Leftover / Month:
+                <span id="grade-leftover" style="font-weight:800;">$0</span>
+              </div>
+            </div>
           </div>
+          <!--  PANELS  -->
           <div class="rs-content">
             <div class="va-card">
-              <!--  PROFILE  -->
+              <!--  ========== PROFILE PANEL ==========  -->
               <section class="ap-section" id="sec-profile">
-                <h2>Profile</h2>
+                <h2>Profile
+                  <span class="va-chip" style="background:#0f1623;border:1px solid var(--line);color:var(--ink);">Household Details</span>
+                </h2>
                 <div id="profile-stack" class="profile-stack">
+                  <!--  MEMBER CARD  -->
                   <div class="profile-card" data-profile-idx="1">
                     <div class="profile-title">
                       <div class="idx">Service Member's Information</div>
                     </div>
+                    <!--  basic identity  -->
                     <div class="va-row">
-                      <div class="va-field"><label>First Name</label><input class="va-input pf-fname"></div>
-                      <div class="va-field"><label>Last Name</label><input class="va-input pf-lname"></div>
+                      <div class="va-field">
+                        <label>First Name</label>
+                        <input class="va-input pf-fname">
+                      </div>
+                      <div class="va-field">
+                        <label>Last Name</label>
+                        <input class="va-input pf-lname">
+                      </div>
                     </div>
                     <div class="va-row" style="margin-top:8px">
-                      <div class="va-field"><label>Email</label><input class="va-input pf-email" type="email" placeholder="name@example.com"></div>
-                      <div class="va-field"><label>Phone #</label><input class="va-input pf-phone" type="tel" placeholder="(xxx) xxx-xxxx"></div>
+                      <div class="va-field">
+                        <label>Email</label>
+                        <input class="va-input pf-email" type="email" placeholder="name@example.com">
+                      </div>
+                      <div class="va-field">
+                        <label>Phone #</label>
+                        <input class="va-input pf-phone" type="tel" placeholder="(xxx) xxx-xxxx">
+                      </div>
                     </div>
-                    <div class="va-card" style="margin-top:14px;background:#0f1326">
-                      <div style="display:flex;align-items:center;justify-content:space-between;">
-                        <h2 style="margin:0">Military Profile</h2>
+                    <!--  Military Profile  -->
+                    <div class="va-card-inner" style="margin-top:14px;">
+                      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                        <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.3px;text-transform:uppercase;">Military Profile</h2>
                         <div class="mil-toggle">
                           <div class="mil-pill" data-mode="AD">ACTIVE DUTY</div>
                           <div class="mil-pill active" data-mode="VET">VETERAN</div>
                         </div>
                       </div>
-                      <div class="muted-help">Choose your current status. Fields below will adjust automatically.</div>
-                      <!--  AD  -->
+                      <div class="muted-help">Choose status. Income logic + fields will adapt.</div>
+                      <!--  Active Duty fields  -->
                       <div class="va-row ad-only" style="margin-top:10px">
-                        <div class="va-field"><label>Rank / Pay Grade</label><select class="va-select sel-rank"></select></div>
-                        <div class="va-field"><label>Years in Service</label><select class="va-select sel-years"></select></div>
+                        <div class="va-field">
+                          <label>Rank / Pay Grade</label>
+                          <select class="va-select sel-rank"></select>
+                        </div>
+                        <div class="va-field">
+                          <label>Years in Service</label>
+                          <select class="va-select sel-years"></select>
+                        </div>
                       </div>
                       <div class="va-row ad-only" style="margin-top:8px">
-                        <div class="va-field"><label>Dependents</label>
+                        <div class="va-field">
+                          <label>Dependents</label>
                           <select class="va-select sel-deps">
                             <option value="with" selected="">With Dependents</option>
                             <option value="without">Without Dependents</option>
                           </select>
                         </div>
-                        <div class="va-field"><label>ZIP / Duty Location</label>
+                        <div class="va-field">
+                          <label>ZIP / Duty Location</label>
                           <select class="va-select sel-zip" disabled="">
                             <option value="78236" selected="">78236 – Lackland AFB (San Antonio, TX)</option>
                           </select>
                         </div>
                       </div>
-                      <!--  VET  -->
+                      <!--  Veteran fields  -->
                       <div class="va-row vet-only" style="margin-top:10px">
-                        <div class="va-field"><label>Retirement Rank (High-3)</label><select class="va-select ret-rank"></select></div>
-                        <div class="va-field"><label>Total Years of Service</label><input class="va-input ret-years" type="number" min="0" max="40" step="1" value="20"></div>
+                        <div class="va-field">
+                          <label>Retirement Rank (High-3)</label>
+                          <select class="va-select ret-rank"></select>
+                        </div>
+                        <div class="va-field">
+                          <label>Total Years of Service</label>
+                          <input class="va-input ret-years" type="number" min="0" max="40" step="1" value="20">
+                        </div>
                       </div>
                       <div class="va-row vet-only" style="margin-top:8px">
-                        <div class="va-field"><label>VA Disability Rating <span class="va-rate-label">70%</span></label><input class="va-slider va-rate" type="range" min="0" max="100" step="10" value="70"></div>
-                        <div class="va-field"><label>Spouse?</label><select class="va-select va-has-spouse">
+                        <div class="va-field">
+                          <label>VA Disability Rating <span class="va-rate-label">70%</span></label>
+                          <input class="va-slider va-rate" type="range" min="0" max="100" step="10" value="70">
+                        </div>
+                        <div class="va-field">
+                          <label>Spouse?</label>
+                          <select class="va-select va-has-spouse">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
                       <div class="va-row vet-only" style="margin-top:8px">
-                        <div class="va-field"><label>Children under 18</label><input class="va-input va-kids-u18" type="number" min="0" step="1" value="0"></div>
-                        <div class="va-field"><label>Children 18–23 in school</label><input class="va-input va-kids-s" type="number" min="0" step="1" value="0"></div>
+                        <div class="va-field">
+                          <label>Children under 18</label>
+                          <input class="va-input va-kids-u18" type="number" min="0" step="1" value="0">
+                        </div>
+                        <div class="va-field">
+                          <label>Children 18–23 in school</label>
+                          <input class="va-input va-kids-s" type="number" min="0" step="1" value="0">
+                        </div>
                       </div>
                       <div class="va-row vet-only" style="margin-top:8px">
-                        <div class="va-field"><label>Parents as dependents (0–2)</label><input class="va-input va-parents" type="number" min="0" max="2" step="1" value="0"></div>
-                        <div class="va-field"><label>Spouse Needs Aid & Attendance?</label><select class="va-select va-spouse-aanda">
+                        <div class="va-field">
+                          <label>Parents as dependents (0–2)</label>
+                          <input class="va-input va-parents" type="number" min="0" max="2" step="1" value="0">
+                        </div>
+                        <div class="va-field">
+                          <label>Spouse Needs Aid &amp; Attendance?</label>
+                          <select class="va-select va-spouse-aanda">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <div class="va-card" style="margin-top:14px;background:#0f1326">
-                      <h2>VA Benefits & Eligibility</h2>
-                      <div class="va-row">
-                        <div class="va-field"><label>Surviving Spouse Eligible?</label><select class="va-select va-survivor">
+                    </div><!--  /va-card-inner military  -->
+                    <!--  VA / TX benefits profile  -->
+                    <div class="va-card-inner" style="margin-top:14px;">
+                      <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.3px;text-transform:uppercase;">VA Benefits &amp; Eligibility</h2>
+                      <div class="va-row" style="margin-top:8px">
+                        <div class="va-field">
+                          <label>Surviving Spouse Eligible?</label>
+                          <select class="va-select va-survivor">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
-                        <div class="va-field"><label>Property State</label><select class="va-select prop-state">
+                          </select>
+                        </div>
+                        <div class="va-field">
+                          <label>Property State</label>
+                          <select class="va-select prop-state">
                             <option value="TX">Texas</option>
                             <option value="Other">Other</option>
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
                       <div class="va-row" style="margin-top:8px">
-                        <div class="va-field"><label>Homestead (Primary Residence)?</label><select class="va-select prop-home">
+                        <div class="va-field">
+                          <label>Homestead (Primary Residence)?</label>
+                          <select class="va-select prop-home">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
-                        <div class="va-field"><label>Disabled-Vet Property-Tax Relief Likely?</label><select class="va-select prop-tax-relief">
+                          </select>
+                        </div>
+                        <div class="va-field">
+                          <label>Disabled-Vet Property-Tax Relief Likely?</label>
+                          <select class="va-select prop-tax-relief">
                             <option>Unsure</option>
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
                       <div class="va-row" style="margin-top:8px">
-                        <div class="va-field"><label>Accessibility Modifications Needed?</label><select class="va-select va-access">
+                        <div class="va-field">
+                          <label>Accessibility Modifications Needed?</label>
+                          <select class="va-select va-access">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
-                        <div class="va-field"><label>Plan Energy-Efficiency Upgrades?</label><select class="va-select va-eem">
+                          </select>
+                        </div>
+                        <div class="va-field">
+                          <label>Plan Energy-Efficiency Upgrades (EEM)?</label>
+                          <select class="va-select va-eem">
                             <option>No</option>
                             <option>Yes</option>
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
                       <div class="va-row" style="margin-top:8px">
-                        <div class="va-field"><label>EEM Amount ($, optional)</label><input class="va-input va-eem-amt" type="number" min="0" step="100" placeholder="e.g., 6000"></div>
-                        <div class="va-field"><label>Seller Concessions % (VA cap 4%)</label><input class="va-input va-seller" type="number" min="0" max="4" step="0.1" value="0"></div>
+                        <div class="va-field">
+                          <label>EEM Amount ($, optional)</label>
+                          <input class="va-input va-eem-amt" type="number" min="0" step="100" placeholder="e.g., 6000">
+                        </div>
+                        <div class="va-field">
+                          <label>Seller Concessions % (VA cap 4%)</label>
+                          <input class="va-input va-seller" type="number" min="0" max="4" step="0.1" value="0">
+                        </div>
                       </div>
-                    </div>
+                    </div><!--  /va-card-inner VA Benefits  -->
                   </div><!--  /profile-card  -->
                 </div><!--  /profile-stack  -->
                 <div class="va-row" style="margin-top:12px">
-                  <div class="va-field"><label>&nbsp;</label><button class="va-btn secondary" id="pf-addprofile">Add Profile</button></div>
-                  <div class="va-field"><small class="va-note">You can add a second household member (e.g., dual-military). This duplicates all fields.</small></div>
+                  <div class="va-field">
+                    <label>&nbsp;</label>
+                    <button class="va-btn secondary" id="pf-addprofile">Add Profile</button>
+                  </div>
+                  <div class="va-field">
+                    <small class="va-note">Add a 2nd household member (dual-military, spouse income). Fields duplicate.</small>
+                  </div>
                 </div>
               </section>
-              <!--  INCOME  -->
+              <!--  ========== INCOME PANEL ==========  -->
               <section class="ap-section active" id="sec-income">
-                <h2>1) Income</h2>
+                <h2>1) Income
+                  <span class="va-chip">Military + Household</span>
+                </h2>
+                <!--  ACTIVE DUTY displayed when MODE='AD'  -->
                 <div class="va-row ad-only">
-                  <div class="va-field"><label>Base Pay ($/mo)</label><input class="va-input" id="in-base" type="number" disabled=""></div>
-                  <div class="va-field"><label>BAH – San Antonio ($/mo)</label><input class="va-input" id="in-bah" type="number" disabled=""></div>
+                  <div class="va-field">
+                    <label>Base Pay ($/mo)</label>
+                    <input class="va-input" id="in-base" type="number" disabled="">
+                  </div>
+                  <div class="va-field">
+                    <label>BAH – San Antonio ($/mo)</label>
+                    <input class="va-input" id="in-bah" type="number" disabled="">
+                  </div>
                 </div>
                 <div class="va-row ad-only" style="margin-top:8px">
-                  <div class="va-field"><label>BAS ($/mo)</label><input class="va-input" id="in-bas" type="number" disabled=""></div>
-                  <div class="va-field"><label>Additional Income ($/mo)</label><input class="va-input" id="in-addl" type="number" min="0" step="1" placeholder="Spouse/side income"></div>
+                  <div class="va-field">
+                    <label>BAS ($/mo)</label>
+                    <input class="va-input" id="in-bas" type="number" disabled="">
+                  </div>
+                  <div class="va-field">
+                    <label>Additional Income ($/mo)</label>
+                    <input class="va-input" id="in-addl" type="number" min="0" step="1" placeholder="Spouse / side income">
+                  </div>
                 </div>
+                <!--  VETERAN displayed when MODE='VET'  -->
                 <div class="va-row vet-only">
-                  <div class="va-field"><label>Retirement Pay ($/mo)</label><input class="va-input" id="in-ret" type="number" disabled=""></div>
-                  <div class="va-field"><label>VA Disability ($/mo)</label><input class="va-input" id="in-va" type="number" disabled=""></div>
+                  <div class="va-field">
+                    <label>Retirement Pay ($/mo)</label>
+                    <input class="va-input" id="in-ret" type="number" disabled="">
+                  </div>
+                  <div class="va-field">
+                    <label>VA Disability ($/mo)</label>
+                    <input class="va-input" id="in-va" type="number" disabled="">
+                  </div>
                 </div>
                 <div class="va-row vet-only" style="margin-top:8px">
-                  <div class="va-field"><label>Additional Income ($/mo)</label><input class="va-input" id="in-addl-vet" type="number" min="0" step="1" placeholder="Spouse/side income"></div>
-                  <div class="va-field"><label>&nbsp;</label>
+                  <div class="va-field">
+                    <label>Additional Income ($/mo)</label>
+                    <input class="va-input" id="in-addl-vet" type="number" min="0" step="1" placeholder="Spouse / side income">
+                  </div>
+                  <div class="va-field">
+                    <label>&nbsp;</label>
                     <div class="va-note">Retirement + VA comp auto-calc from Military Profile (Veteran).</div>
                   </div>
                 </div>
-                <small class="va-note">KPI uses AD pay (Base+BAS+BAH+Addl) or Veteran income (Retirement+VA+Addl) based on the toggle.</small>
+                <div class="va-note" style="margin-top:8px">
+                  KPI uses Active Duty (Base+BAS+BAH+Addl) or Veteran (Retirement+VA+Addl), based on the status toggle above.
+                </div>
                 <div class="va-note" id="mil-breakdown" style="margin-top:8px">—</div>
               </section>
-              <!--  EXPENSES  -->
+              <!--  ========== EXPENSES PANEL ==========  -->
               <section class="ap-section" id="sec-expenses">
-                <h2>2) Expenses</h2>
-                <div class="va-row">
-                  <div class="va-field"><label>Monthly Expenses ($)</label><input class="va-input" id="ex-core" type="number" min="0" step="1"></div>
-                  <div class="va-field"><label>Discretionary Expenses ($)</label><input class="va-input" id="ex-disc" type="number" min="0" step="1"></div>
+                <h2>2) Expenses
+                  <span class="va-chip">Live Monthly Budget</span>
+                </h2>
+                <!--  Month picker / load+save  -->
+                <div class="month-row">
+                  <div class="month-col">
+                    <label for="month-select">Budget Month</label>
+                    <select class="va-select" id="month-select"></select>
+                  </div>
+                  <div class="month-col">
+                    <label>Active Month Status</label>
+                    <div class="month-saved-hint" id="month-status-hint">No data saved for this month.</div>
+                  </div>
                 </div>
-                <div class="va-note" style="margin-top:6px">Itemized budget (example loaded; edit as needed).</div>
+                <div class="va-row">
+                  <div class="va-field">
+                    <label>Fixed / Core Bills ($)</label>
+                    <input class="va-input" id="ex-core" type="number" min="0" step="1">
+                  </div>
+                  <div class="va-field">
+                    <label>Discretionary ($)</label>
+                    <input class="va-input" id="ex-disc" type="number" min="0" step="1">
+                  </div>
+                </div>
+                <div class="va-note" style="margin-top:6px">
+                  Itemized budget below is stored per-month. You can build November, December, January, etc.
+                </div>
                 <div id="bp-panel" class="bp-panel">
+                  <!--  Add Row  -->
                   <div class="bp-row">
-                    <select id="bp-cat" class="va-select">
+                    <select id="bp-cat" class="va-select" style="min-width:110px;">
                       <option>Essentials</option>
                       <option>Discretionary</option>
                       <option>Debt</option>
                       <option>Other</option>
                     </select>
                     <input id="bp-name" class="va-input" placeholder="Item name (e.g., Rent, Groceries)">
-                    <input id="bp-month" class="va-input" type="number" min="0" step="1" placeholder="Monthly $">
-                    <button id="bp-add" class="va-btn">Add</button>
+                    <input id="bp-month" class="va-input" type="number" min="0" step="1" placeholder="Monthly $" style="min-width:120px;">
+                    <button id="bp-add" class="va-btn" style="min-width:90px;">Add</button>
                   </div>
+                  <!--  Table  -->
                   <table class="bp-table">
                     <thead>
                       <tr class="bp-tr">
@@ -522,55 +1268,115 @@
                     </thead>
                     <tbody id="bp-body"></tbody>
                   </table>
+                  <!--  Totals row  -->
                   <div class="bp-controls">
                     <span class="bp-chip">Essentials: <b id="bp-t-Essentials">$0</b></span>
                     <span class="bp-chip">Discretionary: <b id="bp-t-Discretionary">$0</b></span>
                     <span class="bp-chip">Debt: <b id="bp-t-Debt">$0</b></span>
                     <span class="bp-chip">Other: <b id="bp-t-Other">$0</b></span>
                     <span class="bp-chip">Total: <b id="bp-t-All">$0</b></span>
-                    <button id="bp-save" class="va-btn secondary" style="margin-left:auto">Save & Prefill</button>
+                    <!--  SAVE MONTH  -->
+                    <button id="bp-save-month" class="va-btn secondary" style="margin-left:auto;min-width:150px;">
+                      Save Month Budget
+                    </button>
                   </div>
-                  <div class="va-note" id="bp-note" style="margin-top:6px">Saved totals copy up to the fields above.</div>
+                  <div class="va-note" id="bp-note" style="margin-top:6px">
+                    Month saved. These numbers auto-fill the fields above, feed KPIs, and feed the Analysis Dashboard.
+                  </div>
                 </div>
               </section>
-              <!--  SAVINGS  -->
+              <!--  ========== SAVINGS PANEL ==========  -->
               <section class="ap-section" id="sec-savings">
-                <h2>3) Savings Target</h2>
+                <h2>3) Savings Target
+                  <span class="va-chip">% Plan</span>
+                </h2>
                 <div class="va-row">
-                  <div class="va-field"><label>Desired Savings Rate <span id="save-rate-label" class="va-chip">15%</span></label><input class="va-slider" id="save-rate" type="range" min="0" max="40" step="1" value="15"></div>
-                  <div class="va-field"><label>Current Savings ($)</label><input class="va-input" id="sv-current" type="number" min="0" step="1"></div>
+                  <div class="va-field">
+                    <label>
+                      Desired Savings Rate
+                      <span id="save-rate-label" class="va-chip">15%</span>
+                    </label>
+                    <input class="va-slider" id="save-rate" type="range" min="0" max="40" step="1" value="15">
+                  </div>
+                  <div class="va-field">
+                    <label>Current Savings ($)</label>
+                    <input class="va-input" id="sv-current" type="number" min="0" step="1">
+                  </div>
                 </div>
                 <div class="va-row" style="margin-top:8px">
-                  <div class="va-field"><label>Monthly Investments ($)</label><input class="va-input" id="sv-invest" type="number" min="0" step="1"></div>
-                  <div class="va-field"><label>Notes</label><input class="va-input" id="sv-notes" type="text"></div>
+                  <div class="va-field">
+                    <label>Monthly Investments ($)</label>
+                    <input class="va-input" id="sv-invest" type="number" min="0" step="1">
+                  </div>
+                  <div class="va-field">
+                    <label>Notes</label>
+                    <input class="va-input" id="sv-notes" type="text">
+                  </div>
                 </div>
               </section>
-              <!--  MORTGAGE  -->
+              <!--  ========== MORTGAGE PANEL ==========  -->
               <section class="ap-section" id="sec-mortgage">
-                <h2>4) Home Purchase (What-If)</h2>
-                <div class="va-field"><label>Credit Score <span id="cs-label">720 – Good</span></label><input class="va-slider" id="cs-slider" type="range" min="500" max="850" step="5" value="720"></div>
-                <div class="va-note">Estimated APR from credit score: <b id="apr-label">7.00%</b> (illustrative).</div>
-                <div class="va-row" style="margin-top:8px">
-                  <div class="va-field"><label>Home Price ($)</label><input class="va-input" id="h-price" type="number" min="0" step="1000"></div>
-                  <div class="va-field"><label>Down Payment % <span id="dp-pct-label">20%</span> = <span id="dp-amt-label">$0</span></label><input class="va-slider" id="dp-slider" type="range" min="0" max="100" step="1" value="20"></div>
+                <h2>4) Home Purchase (What-If)
+                  <span class="va-chip">VA / Conventional</span>
+                </h2>
+                <div class="va-field">
+                  <label>
+                    Credit Score
+                    <span id="cs-label">720 – Good</span>
+                  </label>
+                  <input class="va-slider" id="cs-slider" type="range" min="500" max="850" step="5" value="720">
+                </div>
+                <div class="va-note">
+                  Estimated APR from credit score: <b id="apr-label">7.00%</b> (illustrative).
                 </div>
                 <div class="va-row" style="margin-top:8px">
-                  <div class="va-field"><label>Interest Rate (APR %)</label><input class="va-input" id="h-rate" type="number" step="0.01" value="7.00"></div>
-                  <div class="va-field"><label>Down Payment ($)</label><input class="va-input" id="dp-amt" type="text" disabled=""></div>
+                  <div class="va-field">
+                    <label>Home Price ($)</label>
+                    <input class="va-input" id="h-price" type="number" min="0" step="1000">
+                  </div>
+                  <div class="va-field">
+                    <label>
+                      Down Payment %
+                      <span id="dp-pct-label">20%</span> =
+                      <span id="dp-amt-label">$0</span>
+                    </label>
+                    <input class="va-slider" id="dp-slider" type="range" min="0" max="100" step="1" value="20">
+                  </div>
                 </div>
                 <div class="va-row" style="margin-top:8px">
-                  <div class="va-field"><label>Term (years)</label><input class="va-input" id="h-term" type="number" min="5" max="40" step="1" value="30"></div>
-                  <div class="va-field"><label>Taxes + Insurance + HOA ($/mo)</label><input class="va-input" id="h-tihoa" type="number" min="0" step="1" value="0"></div>
+                  <div class="va-field">
+                    <label>Interest Rate (APR %)</label>
+                    <input class="va-input" id="h-rate" type="number" step="0.01" value="7.00">
+                  </div>
+                  <div class="va-field">
+                    <label>Down Payment ($)</label>
+                    <input class="va-input" id="dp-amt" type="text" disabled="">
+                  </div>
                 </div>
                 <div class="va-row" style="margin-top:8px">
-                  <div class="va-field"><label>Include PMI? ($/mo)</label><input class="va-input" id="h-pmi" type="number" min="0" step="1" value="0"></div>
-                  <div class="va-field"><label>&nbsp;</label>
+                  <div class="va-field">
+                    <label>Term (years)</label>
+                    <input class="va-input" id="h-term" type="number" min="5" max="40" step="1" value="30">
+                  </div>
+                  <div class="va-field">
+                    <label>Taxes + Insurance + HOA ($/mo)</label>
+                    <input class="va-input" id="h-tihoa" type="number" min="0" step="1" value="0">
+                  </div>
+                </div>
+                <div class="va-row" style="margin-top:8px">
+                  <div class="va-field">
+                    <label>Include PMI? ($/mo)</label>
+                    <input class="va-input" id="h-pmi" type="number" min="0" step="1" value="0">
+                  </div>
+                  <div class="va-field">
+                    <label>&nbsp;</label>
                     <div class="va-note">APR/PMI are illustrative only; verify with your lender.</div>
                   </div>
                 </div>
-                <div class="va-card" style="margin-top:12px;background:#0f1326">
-                  <h2>VA Benefits & Adjustments (Read-Only)</h2>
-                  <div class="benefit-grid">
+                <!--  VA Benefits Read-only summary  -->
+                <div class="va-card-inner" style="margin-top:12px;">
+                  <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.3px;text-transform:uppercase;">VA Benefits &amp; Adjustments</h2>
+                  <div class="benefit-grid" style="margin-top:10px">
                     <div class="benefit ok" id="b-funding">
                       <div class="t">Funding Fee</div>
                       <div class="v">—</div>
@@ -598,572 +1404,1094 @@
                   </div>
                 </div>
                 <div class="va-row" style="justify-content:flex-end;margin-top:12px">
-                  <button class="va-btn secondary" id="btn-clear">Reset</button>
-                  <button class="va-btn" id="btn-calc">Update Calculations</button>
+                  <button class="va-btn secondary" id="btn-clear" style="min-width:120px;">Reset</button>
+                  <button class="va-btn" id="btn-calc" style="min-width:160px;">Update Calculations</button>
                 </div>
               </section>
-            </div>
-          </div>
+            </div><!--  /va-card  -->
+          </div><!--  /rs-content  -->
         </main>
-      </div>
-      <script>
-  (function RS_DASHBOARD_MOUNT(){
-    if(window.__RS_DASH_MOUNTED__) return; window.__RS_DASH_MOUNTED__ = true;
-    const $=(q,root=document)=>root.querySelector(q);
-    const $$=(q,root=document)=>Array.from(root.querySelectorAll(q));
-    const fmt=n=>(Number(n)||0).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
-    const rsPMTI=(P,r,n)=>{ if(r===0) return P/n; const x=Math.pow(1+r,n); return P*(r*x)/(x-1); };
-    const rsAPRFromScore=s=>{ s=+s||720; return s>=780?6.50:s>=760?6.75:s>=720?7.00:s>=700?7.20:s>=680?7.35:s>=660?7.85:s>=640?8.25:s>=620?9.25:9.95; };
-    const PAYGRADE_TITLES={
-      "E-1":"AB","E-2":"Amn","E-3":"A1C","E-4":"SrA","E-5":"SSgt","E-6":"TSgt","E-7":"MSgt","E-8":"SMSgt","E-9":"CMSgt",
-      "W-1":"WO1","W-2":"CWO2","W-3":"CWO3","W-4":"CWO4","W-5":"CWO5",
-      "O-1":"2nd Lt","O-2":"1st Lt","O-3":"Captain","O-4":"Major","O-5":"Lt Col","O-6":"Colonel",
-      "O-7":"Brig Gen","O-8":"Maj Gen","O-9":"Lt Gen","O-10":"Gen"
-    };
-    /* NAV */
-    (function(){
-      const names=['profile','income','expenses','savings','mortgage'];
-      function show(name){ names.forEach(n=>{ $('#sec-'+n)?.classList.toggle('active',n===name); $(`.rs-item[data-panel="${n}"]`)?.classList.toggle('active',n===name); }); }
-      document.addEventListener('click',e=>{const b=e.target.closest('.rs-item[data-panel]'); if(!b) return; e.preventDefault(); show(b.dataset.panel);});
-      document.addEventListener('DOMContentLoaded',()=>show('income'));
-      if(document.readyState!=='loading') show('income');
-    })();
-    /* PAY TABLE FALLBACKS */
-    const LS=k=>{ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } };
-    const BASEPAY=LS('rs.pay.BASEPAY')||{"E-6":{o8:4444}};
-    const BAS=LS('rs.pay.BAS')||{enlisted:465.77,officer:320.78};
-    const BAH78236=LS('rs.pay.BAH.78236')||{with:{E6:2154},without:{E6:1656}};
-    const VATABLE=LS('va.comp.table')||{70:{vet:1716.28,vet_spouse:1826,vet_one_child:1850,vet_spouse_one_child:1940,add_child_u18:90,add_child_s:230,spouse_aanda:110,add_parent:125},0:{vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0}};
-    const tiers=['a2','o2','o3','o4','o6','o8','o10','o12','o14','o16','o18','o20','o22','o24'];
-    const yosTier=y=>y<=2?'a2':y<=3?'o2':y<=4?'o3':y<=6?'o4':y<=8?'o6':y<=10?'o8':y<=12?'o10':y<=14?'o12':y<=16?'o14':y<=18?'o16':y<=20?'o18':y<=22?'o20':y<=24?'o22':'o24';
-    const normRankForBase=r=>{ if(!r) return 'E-1'; if(/^W-\d+$/.test(r)){const n=+r.split('-')[1]; return n<=1?'O-1':n===2?'O-2':n===3?'O-3':n===4?'O-4':'O-5'; } if(/^O-(7|8|9|10)$/.test(r)) return 'O-6'; return r; };
-    function basePayNearest(rank,years){ const use=normRankForBase(rank), t=BASEPAY[use]||{}, want=yosTier(+years||2); let i=tiers.indexOf(want); if(i<0)i=tiers.length-1; for(let k=i;k>=0;k--){ const key=tiers[k]; if(t[key]!=null) return t[key]; } const keys=Object.keys(t); return keys.length?t[keys[0]]:0; }
-    const basByRank=r=>(/^(O-|W-)/.test(r||''))?BAS.officer:BAS.enlisted;
-    const bahSATX=(rank,deps)=>{ const norm=(rank||'').replace('-','').toUpperCase(); const table=BAH78236[deps==='without'?'without':'with']; return table?.[norm]??0; };
-    let MODE='VET';
-    function applyMode(){
-      $$('.ad-only').forEach(n=>n.style.display = MODE==='AD' ? 'grid' : 'none');
-      $$('.vet-only').forEach(n=>n.style.display = MODE==='VET' ? 'grid' : 'none');
-      $$('.profile-card').forEach(card=>{
-        card.querySelectorAll('.mil-pill').forEach(p=>p.classList.toggle('active', p.dataset.mode===MODE));
-      });
-      render(); persistIdentity();
-    }
-    function hydrateProfileCard(card){
-      const selRank=card.querySelector('.sel-rank');
-      const retRank=card.querySelector('.ret-rank');
-      const selYears=card.querySelector('.sel-years');
-      const ranks=['E-1','E-2','E-3','E-4','E-5','E-6','E-7','E-8','E-9','W-1','W-2','W-3','W-4','W-5','O-1','O-2','O-3','O-4','O-5','O-6','O-7','O-8','O-9','O-10'];
-      if(selRank){ selRank.innerHTML=ranks.map(r=>`<option value="${r}">${r}</option>`).join(''); selRank.value='E-6'; }
-      if(retRank){ retRank.innerHTML=ranks.map(r=>`<option value="${r}">${r}</option>`).join(''); }
-      if(selYears){ let y=''; for(let i=2;i<=24;i++) y+=`<option value="${i}">${i}</option>`; selYears.innerHTML=y; selYears.value='10'; }
-      card.querySelector('.mil-toggle')?.addEventListener('click',e=>{
-        const pill=e.target.closest('.mil-pill'); if(!pill) return; MODE = pill.dataset.mode==='AD'?'AD':'VET'; applyMode();
-      });
-      const vslider=card.querySelector('.va-rate'); const vlabel=card.querySelector('.va-rate-label');
-      vslider?.addEventListener('input',()=>{ if(vlabel) vlabel.textContent=vslider.value+'%'; if(MODE==='VET') render(); });
-      ['.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank','.pf-fname'].forEach(sel=>{
-        card.querySelector(sel)?.addEventListener('input',persistIdentity);
-        card.querySelector(sel)?.addEventListener('change',persistIdentity);
-      });
-      ['.sel-rank','.sel-years','.sel-deps','.ret-rank','.ret-years','.va-has-spouse','.va-kids-u18','.va-kids-s','.va-parents','.va-spouse-aanda','.va-rate'].forEach(sel=>{
-        card.querySelector(sel)?.addEventListener('input',render);
-        card.querySelector(sel)?.addEventListener('change',render);
-      });
-    }
-    hydrateProfileCard($('.profile-card'));
-    $('#pf-addprofile')?.addEventListener('click',()=>{
-      const stack=$('#profile-stack'); const base=stack.querySelector('.profile-card'); const clone=base.cloneNode(true);
-      const idx=stack.querySelectorAll('.profile-card').length+1; clone.setAttribute('data-profile-idx',String(idx));
-      clone.querySelector('.idx').textContent='Member '+idx;
-      clone.querySelectorAll('input').forEach(inp=>{ if(inp.type==='range')return; if(!inp.classList.contains('ret-years')) inp.value=''; });
-      stack.appendChild(clone); hydrateProfileCard(clone);
-      const btn=$('#pf-addprofile'); const old=btn.textContent; btn.textContent='Profile Added ✓'; setTimeout(()=>btn.textContent=old,1100);
-    });
-    const el={
-      inBase:$('#in-base'), inBAH:$('#in-bah'), inBAS:$('#in-bas'),
-      addl:$('#in-addl'), addlVet:$('#in-addl-vet'),
-      inRet:$('#in-ret'), inVA:$('#in-va'),
-      exCore:$('#ex-core'), exDisc:$('#ex-disc'), saveRate:$('#save-rate'), svCurrent:$('#sv-current'),
-      kIncome:$('#kpi-income'), kExp:$('#kpi-expenses'), kMortgage:$('#kpi-mortgage'), kSave:$('#kpi-savings'), kDisp:$('#kpi-disposable'),
-      cs:$('#cs-slider'), csLabel:$('#cs-label'), aprLabel:$('#apr-label'),
-      hPrice:$('#h-price'), dpSlider:$('#dp-slider'), dpPctLabel:$('#dp-pct-label'), dpAmtLabel:$('#dp-amt-label'), dpAmt:$('#dp-amt'),
-      hRate:$('#h-rate'), hTerm:$('#h-term'), hTIHOA:$('#h-tihoa'), hPMI:$('#h-pmi')
-    };
-    function activeCard(){ return $('.profile-card'); }
-    function adRank(){ return activeCard()?.querySelector('.sel-rank')?.value || 'E-6'; }
-    function adYears(){ return +(activeCard()?.querySelector('.sel-years')?.value || 10); }
-    function adDeps(){ return activeCard()?.querySelector('.sel-deps')?.value || 'with'; }
-    function updateADIncome(){
-      const rank=adRank(), years=adYears(), deps=adDeps();
-      const base=basePayNearest(rank,years), bas=basByRank(rank), bah=bahSATX(rank,deps);
-      el.inBase.value=Math.round(base); el.inBAS.value=Math.round(bas); el.inBAH.value=Math.round(bah);
-      $('#mil-breakdown').textContent=`AD: Base ${fmt(base)} + BAS ${fmt(bas)} + BAH ${fmt(bah)} = ${fmt(base+bas+bah)}.`;
-    }
-    function retirementMonthly(rank,years){ years=Math.max(0,Math.min(40,+years||0)); const high3=basePayNearest(rank,Math.max(2,years)); const mult=years*0.025; return Math.round(high3*mult); }
-    function vaCompMonthly(opts){
-      const r=Math.max(0,Math.min(100,Number(opts.rating)||0));
-      const rating=(r===0?0:(r===100?100:Math.round(r/10)*10));
-      const row=VATABLE[rating]||VATABLE[0];
-      const spouse=opts.spouse==='Yes';
-      const kidsU18=Math.max(0,+opts.kidsU18||0), kidsS=Math.max(0,+opts.kidsS||0);
-      const parents=Math.max(0,Math.min(2,+opts.parents||0));
-      const spouseA=opts.spouseA==='Yes';
-      let base=0;
-      if(spouse){ base=(kidsU18+kidsS)>0?row.vet_spouse_one_child:row.vet_spouse; }
-      else { base=(kidsU18+kidsS)>0?row.vet_one_child:row.vet; }
-      let add=0;
-      const extra=Math.max(0,(kidsU18+kidsS)-1);
-      if(extra>0){ const takeU18=Math.max(0,Math.min(extra,Math.max(0,kidsU18-1))); const takeS=extra-takeU18; add+=takeU18*(row.add_child_u18||0)+takeS*(row.add_child_s||0); }
-      if((kidsU18+kidsS)===0){ add+=kidsU18*(row.add_child_u18||0)+kidsS*(row.add_child_s||0); }
-      add+=parents*(row.add_parent||0);
-      if(spouse && spouseA) add+=(row.spouse_aanda||0);
-      return Math.round(base+add);
-    }
-    function updateVetIncome(){
-      const card=activeCard();
-      const ret=retirementMonthly(card?.querySelector('.ret-rank')?.value || 'E-6', card?.querySelector('.ret-years')?.value || 20);
-      const vac=vaCompMonthly({
-        rating:card?.querySelector('.va-rate')?.value || 70,
-        spouse:card?.querySelector('.va-has-spouse')?.value || 'No',
-        kidsU18:card?.querySelector('.va-kids-u18')?.value || 0,
-        kidsS:card?.querySelector('.va-kids-s')?.value || 0,
-        parents:card?.querySelector('.va-parents')?.value || 0,
-        spouseA:card?.querySelector('.va-spouse-aanda')?.value || 'No'
-      });
-      el.inRet.value=ret; el.inVA.value=vac;
-      $('#mil-breakdown').textContent=`VET: Retirement ${fmt(ret)} + VA ${fmt(vac)} (rating ${card?.querySelector('.va-rate')?.value||0}%)`;
-    }
-    /* Budget */
-    let BP_ROWS=[], BP_ID=1;
-    function bpTotals(){const t={Essentials:0,Discretionary:0,Debt:0,Other:0}; BP_ROWS.forEach(r=>t[r.cat]+=+r.month||0); t.All=t.Essentials+t.Discretionary+t.Debt+t.Other; return t;}
-    function bpTotalsUI(){const t=bpTotals(); $('#bp-t-Essentials').textContent=fmt(t.Essentials); $('#bp-t-Discretionary').textContent=fmt(t.Discretionary); $('#bp-t-Debt').textContent=fmt(t.Debt); $('#bp-t-Other').textContent=fmt(t.Other); $('#bp-t-All').textContent=fmt(t.All); }
-    function bpRender(){ const tb=$('#bp-body'); tb.innerHTML=''; BP_ROWS.forEach(r=>{ const tr=document.createElement('tr'); tr.className='bp-tr'; tr.innerHTML=`
-        <td class="bp-td"><select class="va-select bp-cat" data-id="${r.id}">
-          <option ${r.cat==='Essentials'?'selected':''}>Essentials</option>
-          <option ${r.cat==='Discretionary'?'selected':''}>Discretionary</option>
-          <option ${r.cat==='Debt'?'selected':''}>Debt</option>
-          <option ${r.cat==='Other'?'selected':''}>Other</option></select></td>
-        <td class="bp-td"><input class="va-input bp-name" data-id="${r.id}" value="${r.name||''}"></td>
-        <td class="bp-td" style="width:140px"><input class="va-input bp-month" data-id="${r.id}" type="number" min="0" step="1" value="${r.month||0}"></td>
-        <td class="bp-td" style="width:120px">${fmt((r.month||0)*12)}</td>
-        <td class="bp-td" style="width:80px"><button class="va-btn ghost bp-del" data-id="${r.id}">✕</button></td>`; tb.appendChild(tr); });
-      $$('.bp-cat').forEach(x=>x.addEventListener('change',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr){rr.cat=e.target.value; bpTotalsUI();}}));
-      $$('.bp-name').forEach(x=>x.addEventListener('input',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr) rr.name=e.target.value;}));
-      $$('.bp-month').forEach(x=>x.addEventListener('input',e=>{const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id); if(rr){rr.month=+e.target.value||0; bpTotalsUI();}}));
-      $$('.bp-del').forEach(x=>x.addEventListener('click',e=>{BP_ROWS=BP_ROWS.filter(r=>r.id!==+e.target.dataset.id); bpRender();}));
-      bpTotalsUI();
-    }
-    $('#bp-add')?.addEventListener('click',()=>{const cat=$('#bp-cat').value; const name=$('#bp-name').value.trim()||'Item'; const m=+$('#bp-month').value||0; BP_ROWS.push({id:BP_ID++,cat,name,month:m}); $('#bp-name').value=''; $('#bp-month').value=''; bpRender();});
-    $('#bp-save')?.addEventListener('click',()=>{const t=bpTotals(); const core=t.Essentials+t.Debt+t.Other; const disc=t.Discretionary; localStorage.setItem('va.expenses.core',String(Math.round(core))); localStorage.setItem('va.expenses.disc',String(Math.round(disc))); localStorage.setItem('va.expenses.rows',JSON.stringify(BP_ROWS)); $('#bp-note').textContent='Saved! Totals copied above.'; $('#ex-core').value=Math.round(core); $('#ex-disc').value=Math.round(disc); render();});
-    (function bpRestore(){ try{ const raw=localStorage.getItem('va.expenses.rows'); if(raw){ BP_ROWS=JSON.parse(raw)||[]; BP_ID=BP_ROWS.reduce((m,r)=>Math.max(m,r.id||0),0)+1; bpRender(); const core=+localStorage.getItem('va.expenses.core')||0; const disc=+localStorage.getItem('va.expenses.disc')||0; if(core||disc){ $('#ex-core').value=core; $('#ex-disc').value=disc; } } else { BP_ROWS=[{id:1,cat:'Essentials',name:'Rent',month:1200},{id:2,cat:'Essentials',name:'Utilities',month:250},{id:3,cat:'Essentials',name:'Insurance',month:300},{id:4,cat:'Essentials',name:'Car Payment',month:400},{id:5,cat:'Discretionary',name:'Food & Dining',month:600},{id:6,cat:'Discretionary',name:'Entertainment',month:200},{id:7,cat:'Debt',name:'Credit Cards',month:300}]; BP_ID=8; bpRender(); const t=bpTotals(); $('#ex-core').value=Math.round(t.Essentials+t.Debt+t.Other); $('#ex-disc').value=Math.round(t.Discretionary); } }catch(e){} })();
-    const readNum=i=>Number.parseFloat((i&&i.value)||'0')||0;
-    const getProfile=()=>{ try{ return JSON.parse(localStorage.getItem('realtysass.profile')||'{}'); }catch(e){ return {}; } };
-    const saveProfile=d=>{ localStorage.setItem('realtysass.profile', JSON.stringify(d)); };
-    const getEEMAddOn=()=>{ const p=getProfile(); return (p.eem==='Yes') ? Math.max(0, Math.min(+p.eemAmt||0, 15000)) : 0; };
-    function compute(){
-      let income=0;
-      if(MODE==='AD'){ income = readNum(el.inBase)+readNum(el.inBAS)+readNum(el.inBAH)+readNum(el.addl); }
-      else { income = readNum(el.inRet)+readNum(el.inVA)+readNum(el.addlVet); }
-      const baseExpenses=readNum(el.exCore)+readNum(el.exDisc);
-      const saveRatePct=Math.max(0,Math.min(40,Number(el.saveRate.value)||0));
-      const saveContribution=income*(saveRatePct/100);
-      const totalExpenses=baseExpenses+saveContribution;
-      const currentSavings=readNum(el.svCurrent);
-      const savingsTotalKPI=Math.max(0,saveContribution)+currentSavings;
-      const inferredAPR=rsAPRFromScore(el.cs.value);
-      const usedAPR=Number(el.hRate.value)||inferredAPR;
-      const price=readNum(el.hPrice);
-      const dpPct=(Number(el.dpSlider.value)||0)/100;
-      const downAmount=Math.max(0,price*dpPct);
-      const loan=Math.max(0,price-downAmount+getEEMAddOn());
-      const mRate=(usedAPR||0)/100/12;
-      const nMonths=Math.max(1,(Number(el.hTerm.value)||30)*12);
-      const pAndI=loan>0?rsPMTI(loan,mRate,nMonths):0;
-      const tihoa=readNum(el.hTIHOA), pmi=readNum(el.hPMI);
-      const housing=pAndI+tihoa+pmi;
-      const disposable=income-totalExpenses;
-      return {income,baseExpenses,saveContribution,totalExpenses,savingsTotalKPI,disposable,housing,dpPct,downAmount,inferredAPR,usedAPR,pAndI,tihoa,pmi,price};
-    }
-    function renderBenefits(){
-      const p=getProfile(); const price=readNum(el.hPrice);
-      const sellerCapPct=Math.min(4,Math.max(0,+(p.seller||0)));
-      const sellerCapAmt=price*(sellerCapPct/100);
-      const vaRating=Number(activeCard()?.querySelector('.va-rate')?.value || 0);
-      const ffEx=(vaRating>0)||(p.survivor==='Yes');
-      $('#b-funding .v').textContent=ffEx?'Exempt':'Not Exempt (calc at closing)';
-      $('#b-funding').classList.toggle('ok',ffEx);
-      const txOk=(p.pstate==='TX' && p.home==='Yes' && p.taxRelief==='Yes');
-      $('#b-tax').classList.toggle('ok',txOk);
-      $('#b-tax').classList.toggle('warn',p.taxRelief==='Unsure');
-      $('#b-tax .v').textContent=txOk?'TX Homestead Disabled-Vet: Likely Exempt':(p.taxRelief==='Yes'?'Relief Likely':'No / Unsure');
-      $('#b-eem .v').textContent=(p.eem==='Yes') ? (p.eemAmt?('Financed: '+fmt(p.eemAmt)):'Enabled (no $ set)') : 'Not used';
-      $('#b-seller .v').textContent=sellerCapPct ? (sellerCapPct.toFixed(1)+'% → '+fmt(sellerCapAmt)) : '0%';
-      $('#b-access .v').textContent=p.access==='Yes'?'May qualify (SAH/SHA/HISA)':'Not indicated';
-      $('#b-purple .v').textContent='—';
-    }
-    function render(){
-      if(MODE==='AD') updateADIncome(); else updateVetIncome();
-      const s=compute();
-      el.kIncome.textContent=fmt(s.income);
-      el.kExp.textContent=fmt(s.totalExpenses);
-      el.kSave.textContent=fmt(s.savingsTotalKPI);
-      el.kMortgage.textContent=fmt(s.housing);
-      el.kDisp.textContent=s.disposable>=0?fmt(s.disposable):('-'+fmt(Math.abs(s.disposable)));
-      const score=Number(el.cs.value)||720;
-      const band=score>=760?'Excellent':score>=720?'Good':score>=680?'Fair':score>=640?'OK-ish':score>=620?'Weak':'Subprime';
-      el.csLabel.textContent=`${score} – ${band}`;
-      el.aprLabel.textContent=(s.inferredAPR||rsAPRFromScore(el.cs.value)).toFixed(2)+'%';
-      el.dpPctLabel.textContent=(s.dpPct*100).toFixed(0)+'%';
-      el.dpAmtLabel.textContent=fmt(s.downAmount); el.dpAmt.value=fmt(s.downAmount);
-      el.cs.classList.remove('good','bad');
-      if(score<=500) el.cs.classList.add('bad');
-      if(score>=850) el.cs.classList.add('good');
-      renderBenefits();
-    }
-    /* SAVE/RECALC WIRES */
-    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#sv-current','#sv-invest','#sv-notes'].forEach(q=>{ document.querySelector(q)?.addEventListener('input',render); });
-    $('#save-rate')?.addEventListener('input',()=>{$('#save-rate-label').textContent=$('#save-rate').value+'%'; render();});
-    $('#cs-slider')?.addEventListener('input',()=>{ if(!$('#h-rate').dataset.touched){ $('#h-rate').value=rsAPRFromScore($('#cs-slider').value).toFixed(2); } render(); });
-    $('#h-rate')?.addEventListener('input',()=>{$('#h-rate').dataset.touched='1'; render();});
-    const updDP=()=>{ const s=compute(); $('#dp-pct-label').textContent=(s.dpPct*100).toFixed(0)+'%'; $('#dp-amt-label').textContent=fmt(s.downAmount); $('#dp-amt').value=fmt(s.downAmount); };
-    $('#dp-slider')?.addEventListener('input',()=>{ updDP(); render(); });
-    $('#h-price')?.addEventListener('input',()=>{ updDP(); render(); });
-    $('#btn-calc')?.addEventListener('click',render);
-    $('#btn-clear')?.addEventListener('click',()=>{ Array.from(document.querySelectorAll('input')).forEach(inp=>{ if(inp.type==='range') return; if(!inp.disabled) inp.value=''; }); $('#save-rate').value=15; $('#cs-slider').value=720; $('#h-rate').value=rsAPRFromScore(720).toFixed(2); $('#dp-slider').value=20; $('#mil-breakdown').textContent='—'; render(); });
-    (function wireProfileSavers(){
-      function pfSave(){
-        const p=getProfile();
-        const card=activeCard();
-        Object.assign(p,{
-          survivor:card?.querySelector('.va-survivor')?.value,
-          pstate:card?.querySelector('.prop-state')?.value,
-          home:card?.querySelector('.prop-home')?.value,
-          taxRelief:card?.querySelector('.prop-tax-relief')?.value,
-          access:card?.querySelector('.va-access')?.value,
-          eem:card?.querySelector('.va-eem')?.value,
-          eemAmt:+(card?.querySelector('.va-eem-amt')?.value||0),
-          seller:Math.min(4, Math.max(0, +(card?.querySelector('.va-seller')?.value||0)))
-        });
-        localStorage.setItem('realtysass.profile', JSON.stringify(p));
-        renderBenefits(); render();
-      }
-      ['.va-survivor','.prop-state','.prop-home','.prop-tax-relief','.va-access','.va-eem','.va-eem-amt','.va-seller'].forEach(sel=>{
-        document.addEventListener('change',e=>{ if(e.target.matches(sel)) pfSave(); });
-        document.addEventListener('input',e=>{ if(e.target.matches(sel)) pfSave(); });
-      });
-    })();
-    /* Identity → localStorage */
-    function currentPaygrade(){
-      const r = MODE==='AD'
-        ? (activeCard()?.querySelector('.sel-rank')?.value||'')
-        : (activeCard()?.querySelector('.ret-rank')?.value||'');
-      const m = /^([EOW])[-\s]?(\d{1,2})$/i.exec(r||'');
-      return m?`${m[1].toUpperCase()}-${m[2]}`:r||'';
-    }
-    function persistIdentity(){
-      const first=(activeCard()?.querySelector('.pf-fname')?.value||'').trim();
-      const last =(activeCard()?.querySelector('.pf-lname')?.value||'').trim();
-      const email=(activeCard()?.querySelector('.pf-email')?.value||'').trim();
-      const phone=(activeCard()?.querySelector('.pf-phone')?.value||'').trim();
-      const paygrade=currentPaygrade();
-      const title=PAYGRADE_TITLES[paygrade]||paygrade||'';
-      const name=[first,last].filter(Boolean).join(' ').trim()||'Client';
-      const ident={firstName:first,lastName:last,name,email,phone,rankPaygrade:paygrade,rankTitle:title,mode:MODE};
-      try{
-        localStorage.setItem('realtysass.identity', JSON.stringify(ident));
-        const p=getProfile()||{};
-        p.name=name; p.email=email; // augment profile for memo reader
-        localStorage.setItem('realtysass.profile', JSON.stringify(p));
-      }catch(_){}
-      return ident;
-    }
-    persistIdentity();
-    /* Bridge → /verify#rsb=… */
-    function b64url(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
-    function buildBridgePayload(){
-      const s=compute();
-      const creditScore=Number($('#cs-slider').value)||720;
-      const dpPctNum=Math.max(0,Math.min(100,Number($('#dp-slider').value)||0));
-      const id=persistIdentity();
-      return {
-        identity: id,
-        income:Math.round(s.income),
-        expenses:Math.round(s.totalExpenses),
-        savings:Math.round(s.savingsTotalKPI),
-        creditScore,
-        price:Math.round(s.price),
-        apr:Number($('#h-rate').value)||s.inferredAPR,
-        termYears:Math.max(1,Number($('#h-term').value)||30),
-        tihoa:Math.round(s.tihoa),
-        pmi:Math.round(s.pmi),
-        dpPct:dpPctNum,
-        dpAmt:Math.round(s.downAmount),
-        pAndI:Math.round(s.pAndI),
-        housing:Math.round(s.housing),
-        itemizedRows:(function(){
-          try{
-            const rows=JSON.parse(localStorage.getItem('va.expenses.rows')||'[]');
-            return Array.isArray(rows)?rows.map(r=>({name:r.name,amount:Number(r.month)||0,cat:r.cat})):[];
-          }catch(_){ return []; }
-        })(),
-        profile:{ name:id.name, email:id.email, branch:'', rankTitle:id.rankTitle },
-        military:{ rank:id.rankPaygrade, branch:'' }
-      };
-    }
-    function persistBridge(){
-      const payload=buildBridgePayload();
-      try{ localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); }catch(_){}
-      return payload;
-    }
-    ['#in-addl','#in-addl-vet','#ex-core','#ex-disc','#h-price','#h-rate','#h-term','#h-tihoa','#h-pmi','#save-rate','#cs-slider','#dp-slider','#sv-current','.pf-fname','.pf-lname','.pf-email','.pf-phone','.sel-rank','.ret-rank'].forEach(sel=>{
-      document.querySelector(sel)?.addEventListener('input',persistBridge);
-    });
-    const a=document.getElementById('btn-analyze');
-    a?.addEventListener('click',()=>{
-      const payload=persistBridge();
-      const packed=b64url(JSON.stringify(payload));
-      a.href='/verify#rsb='+packed;
-    });
-    MODE='VET';
-    applyMode(); render();
-  })();
-  </script>
-    </div>
+      </div><!--  /app  -->
+    </div><!--  /rs-shell  -->
   </div>
   <section>
     <section>
-      <div class="w-embed w-script">
+      <div class="w-embed w-script"><!--  ============================
+ OrozcoRealty • Financial Dashboard v4.0
+ EMBED #2 of 2  (FULL JS LOGIC)
+ - Paste this SECOND, directly under Embed #1, same page
+ - Handles:
+   • AD/VET income math
+   • Mortgage math
+   • Monthly expense budgets
+   • KPI / Grade
+   • Bridge → /verify
+============================  -->
         <script>
-(function () {
-  const a = document.getElementById('btn-analyze');
-  if (!a) return;
-  /* ---------- utils ---------- */
-  const b64url = s => btoa(unescape(encodeURIComponent(s)))
-    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-  const readJSON = (k) => {
-    try { return JSON.parse(localStorage.getItem(k) || 'null'); }
-    catch { return null; }
-  };
-  const lastNameOf = (full) => String(full||'').trim().split(/\s+/).slice(-1)[0] || '';
-  const cleanPhone = (p) => String(p||'').replace(/[^\d+]/g,'').trim();
-  /* Pull identity from the dashboard stores, with fallbacks */
-  function getIdentity() {
-    const ident = readJSON('realtysass.identity') || {};
-    const profile = readJSON('realtysass.profile') || {};
-    // Prefer explicit fields; fall back to profile.name/email
-    const firstName = ident.firstName || '';
-    const lastName  = ident.lastName  || lastNameOf(profile.name);
-    const email     = ident.email     || profile.email || '';
-    const phone     = ident.phone     || '';
-    // Rank: prefer short rank title, else paygrade, else empty
-    const rankTitle = ident.rankTitle || '';
-    const rankPay   = ident.rankPaygrade || '';
-    const rank      = rankTitle || rankPay || '';
-    return {
-      firstName,
-      lastName,
-      email,
-      phone: cleanPhone(phone),
-      rank,
-      // keep the rest in case other pages need them
-      rankTitle: rankTitle,
-      rankPaygrade: rankPay,
-      mode: ident.mode || 'VET',
-      name: ident.name || [firstName, lastName].filter(Boolean).join(' ').trim()
-    };
+(function RS_DASHBOARD_V4(){
+  if (window.__RS_DASH_V4_MOUNTED__) return;
+  window.__RS_DASH_V4_MOUNTED__ = true;
+  /* =======================
+     #0 SMALL HELPERS
+  ======================= */
+  const $=(q,root=document)=>root.querySelector(q);
+  const $$=(q,root=document)=>Array.from(root.querySelectorAll(q));
+  const fmt=n=>(Number(n)||0).toLocaleString(
+    "en-US",
+    {style:"currency",currency:"USD",maximumFractionDigits:0}
+  );
+  function rsPMTI(P,r,n){
+    if(r===0) return P/n;
+    const x=Math.pow(1+r,n);
+    return P*(r*x)/(x-1);
   }
-  /* Existing bridge payload from dashboard computations */
-  function getBridge() {
-    try { return JSON.parse(localStorage.getItem('realtysass.bridge')||'{}'); }
+  function rsAPRFromScore(s){
+    s=+s||720;
+    return s>=780?6.50
+      : s>=760?6.75
+      : s>=720?7.00
+      : s>=700?7.20
+      : s>=680?7.35
+      : s>=660?7.85
+      : s>=640?8.25
+      : s>=620?9.25
+      : 9.95;
+  }
+  // month keys like "2025-11"
+  function monthKeyFromDate(d){
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+  }
+  /* =======================
+     #1 DOM REFS
+  ======================= */
+  const elMap = {
+    kIncome:     $('#kpi-income'),
+    kExp:        $('#kpi-expenses'),
+    kMortgage:   $('#kpi-mortgage'),
+    kSave:       $('#kpi-savings'),
+    kDisp:       $('#kpi-disposable'),
+    gradeDot:    $('#grade-dot'),
+    gradeLetter: $('#grade-letter'),
+    gradeBand:   $('#grade-band'),
+    gradeMeter:  $('#grade-meter'),
+    gradeLeft:   $('#grade-leftover'),
+    // profile + status
+    milToggle:   $('.mil-toggle'),
+    // active duty / vet income fields
+    inBase:      $('#in-base'),
+    inBAH:       $('#in-bah'),
+    inBAS:       $('#in-bas'),
+    inAddl:      $('#in-addl'),
+    inRet:       $('#in-ret'),
+    inVA:        $('#in-va'),
+    inAddlVet:   $('#in-addl-vet'),
+    milBreak:    $('#mil-breakdown'),
+    // expenses (monthly budget)
+    monthSelect: $('#month-select'),
+    monthStatus: $('#month-status-hint'),
+    exCore:      $('#ex-core'),
+    exDisc:      $('#ex-disc'),
+    // budget rows table
+    bpCat:       $('#bp-cat'),
+    bpName:      $('#bp-name'),
+    bpMonth:     $('#bp-month'),
+    bpAdd:       $('#bp-add'),
+    bpBody:      $('#bp-body'),
+    bpSaveMonth: $('#bp-save-month'),
+    bpNote:      $('#bp-note'),
+    // totals badges
+    tEss:        $('#bp-t-Essentials'),
+    tDisc:       $('#bp-t-Discretionary'),
+    tDebt:       $('#bp-t-Debt'),
+    tOther:      $('#bp-t-Other'),
+    tAll:        $('#bp-t-All'),
+    // savings
+    saveRate:    $('#save-rate'),
+    saveRateLbl: $('#save-rate-label'),
+    svCurrent:   $('#sv-current'),
+    svInvest:    $('#sv-invest'),
+    svNotes:     $('#sv-notes'),
+    // mortgage
+    cs:          $('#cs-slider'),
+    csLabel:     $('#cs-label'),
+    aprLabel:    $('#apr-label'),
+    hPrice:      $('#h-price'),
+    dpSlider:    $('#dp-slider'),
+    dpPctLabel:  $('#dp-pct-label'),
+    dpAmtLabel:  $('#dp-amt-label'),
+    dpAmt:       $('#dp-amt'),
+    hRate:       $('#h-rate'),
+    hTerm:       $('#h-term'),
+    hTIHOA:      $('#h-tihoa'),
+    hPMI:        $('#h-pmi'),
+    // benefits
+    bFunding:    $('#b-funding .v'),
+    bFundingBox: $('#b-funding'),
+    bTax:        $('#b-tax .v'),
+    bTaxBox:     $('#b-tax'),
+    bEEM:        $('#b-eem .v'),
+    bSeller:     $('#b-seller .v'),
+    bAccess:     $('#b-access .v'),
+    bPurple:     $('#b-purple .v'),
+    btnAddProfile: $('#pf-addprofile'),
+    analyzeBtn: $('#btn-analyze'),
+    btnCalc:    $('#btn-calc'),
+    btnClear:   $('#btn-clear'),
+  };
+  /* =======================
+     #2 NAV PANEL SWITCH
+  ======================= */
+  (function navSetup(){
+    const panels=['profile','income','expenses','savings','mortgage'];
+    function show(which){
+      panels.forEach(p=>{
+        $('#sec-'+p)?.classList.toggle('active', p===which);
+        $(`.rs-item[data-panel="${p}"]`)?.classList.toggle('active', p===which);
+      });
+    }
+    document.addEventListener('click', e=>{
+      const btn=e.target.closest('.rs-item[data-panel]');
+      if(!btn) return;
+      e.preventDefault();
+      show(btn.dataset.panel);
+    });
+    // default open "income"
+    show('income');
+  })();
+  /* =======================
+     #3 DATA TABLES / LOOKUPS
+  ======================= */
+  // NOTE: these fallback objects get overwritten in future versions
+  // when you add live pay tables / VA tables from Netlify.
+  const PAYGRADE_TITLES={
+    "E-1":"AB","E-2":"Amn","E-3":"A1C","E-4":"SrA","E-5":"SSgt","E-6":"TSgt",
+    "E-7":"MSgt","E-8":"SMSgt","E-9":"CMSgt",
+    "W-1":"WO1","W-2":"CWO2","W-3":"CWO3","W-4":"CWO4","W-5":"CWO5",
+    "O-1":"2nd Lt","O-2":"1st Lt","O-3":"Captain","O-4":"Major","O-5":"Lt Col",
+    "O-6":"Colonel","O-7":"Brig Gen","O-8":"Maj Gen","O-9":"Lt Gen","O-10":"Gen"
+  };
+  // locally cached pay tables (placeholder minimal)
+  function LSget(k){
+    try{ return JSON.parse(localStorage.getItem(k)||'null'); }
+    catch{ return null; }
+  }
+  const BASEPAY = LSget('rs.pay.BASEPAY') || { "E-6":{o8:4444} };
+  const BAS     = LSget('rs.pay.BAS') || {enlisted:465.77,officer:320.78};
+  const BAH78236= LSget('rs.pay.BAH.78236') || {with:{E6:2154}, without:{E6:1656}};
+  // VA comp table fallback (condensed)
+  const VATABLE = LSget('va.comp.table') || {
+    70:{
+      vet:1716.28,
+      vet_spouse:1826,
+      vet_one_child:1850,
+      vet_spouse_one_child:1940,
+      add_child_u18:90,
+      add_child_s:230,
+      spouse_aanda:110,
+      add_parent:125
+    },
+    0:{vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,
+       add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0}
+  };
+  // Year-of-service tiers
+  const yosTiers=['a2','o2','o3','o4','o6','o8','o10','o12','o14','o16','o18','o20','o22','o24'];
+  function yosTier(y){
+    y=+y||0;
+    if(y<=2)return'a2';
+    if(y<=3)return'o2';
+    if(y<=4)return'o3';
+    if(y<=6)return'o4';
+    if(y<=8)return'o6';
+    if(y<=10)return'o8';
+    if(y<=12)return'o10';
+    if(y<=14)return'o12';
+    if(y<=16)return'o14';
+    if(y<=18)return'o16';
+    if(y<=20)return'o18';
+    if(y<=22)return'o20';
+    if(y<=24)return'o22';
+    return'o24';
+  }
+  function normRankForBase(r){
+    if(!r) return 'E-1';
+    if(/^W-\d+$/i.test(r)){
+      const n=+r.split('-')[1];
+      return n<=1?'O-1':n===2?'O-2':n===3?'O-3':n===4?'O-4':'O-5';
+    }
+    if(/^O-(7|8|9|10)$/i.test(r)) return 'O-6';
+    return r;
+  }
+  function basePayNearest(rank,years){
+    const use=normRankForBase(rank);
+    const t=BASEPAY[use]||{};
+    const want=yosTier(years);
+    let i=yosTiers.indexOf(want);
+    if(i<0) i=yosTiers.length-1;
+    for(let k=i;k>=0;k--){
+      const key=yosTiers[k];
+      if(t[key]!=null) return t[key];
+    }
+    const keys=Object.keys(t);
+    return keys.length?t[keys[0]]:0;
+  }
+  function basByRank(r){
+    return (/^(O-|W-)/.test(r||''))? BAS.officer:BAS.enlisted;
+  }
+  function bahSATX(rank,deps){
+    const norm=(rank||'').replace('-','').toUpperCase();
+    const table=BAH78236[deps==='without'?'without':'with'];
+    return table?.[norm]??0;
+  }
+  // Retirement calc
+  function retirementMonthly(rank,years){
+    years=Math.max(0,Math.min(40,+years||0));
+    const high3=basePayNearest(rank,Math.max(2,years));
+    const mult=years*0.025;
+    return Math.round(high3*mult);
+  }
+  // VA comp calc
+  function vaCompMonthly(opts){
+    const r = Math.max(0,Math.min(100,Number(opts.rating)||0));
+    const rating = (r===0?0:(r===100?100:Math.round(r/10)*10));
+    const row = VATABLE[rating]||VATABLE[0];
+    const spouse = opts.spouse==='Yes';
+    const kidsU18 = Math.max(0,+opts.kidsU18||0);
+    const kidsS   = Math.max(0,+opts.kidsS||0);
+    const parents = Math.max(0,Math.min(2,+opts.parents||0));
+    const spouseA = opts.spouseA==='Yes';
+    // pick base
+    let base=0;
+    if(spouse){
+      base = (kidsU18+kidsS)>0?row.vet_spouse_one_child:row.vet_spouse;
+    } else {
+      base = (kidsU18+kidsS)>0?row.vet_one_child:row.vet;
+    }
+    // extras
+    let add=0;
+    const extraCount=Math.max(0,(kidsU18+kidsS)-1);
+    if(extraCount>0){
+      // distribute extras
+      const takeU18=Math.max(0,Math.min(extraCount,Math.max(0,kidsU18-1)));
+      const takeS = extraCount-takeU18;
+      add += takeU18*(row.add_child_u18||0) + takeS*(row.add_child_s||0);
+    }
+    if((kidsU18+kidsS)===0){
+      add += kidsU18*(row.add_child_u18||0) + kidsS*(row.add_child_s||0);
+    }
+    add += parents*(row.add_parent||0);
+    if(spouse && spouseA) add += (row.spouse_aanda||0);
+    return Math.round(base+add);
+  }
+  /* =======================
+     #4 STATE
+  ======================= */
+  let MODE='VET'; // "AD" or "VET"
+  // month budgeting: we hold many months
+  // structure in localStorage key 'rs.monthly'
+  // {
+  //   "2025-11": {
+  //      rows:[{id,cat,name,month}],
+  //      core:1234,
+  //      disc:456,
+  //      meta:{saved:true,timestamp:...}
+  //   },
+  //   ...
+  // }
+  let monthData=LSget('rs.monthly')||{};
+  // active month key
+  let activeMonthKey = (()=>{
+    // default = current year-month
+    const nowKey = monthKeyFromDate(new Date());
+    if(monthData[nowKey]) return nowKey;
+    return nowKey;
+  })();
+  // in-panel working rows (for active month)
+  let BP_ROWS=[];
+  let BP_ID=1;
+  /* =======================
+     #5 MODE TOGGLING
+  ======================= */
+  function applyMode(){
+    $$('.ad-only').forEach(n=>{
+      n.style.display = (MODE==='AD')?'grid':'none';
+    });
+    $$('.vet-only').forEach(n=>{
+      n.style.display = (MODE==='VET')?'grid':'none';
+    });
+    // update mil-pill highlight
+    $$('.mil-pill').forEach(p=>{
+      p.classList.toggle('active', p.dataset.mode===MODE);
+    });
+    updateIncomeNumbers(); // recalc AD/VET income fields
+    renderAll();           // recalc KPIs with new mode
+    persistIdentity();     // sync identity after mode flip
+  }
+  /* hydrate rank dropdowns etc for a profile card */
+  function hydrateProfileCard(card){
+    const selRank   = card.querySelector('.sel-rank');
+    const retRank   = card.querySelector('.ret-rank');
+    const selYears  = card.querySelector('.sel-years');
+    const ranks=['E-1','E-2','E-3','E-4','E-5','E-6','E-7','E-8','E-9',
+                 'W-1','W-2','W-3','W-4','W-5',
+                 'O-1','O-2','O-3','O-4','O-5','O-6','O-7','O-8','O-9','O-10'];
+    if(selRank){
+      selRank.innerHTML = ranks.map(r=>`<option value="${r}">${r}</option>`).join('');
+      selRank.value='E-6';
+    }
+    if(retRank){
+      retRank.innerHTML = ranks.map(r=>`<option value="${r}">${r}</option>`).join('');
+    }
+    if(selYears){
+      let yOpt='';
+      for(let i=2;i<=24;i++) yOpt+=`<option value="${i}">${i}</option>`;
+      selYears.innerHTML=yOpt;
+      selYears.value='10';
+    }
+    // toggle AD/VET pills
+    card.querySelector('.mil-toggle')?.addEventListener('click', e=>{
+      const pill=e.target.closest('.mil-pill');
+      if(!pill) return;
+      MODE = (pill.dataset.mode==='AD')?'AD':'VET';
+      applyMode();
+    });
+    // disability % label live update
+    const vslider=card.querySelector('.va-rate');
+    const vlabel=card.querySelector('.va-rate-label');
+    vslider?.addEventListener('input',()=>{
+      if(vlabel) vlabel.textContent=vslider.value+'%';
+      if(MODE==='VET') updateIncomeNumbers();
+    });
+    // recalc + persist identity triggers
+    [
+      '.pf-fname','.pf-lname','.pf-email','.pf-phone',
+      '.sel-rank','.ret-rank','.sel-years','.sel-deps',
+      '.ret-years','.va-has-spouse','.va-kids-u18','.va-kids-s',
+      '.va-parents','.va-spouse-aanda','.va-rate'
+    ].forEach(sel=>{
+      card.querySelector(sel)?.addEventListener('input',()=>{
+        updateIncomeNumbers();
+        renderAll();
+        persistIdentity();
+      });
+      card.querySelector(sel)?.addEventListener('change',()=>{
+        updateIncomeNumbers();
+        renderAll();
+        persistIdentity();
+      });
+    });
+    // benefits triggers (property state, etc.)
+    [
+      '.va-survivor','.prop-state','.prop-home','.prop-tax-relief',
+      '.va-access','.va-eem','.va-eem-amt','.va-seller'
+    ].forEach(sel=>{
+      card.querySelector(sel)?.addEventListener('input',()=>{
+        persistProfileToStorage();
+        renderBenefits();
+        renderAll();
+      });
+      card.querySelector(sel)?.addEventListener('change',()=>{
+        persistProfileToStorage();
+        renderBenefits();
+        renderAll();
+      });
+    });
+  }
+  // first card is hydrated on load
+  hydrateProfileCard($('.profile-card'));
+  // Add secondary member
+  elMap.btnAddProfile?.addEventListener('click',()=>{
+    const stack = $('#profile-stack');
+    const base  = stack.querySelector('.profile-card');
+    const clone = base.cloneNode(true);
+    const newIdx= stack.querySelectorAll('.profile-card').length+1;
+    clone.setAttribute('data-profile-idx',String(newIdx));
+    clone.querySelector('.idx').textContent = 'Member '+newIdx;
+    // wipe text/range fields appropriately
+    clone.querySelectorAll('input').forEach(inp=>{
+      if(inp.type==='range') return;
+      if(!inp.classList.contains('ret-years')){
+        inp.value='';
+      }
+    });
+    stack.appendChild(clone);
+    hydrateProfileCard(clone);
+    // flash feedback
+    const oldTxt = elMap.btnAddProfile.textContent;
+    elMap.btnAddProfile.textContent='Profile Added ✓';
+    setTimeout(()=>{ elMap.btnAddProfile.textContent=oldTxt; },1100);
+  });
+  /* =======================
+     #6 IDENTITY / PROFILE STORAGE
+  ======================= */
+  function getActiveCard(){
+    return $('.profile-card'); // for now: first card is primary
+  }
+  function currentPaygrade(){
+    const card=getActiveCard();
+    const rankAD = card?.querySelector('.sel-rank')?.value || '';
+    const rankV  = card?.querySelector('.ret-rank')?.value || '';
+    const raw = (MODE==='AD'?rankAD:rankV) || rankAD || rankV || '';
+    const m = /^([EOW])[-\s]?(\d{1,2})$/i.exec(raw||'');
+    return m? (m[1].toUpperCase()+"-"+m[2]) : raw || '';
+  }
+  function persistIdentity(){
+    const card = getActiveCard();
+    const first=(card?.querySelector('.pf-fname')?.value||'').trim();
+    const last =(card?.querySelector('.pf-lname')?.value||'').trim();
+    const email=(card?.querySelector('.pf-email')?.value||'').trim();
+    const phone=(card?.querySelector('.pf-phone')?.value||'').trim();
+    const pg = currentPaygrade();
+    const title = PAYGRADE_TITLES[pg]||pg||'';
+    const name=[first,last].filter(Boolean).join(' ').trim()||'Client';
+    const ident={
+      firstName:first,
+      lastName:last,
+      name,
+      email,
+      phone,
+      rankPaygrade:pg,
+      rankTitle:title,
+      mode:MODE
+    };
+    try{
+      localStorage.setItem('realtysass.identity', JSON.stringify(ident));
+      const prof = getProfileStore()||{};
+      prof.name = name;
+      prof.email= email;
+      localStorage.setItem('realtysass.profile', JSON.stringify(prof));
+    }catch(_){}
+    return ident;
+  }
+  function getProfileStore(){
+    try { return JSON.parse(localStorage.getItem('realtysass.profile')||'{}'); }
     catch { return {}; }
   }
-  a.addEventListener('click', () => {
-    const payload = getBridge() || {};
-    const who = getIdentity();
-    // Ensure the verify page (and your Netlify function) receive flat fields:
-    payload.identity = payload.identity || {};        // keep the nested identity object
-    Object.assign(payload.identity, who);             // enrich nested identity
-    // 👇 Add FLAT fields required by the SendEmail function
-    payload.email    = who.email || payload.email || '';
-    payload.phone    = who.phone || payload.phone || '';
-    payload.lastName = who.lastName || payload.lastName || lastNameOf(who.name);
-    payload.rank     = who.rank || payload.rank || '';
-    // Optional: persist the enriched bridge back to localStorage
-    try { localStorage.setItem('realtysass.bridge', JSON.stringify(payload)); } catch (_){}
-    // Route to /verify with packed bridge
-    const packed = b64url(JSON.stringify(payload));
-    a.href = '/verify#rsb=' + packed;
-  });
-})();
-</script>
-      </div>
-    </section>
-  </section>
-  <section class="section-181">
-    <div class="w-layout-blockcontainer w-container">
-      <div class="w-embed w-script"><!--  RealtySaSS Tables Loader (BasePay, BAS, BAH, VA Compensation)  -->
-        <div id="rs-tables-loader" style="all: initial;">
-          <style>
-    #rs-tables-loader, #rs-tables-loader * { box-sizing: border-box; }
-    :root{--ink:#EAF2FF;--muted:#9FB1DE;--line:rgba(255,255,255,.12);--panel:#0f1623;--accent:#82dff8;--accent2:#2df5c7}
-    #rs-tables-loader .wrap{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-      color: var(--ink);
-      background: linear-gradient(180deg,#0b1019,#0a0f16);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
-    }
-    #rs-tables-loader h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
-    #rs-tables-loader p{margin:8px 0;color:#cfe3ff;font-size:13px}
-    #rs-tables-loader .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    #rs-tables-loader .btn{
-      cursor:pointer;border:1px solid var(--line);
-      padding:10px 14px;border-radius:10px;font-weight:800;font-size:13px;
-      background: linear-gradient(135deg,var(--accent),#7ec8ff); color:#041125;
-    }
-    #rs-tables-loader .btn.ghost{background:#0f1220;color:#e9ecff;border-style:dashed}
-    #rs-tables-loader .msg{font-size:12px;color:var(--muted);margin-top:10px}
-    #rs-tables-loader code{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;color:#bfe3ff}
-  </style>
-          <div class="wrap">
-            <h3>RealtySaSS Tables Loader</h3>
-            <p>Loads Base Pay, BAS, San Antonio BAH (78236), and a VA Compensation table into <code>localStorage</code> for use by the Financial Dashboard.</p>
-            <div class="row">
-              <button id="loadAll" class="btn">Load / Refresh Tables</button>
-              <button id="wipeAll" class="btn ghost">Wipe Tables</button>
-            </div>
-            <div id="msg" class="msg">—</div>
-          </div>
-          <script>
-  // -----------------------------
-  // Data Constants (minified-ish)
-  // -----------------------------
-  // BAS (monthly, illustrative)
-  const RS_BAS = { enlisted: 465.77, officer: 320.78 };
-  // Base Pay (monthly, illustrative ladder used by the dashboard)
-  const RS_BASEPAY = {
-    "E-1":{a2:2319},
-    "E-2":{a2:2599},
-    "E-3":{a2:2733,o2:2905,o3:3081},
-    "E-4":{a2:3027,o2:3182,o3:3355,o4:3525,o6:3676},
-    "E-5":{a2:3221,o2:3467,o3:3638,o4:3802,o6:3959,o8:4142,o10:4235,o12:4260},
-    "E-6":{a2:3277,o2:3606,o3:3765,o4:3920,o6:4081,o8:4444,o10:4585,o12:4859},
-    "E-7":{a2:3788,o2:4134,o3:4293,o4:4502,o6:4667,o8:4948,o10:5106,o12:5387,o14:5621,o16:5781,o18:5951},
-    "E-8":{o8:5450,o10:5691,o12:5840,o14:6019,o16:6212,o18:6562,o20:6740,o22:7041,o24:7208},
-    "E-9":{o10:6657,o12:6808,o14:6998,o16:7222,o18:7448,o20:7808,o22:8115,o24:8436},
-    "O-1":{a2:3998,o2:4162,o3:5031},
-    "O-2":{a2:4607,o2:5247,o3:6043,o4:6247,o6:6375},
-    "O-3":{a2:5332,o2:6044,o3:6523,o4:7112,o6:7454,o8:7828,o10:8069},
-    "O-4":{a2:6064,o2:7020,o3:7489,o4:7592,o6:8027,o8:8494,o10:9075,o12:9526},
-    "O-5":{a2:7028,o2:7917,o3:8465,o4:8569,o6:8911,o8:9115,o10:9565,o12:9896,o14:10323,o16:10974},
-    "O-6":{a2:8431,o2:9262,o3:9870,o6:9908,o8:10332,o10:10389,o14:10979,o16:12023,o18:12635}
-  };
-  // San Antonio BAH (78236), with/without dependents (illustrative)
-  const RS_BAH_78236 = {
-    "with":{E1:1791,E2:1791,E3:1791,E4:1791,E5:1935,E6:2154,E7:2172,E8:2181,E9:2208,W1:1968,W2:2151,W3:2187,W4:2340,W5:2466,O1:1968,O2:2151,O3:2187,O4:2340,O5:2466,O6:2487,O7:2487,O8:2487,O9:2487,O10:2487},
-    "without":{E1:1344,E2:1344,E3:1344,E4:1344,E5:1530,E6:1656,E7:1794,E8:1983,E9:2037,W1:1644,W2:1890,W3:2070,W4:2148,W5:2160,O1:1644,O2:1890,O3:2070,O4:2148,O5:2160,O6:2163,O7:2163,O8:2163,O9:2163,O10:2163}
-  };
-  // VA Compensation table (2024-ish illustrative).
-  // Structure per rating (rounded to nearest 10): base variants + adders.
-  // Keys:
-  //  vet, vet_spouse, vet_one_child, vet_spouse_one_child, add_child_u18, add_child_s, spouse_aanda, add_parent
-  const RS_VA_TABLE = (function(){
-    // Base amounts for Veteran only (no dependents), by rating:
-    const baseVet = {10:171.23,20:338.49,30:524.31,40:755.28,50:1075.16,60:1361.88,70:1716.28,80:1995.01,90:2241.91,100:3737.85};
-    // Approx deltas for spouse / first child / add-ons (illustrative)
-    const spouseDelta = {10:0,20:0,30:55,40:65,50:85,60:95,70:110,80:120,90:130,100:160};
-    const firstChildDelta = {10:0,20:0,30:70,40:80,50:95,60:110,70:135,80:150,90:165,100:190};
-    const addChildU18 = {10:0,20:0,30:70,40:75,50:80,60:85,70:90,80:95,90:100,100:105};
-    const addChildS   = {10:0,20:0,30:210,40:215,50:220,60:225,70:230,80:235,90:240,100:245};
-    const spouseAandA = {10:0,20:0,30:65,40:70,50:85,60:95,70:110,80:120,90:130,100:150};
-    const addParent   = {10:0,20:0,30:120,40:120,50:120,60:125,70:125,80:130,90:130,100:135};
-    const ratings = [10,20,30,40,50,60,70,80,90,100];
-    const out = {};
-    ratings.forEach(r=>{
-      const v = baseVet[r];
-      out[r] = {
-        vet: v,
-        vet_spouse: v + (spouseDelta[r]||0),
-        vet_one_child: v + (firstChildDelta[r]||0),
-        vet_spouse_one_child: v + (spouseDelta[r]||0) + (firstChildDelta[r]||0),
-        add_child_u18: addChildU18[r]||0,
-        add_child_s: addChildS[r]||0,
-        spouse_aanda: spouseAandA[r]||0,
-        add_parent: addParent[r]||0
-      };
+  function persistProfileToStorage(){
+    const card=getActiveCard();
+    const prof=getProfileStore();
+    Object.assign(prof,{
+      survivor: card?.querySelector('.va-survivor')?.value,
+      pstate:   card?.querySelector('.prop-state')?.value,
+      home:     card?.querySelector('.prop-home')?.value,
+      taxRelief:card?.querySelector('.prop-tax-relief')?.value,
+      access:   card?.querySelector('.va-access')?.value,
+      eem:      card?.querySelector('.va-eem')?.value,
+      eemAmt:   +(card?.querySelector('.va-eem-amt')?.value||0),
+      seller:   Math.min(4, Math.max(0, +(card?.querySelector('.va-seller')?.value||0)))
     });
-    // 0% = $0 across the board
-    out[0] = {vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0};
-    return out;
-  })();
-  // -----------------------------
-  // DOM Ready + Wiring
-  // -----------------------------
-  document.addEventListener("DOMContentLoaded", function(){
-    const loadBtn = document.getElementById('loadAll');
-    const wipeBtn = document.getElementById('wipeAll');
-    const msg = document.getElementById('msg');
-    function setLS(key,obj){ localStorage.setItem(key, JSON.stringify(obj)); }
-    function fmtNum(n){ return (Number(n)||0).toLocaleString('en-US'); }
-    function loadAll(){
-      setLS("rs.pay.BASEPAY", RS_BASEPAY);
-      setLS("rs.pay.BAS", RS_BAS);
-      setLS("rs.pay.BAH.78236", RS_BAH_78236);
-      setLS("va.comp.table", RS_VA_TABLE);
-      localStorage.setItem("rs.tables.version", JSON.stringify({version:"2025-10-11", source:"Tables Loader v1"}));
-      const bpRanks = Object.keys(RS_BASEPAY).length;
-      const vaRatings = Object.keys(RS_VA_TABLE).length;
-      msg.textContent = `Tables loaded ✔  (BasePay: ${bpRanks} ranks • BAH: 2 sets • VA ratings: ${vaRatings})`;
-    }
-    function wipeAll(){
-      ["rs.pay.BASEPAY","rs.pay.BAS","rs.pay.BAH.78236","va.comp.table","rs.tables.version"].forEach(k=>localStorage.removeItem(k));
-      msg.textContent = "Tables removed ✘";
-    }
-    loadBtn?.addEventListener("click", loadAll);
-    wipeBtn?.addEventListener("click", wipeAll);
-    // Autoload on first visit
-    if(!localStorage.getItem("rs.pay.BASEPAY") || !localStorage.getItem("va.comp.table")){
-      loadAll();
+    try{
+      localStorage.setItem('realtysass.profile', JSON.stringify(prof));
+    }catch(_){}
+    return prof;
+  }
+  /* =======================
+     #7 INCOME CALC
+  ======================= */
+  function adYears(){ return +(getActiveCard()?.querySelector('.sel-years')?.value || 10); }
+  function adRank(){ return getActiveCard()?.querySelector('.sel-rank')?.value || 'E-6'; }
+  function adDeps(){ return getActiveCard()?.querySelector('.sel-deps')?.value || 'with'; }
+  function updateIncomeNumbers(){
+    if(MODE==='AD'){
+      const rank=adRank(), years=adYears(), deps=adDeps();
+      const base = basePayNearest(rank,years);
+      const basPay= basByRank(rank);
+      const bah  = bahSATX(rank,deps);
+      if(elMap.inBase) elMap.inBase.value = Math.round(base);
+      if(elMap.inBAS)  elMap.inBAS.value  = Math.round(basPay);
+      if(elMap.inBAH)  elMap.inBAH.value  = Math.round(bah);
+      if(elMap.milBreak){
+        elMap.milBreak.textContent =
+          `AD: Base ${fmt(base)} + BAS ${fmt(basPay)} + BAH ${fmt(bah)} = ${fmt(base+basPay+bah)}.`;
+      }
     } else {
-      const ver = (()=>{try{return JSON.parse(localStorage.getItem("rs.tables.version"))||null}catch(e){return null}})();
-      msg.textContent = ver ? `Tables present (v${ver.version}). Click “Load / Refresh” to overwrite.` : `Tables present. Click “Load / Refresh” to overwrite.`;
+      // VET mode
+      const card=getActiveCard();
+      const ret=retirementMonthly(
+        card?.querySelector('.ret-rank')?.value || 'E-6',
+        card?.querySelector('.ret-years')?.value || 20
+      );
+      const vac=vaCompMonthly({
+        rating:  card?.querySelector('.va-rate')?.value || 70,
+        spouse:  card?.querySelector('.va-has-spouse')?.value || 'No',
+        kidsU18: card?.querySelector('.va-kids-u18')?.value || 0,
+        kidsS:   card?.querySelector('.va-kids-s')?.value || 0,
+        parents: card?.querySelector('.va-parents')?.value || 0,
+        spouseA: card?.querySelector('.va-spouse-aanda')?.value || 'No'
+      });
+      if(elMap.inRet) elMap.inRet.value = ret;
+      if(elMap.inVA)  elMap.inVA.value  = vac;
+      if(elMap.milBreak){
+        elMap.milBreak.textContent =
+          `VET: Retirement ${fmt(ret)} + VA ${fmt(vac)} (rating ${card?.querySelector('.va-rate')?.value||0}%).`;
+      }
     }
+  }
+  /* compute() combines all pieces into snapshot numbers used for KPIs */
+  function computeSnapshot(){
+    // income
+    let income=0;
+    if(MODE==='AD'){
+      income =
+        (+elMap.inBase.value||0)+
+        (+elMap.inBAS.value||0)+
+        (+elMap.inBAH.value||0)+
+        (+elMap.inAddl.value||0);
+    } else {
+      income =
+        (+elMap.inRet.value||0)+
+        (+elMap.inVA.value||0)+
+        (+elMap.inAddlVet.value||0);
+    }
+    // expenses base for ACTIVE MONTH
+    const baseCore = +elMap.exCore.value||0;
+    const baseDisc = +elMap.exDisc.value||0;
+    // savings target calc
+    const saveRatePct = Math.max(0,Math.min(40,Number(elMap.saveRate.value)||0));
+    const saveContribution = income*(saveRatePct/100);
+    const totalExpenses = baseCore + baseDisc + saveContribution;
+    // savings KPI = current stash + new contribution
+    const currentSavings = +elMap.svCurrent.value||0;
+    const savingsTotalKPI = saveContribution + currentSavings;
+    // mortgage (p& i etc.)
+    const inferredAPR = rsAPRFromScore(elMap.cs.value);
+    const usedAPR = Number(elMap.hRate.value)||inferredAPR;
+    const price = +elMap.hPrice.value||0;
+    const dpPct = (Number(elMap.dpSlider.value)||0)/100;
+    const downAmount = Math.max(0, price*dpPct);
+    // EEM add-on (VA energy efficiency financed)
+    const prof=getProfileStore();
+    const eemAdd = (prof.eem==='Yes')
+      ? Math.max(0, Math.min(+prof.eemAmt||0,15000))
+      : 0;
+    const loan = Math.max(0, price - downAmount + eemAdd);
+    const mRate = (usedAPR||0)/100/12;
+    const nMonths = Math.max(1,(Number(elMap.hTerm.value)||30)*12);
+    const pAndI = loan>0?rsPMTI(loan,mRate,nMonths):0;
+    const tihoa = +elMap.hTIHOA.value||0;
+    const pmi   = +elMap.hPMI.value||0;
+    const housing = pAndI + tihoa + pmi;
+    const disposable = income - totalExpenses - housing; // leftover after everything including housing
+    return {
+      income,
+      baseCore,
+      baseDisc,
+      saveContribution,
+      totalExpenses,
+      savingsTotalKPI,
+      disposable,
+      housing,
+      dpPct,
+      downAmount,
+      inferredAPR,
+      usedAPR,
+      pAndI,
+      tihoa,
+      pmi,
+      price
+    };
+  }
+  /* =======================
+     #8 GRADE + BENEFITS
+  ======================= */
+  function computeGrade(snap){
+    // % income being burned (expenses+housing+saveContribution)
+    const burnShare = (snap.baseCore + snap.baseDisc + snap.saveContribution + snap.housing) / (snap.income||1);
+    const housingShare = snap.housing / (snap.income||1);
+    let g=92;
+    if(burnShare>=0.85) g-=30; else if(burnShare>=0.70) g-=15; else g+=4;
+    if(housingShare>0.40) g-=18; else if(housingShare>0.33) g-=8; else g+=4;
+    if(snap.disposable < 0) g-=30;
+    const saveRatePct = (snap.saveContribution/(snap.income||1));
+    if(saveRatePct<0.10) g-=8; else if(saveRatePct>=0.20) g+=4;
+    g = Math.max(0,Math.min(100,g));
+    const letter =
+      g>=98?'A+': g>=92?'A': g>=88?'A-'
+      : g>=82?'B+': g>=76?'B': g>=72?'B-'
+      : g>=66?'C+': g>=60?'C': g>=55?'C-'
+      : g>=50?'D+': g>=45?'D':'F';
+    // credit band text from mortgage panel
+    const score=+elMap.cs.value||720;
+    const band = score>=760?'Excellent'
+               : score>=720?'Good'
+               : score>=680?'Fair'
+               : score>=640?'OK-ish'
+               : score>=620?'Weak'
+               : 'Subprime';
+    return {letter, burnShare, band};
+  }
+  function renderBenefits(){
+    const prof = persistProfileToStorage(); // ensures latest
+    const price = +elMap.hPrice.value||0;
+    const sellerCapPct = Math.min(4, Math.max(0, +(prof.seller||0)));
+    const sellerCapAmt = price*(sellerCapPct/100);
+    const vaRating = Number(getActiveCard()?.querySelector('.va-rate')?.value||0);
+    const ffEx = (vaRating>0) || (prof.survivor==='Yes');
+    if(elMap.bFunding){
+      elMap.bFunding.textContent = ffEx
+        ? 'Exempt'
+        : 'Not Exempt (calc at closing)';
+    }
+    elMap.bFundingBox?.classList.toggle('ok',ffEx);
+    const txOk = (prof.pstate==='TX' && prof.home==='Yes' && prof.taxRelief==='Yes');
+    if(elMap.bTax){
+      elMap.bTax.textContent = txOk
+        ? 'TX Homestead Disabled-Vet: Likely Exempt'
+        : (prof.taxRelief==='Yes'
+            ? 'Relief Likely'
+            : (prof.taxRelief==='Unsure'?'Need review':'No'));
+    }
+    elMap.bTaxBox?.classList.toggle('ok',txOk);
+    elMap.bTaxBox?.classList.toggle('warn',prof.taxRelief==='Unsure');
+    if(elMap.bEEM){
+      elMap.bEEM.textContent = (prof.eem==='Yes')
+        ? (prof.eemAmt?('Financed: '+fmt(prof.eemAmt)):'Enabled (no $ set)')
+        : 'Not used';
+    }
+    if(elMap.bSeller){
+      elMap.bSeller.textContent = sellerCapPct
+        ? (sellerCapPct.toFixed(1)+'% → '+fmt(sellerCapAmt))
+        : '0%';
+    }
+    if(elMap.bAccess){
+      elMap.bAccess.textContent = prof.access==='Yes'
+        ? 'May qualify (SAH/SHA/HISA)'
+        : 'Not indicated';
+    }
+    if(elMap.bPurple){
+      elMap.bPurple.textContent = '—'; // reserved for Purple Heart logic
+    }
+  }
+  /* =======================
+     #9 BUDGET TABLE (MONTHLY)
+  ======================= */
+  function bpTotals(){
+    const t={Essentials:0,Discretionary:0,Debt:0,Other:0};
+    BP_ROWS.forEach(r=>{
+      const cat = r.cat||'Other';
+      t[cat]=(t[cat]||0)+(+r.month||0);
+    });
+    t.All=t.Essentials+t.Discretionary+t.Debt+t.Other;
+    return t;
+  }
+  function bpTotalsUI(){
+    const t=bpTotals();
+    if(elMap.tEss)  elMap.tEss.textContent  = fmt(t.Essentials);
+    if(elMap.tDisc) elMap.tDisc.textContent = fmt(t.Discretionary);
+    if(elMap.tDebt) elMap.tDebt.textContent = fmt(t.Debt);
+    if(elMap.tOther)elMap.tOther.textContent= fmt(t.Other);
+    if(elMap.tAll)  elMap.tAll.textContent  = fmt(t.All);
+  }
+  function bpRender(){
+    if(!elMap.bpBody) return;
+    elMap.bpBody.innerHTML='';
+    BP_ROWS.forEach(r=>{
+      const tr=document.createElement('tr');
+      tr.className='bp-tr';
+      tr.innerHTML=`
+        <td class="bp-td" style="min-width:100px;">
+          <select class="va-select bp-cat" data-id="${r.id}">
+            <option ${r.cat==='Essentials'?'selected':''}>Essentials</option>
+            <option ${r.cat==='Discretionary'?'selected':''}>Discretionary</option>
+            <option ${r.cat==='Debt'?'selected':''}>Debt</option>
+            <option ${r.cat==='Other'?'selected':''}>Other</option>
+          </select>
+        </td>
+        <td class="bp-td">
+          <input class="va-input bp-name" data-id="${r.id}" value="${r.name||''}">
+        </td>
+        <td class="bp-td" style="width:140px;">
+          <input class="va-input bp-month" data-id="${r.id}" type="number" min="0" step="1" value="${r.month||0}">
+        </td>
+        <td class="bp-td" style="width:100px;">${fmt((r.month||0)*12)}</td>
+        <td class="bp-td" style="width:80px;">
+          <button class="va-btn ghost bp-del" data-id="${r.id}">✕</button>
+        </td>`;
+      elMap.bpBody.appendChild(tr);
+    });
+    // wire row edits
+    $$('.bp-cat').forEach(x=>{
+      x.addEventListener('change',e=>{
+        const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id);
+        if(rr){ rr.cat=e.target.value; bpTotalsUI(); renderAll(); }
+      });
+    });
+    $$('.bp-name').forEach(x=>{
+      x.addEventListener('input',e=>{
+        const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id);
+        if(rr){ rr.name=e.target.value; }
+      });
+    });
+    $$('.bp-month').forEach(x=>{
+      x.addEventListener('input',e=>{
+        const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id);
+        if(rr){ rr.month=+e.target.value||0; bpTotalsUI(); renderAll(); }
+      });
+    });
+    $$('.bp-del').forEach(x=>{
+      x.addEventListener('click',e=>{
+        BP_ROWS = BP_ROWS.filter(r=>r.id!==+e.target.dataset.id);
+        bpRender();
+        renderAll();
+      });
+    });
+    bpTotalsUI();
+  }
+  // build month select dropdown around current & +/-5 months
+  function populateMonthSelect(){
+    if(!elMap.monthSelect) return;
+    const baseDate=new Date();
+    const opts=[];
+    for(let offset=-2; offset<=4; offset++){
+      const d=new Date(baseDate.getFullYear(), baseDate.getMonth()+offset, 1);
+      const y=d.getFullYear();
+      const m=d.toLocaleString('en-US',{month:'short'});
+      const key=monthKeyFromDate(d);
+      const label=m+" "+y;
+      opts.push({key,label});
+    }
+    elMap.monthSelect.innerHTML = opts.map(o=>
+      `<option value="${o.key}">${o.label}</option>`
+    ).join('');
+    // select the active one if it exists
+    elMap.monthSelect.value = activeMonthKey;
+  }
+  // load data from monthData[activeMonthKey] → BP_ROWS, ex-core, ex-disc
+  function loadMonthData(key){
+    activeMonthKey = key;
+    const mObj = monthData[key] || {};
+    BP_ROWS = Array.isArray(mObj.rows) ? JSON.parse(JSON.stringify(mObj.rows)) : [];
+    BP_ID = BP_ROWS.reduce((mx,r)=>Math.max(mx,r.id||0),0)+1;
+    // fill exCore/exDisc if stored
+    if(mObj.core!=null) elMap.exCore.value = mObj.core;
+    else elMap.exCore.value = '';
+    if(mObj.disc!=null) elMap.exDisc.value = mObj.disc;
+    else elMap.exDisc.value = '';
+    // rerender table
+    if(BP_ROWS.length===0){
+      // if brand new month, create starter defaults
+      BP_ROWS=[
+        {id:1,cat:'Essentials',name:'Rent',month:1200},
+        {id:2,cat:'Essentials',name:'Utilities',month:250},
+        {id:3,cat:'Essentials',name:'Insurance',month:300},
+        {id:4,cat:'Debt',name:'Car Payment',month:400},
+        {id:5,cat:'Discretionary',name:'Food & Dining',month:600},
+        {id:6,cat:'Discretionary',name:'Entertainment',month:200},
+        {id:7,cat:'Debt',name:'Credit Cards',month:300}
+      ];
+      BP_ID=8;
+      // also preload core/disc if empty
+      const t=bpTotalsAfterRowsTemp(BP_ROWS);
+      if(!elMap.exCore.value) elMap.exCore.value = Math.round(t.Essentials+t.Debt+t.Other);
+      if(!elMap.exDisc.value) elMap.exDisc.value = Math.round(t.Discretionary);
+    }
+    bpRender();
+    renderMonthStatusHint();
+  }
+  // helper for initial default math
+  function bpTotalsAfterRowsTemp(rows){
+    const t={Essentials:0,Discretionary:0,Debt:0,Other:0};
+    rows.forEach(r=>{
+      t[r.cat]=(t[r.cat]||0)+(+r.month||0);
+    });
+    t.All=t.Essentials+t.Discretionary+t.Debt+t.Other;
+    return t;
+  }
+  // save current month back into monthData + localStorage
+  function saveCurrentMonth(){
+    const core = +elMap.exCore.value||0;
+    const disc = +elMap.exDisc.value||0;
+    monthData[activeMonthKey] = {
+      rows: JSON.parse(JSON.stringify(BP_ROWS)),
+      core,
+      disc,
+      meta:{
+        saved:true,
+        ts:Date.now()
+      }
+    };
+    try{
+      localStorage.setItem('rs.monthly', JSON.stringify(monthData));
+    }catch(_){}
+    renderMonthStatusHint();
+  }
+  function renderMonthStatusHint(){
+    const mObj = monthData[activeMonthKey];
+    if(!mObj || !mObj.meta || !mObj.meta.saved){
+      elMap.monthStatus.textContent = "No data saved for this month.";
+    } else {
+      const d=new Date(mObj.meta.ts||Date.now());
+      elMap.monthStatus.textContent =
+        "Saved • " + d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    }
+  }
+  // events for month select
+  elMap.monthSelect?.addEventListener('change',e=>{
+    loadMonthData(e.target.value);
+    renderAll();
+    persistBridge(); // update link preview
   });
-  </script>
-        </div>
-      </div>
-    </div>
-    <section>
-      <div class="w-layout-blockcontainer w-container">
-        <div class="w-embed w-script">
-          <script>
-(function(){
-  // 1. grab the numbers from your inputs on the Financial Dashboard page
-  //    (change the querySelectors to match your input IDs or classes)
-  const income   = Number(document.querySelector('#total-income')?.value || 0);
-  const expenses = Number(document.querySelector('#total-expense')?.value || 0);
-  const savings  = Number(document.querySelector('#total-savings')?.value || 0);
-  // mortgage (monthly PITI-ish) estimate from that page
-  const housing  = Number(document.querySelector('#mortgage-estimate')?.value || 0);
-  // OPTIONAL: credit score if you have it on that page
-  const creditScore = Number(document.querySelector('#credit-score')?.value || 720);
-  // 2. build the object the Analyze page expects
-  const bridge = {
-    income,
-    expenses,
-    savings,
-    housing,
-    creditScore,
-    // we can also drop raw sliders if you have them later
-  };
-  // 3. save into localStorage so Analyze can read it
-  localStorage.setItem('realtysass.bridge', JSON.stringify(bridge));
-  console.log('Saved bridge for Analyze:', bridge);
+  // add row
+  elMap.bpAdd?.addEventListener('click',()=>{
+    const cat = elMap.bpCat.value || 'Essentials';
+    const name= elMap.bpName.value.trim() || 'Item';
+    const m   = +elMap.bpMonth.value||0;
+    BP_ROWS.push({id:BP_ID++, cat, name, month:m});
+    elMap.bpName.value='';
+    elMap.bpMonth.value='';
+    bpRender();
+    renderAll();
+  });
+  // save month
+  elMap.bpSaveMonth?.addEventListener('click',()=>{
+    saveCurrentMonth();
+    elMap.bpNote.textContent="Saved! Month totals copied up top and will flow into analysis.";
+    setTimeout(()=>{
+      elMap.bpNote.textContent="Month saved. These numbers auto-fill the fields above, feed KPIs, and feed the Analysis Dashboard.";
+    },2000);
+    // push totals up to inputs (core/disc already used)
+    renderAll();
+    persistBridge();
+  });
+  // core/disc manual edits
+  elMap.exCore?.addEventListener('input',()=>{
+    renderAll();
+  });
+  elMap.exDisc?.addEventListener('input',()=>{
+    renderAll();
+  });
+  /* =======================
+     #10 SAVINGS + MORTGAGE EVENTS
+  ======================= */
+  elMap.saveRate?.addEventListener('input',()=>{
+    elMap.saveRateLbl.textContent = elMap.saveRate.value+'%';
+    renderAll();
+  });
+  // mortgage: credit score slider also drives APR unless user overrides
+  elMap.cs?.addEventListener('input',()=>{
+    const score=+elMap.cs.value||720;
+    const band = score>=760?'Excellent'
+               : score>=720?'Good'
+               : score>=680?'Fair'
+               : score>=640?'OK-ish'
+               : score>=620?'Weak'
+               : 'Subprime';
+    elMap.csLabel.textContent = score+" – "+band;
+    if(!elMap.hRate.dataset.touched){
+      elMap.hRate.value = rsAPRFromScore(score).toFixed(2);
+    }
+    renderAll();
+  });
+  elMap.hRate?.addEventListener('input',()=>{
+    elMap.hRate.dataset.touched='1';
+    renderAll();
+  });
+  function updateDownLabels(){
+    const snap=computeSnapshot();
+    elMap.dpPctLabel.textContent = (snap.dpPct*100).toFixed(0)+'%';
+    elMap.dpAmtLabel.textContent = fmt(snap.downAmount);
+    elMap.dpAmt.value            = fmt(snap.downAmount);
+  }
+  elMap.dpSlider?.addEventListener('input',()=>{
+    updateDownLabels();
+    renderAll();
+  });
+  elMap.hPrice?.addEventListener('input',()=>{
+    updateDownLabels();
+    renderAll();
+  });
+  ['hTerm','hTIHOA','hPMI','svCurrent','svInvest','svNotes','inAddl','inAddlVet']
+  .forEach(id=>{
+    elMap[id]?.addEventListener('input',()=>{
+      renderAll();
+    });
+  });
+  // "Update Calculations" button just forces re-render
+  elMap.btnCalc?.addEventListener('click',()=>{
+    renderAll();
+    persistBridge();
+  });
+  // "Reset" clears user-editable numeric fields
+  elMap.btnClear?.addEventListener('click',()=>{
+    // clear text/number except range + disabled
+    $$('input').forEach(inp=>{
+      if(inp.type==='range') return;
+      if(inp.disabled) return;
+      if(inp===elMap.cs || inp===elMap.dpSlider) return; // keep sliders
+      if(inp===elMap.hRate) { inp.dataset.touched=''; }
+      inp.value='';
+    });
+    // reset sliders to defaults
+    elMap.saveRate.value=15;
+    elMap.saveRateLbl.textContent='15%';
+    elMap.cs.value=720;
+    elMap.csLabel.textContent='720 – Good';
+    elMap.hRate.value=rsAPRFromScore(720).toFixed(2);
+    elMap.dpSlider.value=20;
+    elMap.dpPctLabel.textContent='20%';
+    elMap.dpAmtLabel.textContent='$0';
+    elMap.dpAmt.value='$0';
+    // clear breakdown text
+    elMap.milBreak.textContent='—';
+    renderAll();
+    persistBridge();
+  });
+  /* =======================
+     #11 KPI / GRADE RENDER
+  ======================= */
+  function renderAll(){
+    updateIncomeNumbers(); // ensures in-base/in-ret are correct first
+    renderBenefits();      // sets VA / TX flags, seller concessions, etc.
+    const snap = computeSnapshot();
+    const grd  = computeGrade(snap);
+    // KPIs
+    if(elMap.kIncome)   elMap.kIncome.textContent   = fmt(snap.income);
+    if(elMap.kExp)      elMap.kExp.textContent      = fmt(snap.baseCore+snap.baseDisc+snap.saveContribution);
+    if(elMap.kMortgage) elMap.kMortgage.textContent = fmt(snap.housing);
+    if(elMap.kSave)     elMap.kSave.textContent     = fmt(snap.savingsTotalKPI);
+    const dispAfterAll = snap.disposable;
+    if(elMap.kDisp){
+      elMap.kDisp.textContent = (dispAfterAll>=0)
+        ? fmt(dispAfterAll)
+        : ('-'+fmt(Math.abs(dispAfterAll)));
+    }
+    // Grade card visuals
+    if(elMap.gradeLetter) elMap.gradeLetter.textContent = grd.letter;
+    if(elMap.gradeBand)   elMap.gradeBand.textContent   = grd.band+' / Spending Load';
+    if(elMap.gradeLeft){
+      elMap.gradeLeft.textContent = (dispAfterAll>=0)
+        ? fmt(dispAfterAll)
+        : ('-'+fmt(Math.abs(dispAfterAll)));
+    }
+    // dot color
+    if(elMap.gradeDot){
+      if(grd.letter[0]==='A'||grd.letter[0]==='B'){
+        elMap.gradeDot.style.background='var(--ok)';
+      } else if(grd.letter[0]==='C'){
+        elMap.gradeDot.style.background='var(--warn)';
+      } else {
+        elMap.gradeDot.style.background='var(--bad)';
+      }
+      elMap.gradeDot.style.boxShadow='0 0 8px rgba(255,255,255,.4)';
+    }
+    // meter fill width (burnShare ~ 0..1)
+    if(elMap.gradeMeter){
+      const w = Math.max(0,Math.min(1,grd.burnShare))*100;
+      elMap.gradeMeter.style.width = w+'%';
+    }
+    // APR label
+    const inferredAPR = rsAPRFromScore(elMap.cs.value);
+    const usedAPR = Number(elMap.hRate.value)||inferredAPR;
+    if(elMap.aprLabel){
+      elMap.aprLabel.textContent = usedAPR.toFixed(2)+'%';
+    }
+    // update down labels
+    updateDownLabels();
+  }
+  /* =======================
+     #12 BRIDGE BUILDER (→ /verify)
+  ======================= */
+  function b64url(str){
+    return btoa(unescape(encodeURIComponent(str)))
+      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  // final object to ship to /verify (and to Supabase / email, etc.)
+  function buildBridgePayload(){
+    const snap=computeSnapshot();
+    const score=+elMap.cs.value||720;
+    const id = persistIdentity(); // ensures identity object is fresh
+    const prof = getProfileStore();
+    // assemble itemizedRows from BP_ROWS (active month only)
+    const itemRows = BP_ROWS.map(r=>({
+      name:r.name,
+      amount:+r.month||0,
+      cat:r.cat||'Other'
+    }));
+    // We'll also attach meta for which month user saved
+    const monthMeta = { activeMonth:activeMonthKey };
+    return {
+      identity: id,
+      profile: {
+        name:id.name,
+        email:id.email,
+        branch:'',
+        rankTitle:id.rankTitle
+      },
+      military:{
+        rank:id.rankPaygrade,
+        branch:''
+      },
+      // high-level finance snapshot we want Analysis Dashboard to use
+      income:Math.round(snap.income),
+      expenses:Math.round(snap.baseCore+snap.baseDisc+snap.saveContribution),
+      savings:Math.round(snap.savingsTotalKPI),
+      creditScore:score,
+      price:Math.round(snap.price),
+      apr:(Number(elMap.hRate.value)||snap.inferredAPR),
+      termYears:Math.max(1,Number(elMap.hTerm.value)||30),
+      tihoa:Math.round(snap.tihoa),
+      pmi:Math.round(snap.pmi),
+      dpPct:Math.max(0,Math.min(100,Number(elMap.dpSlider.value)||0)),
+      dpAmt:Math.round(snap.downAmount),
+      pAndI:Math.round(snap.pAndI),
+      housing:Math.round(snap.housing),
+      // monthly expense breakdown table
+      itemizedRows:itemRows,
+      // month context
+      monthInfo:monthMeta,
+      // also pass entire 'profile' store (benefits flags etc.)
+      benefitsProfile: prof
+    };
+  }
+  function persistBridge(){
+    const payload = buildBridgePayload();
+    try{
+      localStorage.setItem('realtysass.bridge', JSON.stringify(payload));
+    }catch(_){}
+    return payload;
+  }
+  // enrich and route when user taps "Analyze"
+  function cleanPhone(p){
+    return String(p||'').replace(/[^\d+]/g,'').trim();
+  }
+  function lastNameOf(full){
+    return String(full||'').trim().split(/\s+/).slice(-1)[0] || '';
+  }
+  elMap.analyzeBtn?.addEventListener('click',()=>{
+    const payload = persistBridge() || {};
+    const ident = JSON.parse(localStorage.getItem('realtysass.identity')||'{}') || {};
+    const who   = ident;
+    // flatten important identity info for downstream email function
+    payload.identity = payload.identity || {};
+    Object.assign(payload.identity, who);
+    // also top-level copies
+    payload.email    = who.email || payload.email || '';
+    payload.phone    = cleanPhone(who.phone) || payload.phone || '';
+    payload.lastName = who.lastName || payload.lastName || lastNameOf(who.name||who.firstName||'');
+    payload.rank     = who.rankTitle || who.rankPaygrade || payload.rank || '';
+    // persist again
+    try{
+      localStorage.setItem('realtysass.bridge', JSON.stringify(payload));
+    }catch(_){}
+    const packed = b64url(JSON.stringify(payload));
+    elMap.analyzeBtn.href = '/verify#rsb='+packed;
+  });
+  /* =======================
+     #13 INIT
+  ======================= */
+  // 1) default MODE='VET' (you can flip to AD)
+  MODE='VET';
+  // 2) set up month select and load default month
+  populateMonthSelect();
+  loadMonthData(activeMonthKey);
+  // 3) wire identity now
+  persistIdentity();
+  // 4) apply mode visibility
+  applyMode();
+  // 5) initial compute/render/persist
+  renderAll();
+  persistBridge();
 })();
 </script>
-        </div>
       </div>
     </section>
   </section>

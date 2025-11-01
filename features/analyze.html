@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Fri Oct 31 2025 03:23:53 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Sat Nov 01 2025 16:45:00 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68d5fc11b55d1fc05f41ed8c" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -49,7 +49,9 @@
                     <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055a7" class="home-three-dropdaown-2 w-dropdown">
                       <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                         <div class="home-three-dropdown">
-                          <div class="home-three-dropdown-menu black-color">Home </div>
+                          <a href="../index.html" class="w-inline-block">
+                            <div class="home-three-dropdown-menu black-color">Home </div>
+                          </a>
                           <div class="home-three-dropdown-menu black-color">Home </div>
                         </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                       </div>
@@ -67,7 +69,9 @@
                     <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055ba" class="home-three-dropdaown-2 w-dropdown">
                       <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                         <div class="home-three-dropdown">
-                          <div class="home-three-dropdown-menu black-color">FEATURES</div>
+                          <a href="../features/financial-dashboard.html" class="w-inline-block">
+                            <div class="home-three-dropdown-menu black-color">DashBoard</div>
+                          </a>
                           <div class="home-three-dropdown-menu black-color">Properties</div>
                         </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                       </div>
@@ -86,7 +90,9 @@
                     <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055d2" class="home-three-dropdaown-2 w-dropdown">
                       <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                         <div class="home-three-dropdown">
-                          <div class="home-three-dropdown-menu black-color">ABOUT US</div>
+                          <a href="../about-us.html" class="w-inline-block">
+                            <div class="home-three-dropdown-menu black-color">ABOUT US</div>
+                          </a>
                           <div class="home-three-dropdown-menu black-color">Pages</div>
                         </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                       </div>
@@ -117,7 +123,9 @@
                     <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055ff" class="home-three-dropdaown-2 w-dropdown">
                       <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                         <div class="home-three-dropdown">
-                          <div class="home-three-dropdown-menu black-color">Blog</div>
+                          <a href="../blogs-more.html" class="w-inline-block">
+                            <div class="home-three-dropdown-menu black-color">Blog</div>
+                          </a>
                           <div class="home-three-dropdown-menu black-color">Blog</div>
                         </div><img width="9" height="9" alt="Plus" src="../images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                       </div>
@@ -176,10 +184,9 @@
     </div>
     <section>
       <div class="w-embed w-script"><!--  =========================================================
-  RealtySaSS • Frosted Glass Lock (Global • ONLY lock /realtysass)
-  - Keep ONE embed sitewide.
-  - Locks pages that MATCH ALLOW_PATHS (allow-list mode).
-  - All other pages are OPEN (no prompt).
+  RealtySaSS • Frosted Glass Lock (Updated to support .html)
+  - Global lock for /realtysass and /realtysass.html
+  - Keep ONE embed sitewide
 =========================================================  -->
         <div id="rs-lock-overlay" aria-hidden="true" style="visibility:hidden; opacity:0;">
           <div class="rs-lock-centered" role="dialog" aria-labelledby="rs-lock-title" aria-modal="true">
@@ -240,36 +247,28 @@
 (function(){
   "use strict";
   // --- CONFIG ---
-  const VALID_CODE = "123456";   // <--- your 6-digit code (numbers only)
-  // Allow-list mode: ONLY paths that match ALLOW_PATHS will be locked.
+  const VALID_CODE = "123456";
+  // Supports both /realtysass and /realtysass.html
   const USE_ALLOW_LIST = true;
   const ALLOW_PATHS = [
-    /\/realtysass\/?$/i,            // exactly /realtysass (with optional trailing slash)
-    // If you also have a subpage like /realtysass/something, add another line, e.g.:
-    // /\/realtysass\/.+/i,
+    /\/realtysass(?:\.html)?$/i,
   ];
-  // (EXEMPT_PATHS is ignored in allow-list mode, but keeping here for reference)
   const EXEMPT_PATHS = [];
-  // --- PAGE DECISION ---
   const path = (location.pathname || "/").toLowerCase();
   const isAllowed = ALLOW_PATHS.some(re => re.test(path));
   const shouldLock = USE_ALLOW_LIST ? isAllowed : !EXEMPT_PATHS.some(re => re.test(path));
-  // If this page shouldn't be locked, remove all overlays and exit.
   if (!shouldLock) {
     document.querySelectorAll('#rs-lock-overlay').forEach(el => el.remove());
     return;
   }
-  // --- ELEMENTS ---
   const overlay = document.getElementById('rs-lock-overlay');
   const input   = document.getElementById('rs-code-input');
   const btn     = document.getElementById('rs-code-btn');
   const msg     = document.getElementById('rs-lock-msg');
-  // Show overlay now (we start hidden so non-locked pages never flash)
   overlay.classList.remove('rs-hidden');
   overlay.setAttribute('aria-hidden','false');
   overlay.style.visibility = 'visible';
   overlay.style.opacity = '1';
-  // --- HELPERS ---
   const digitsOnly = s => String(s || '').replace(/\D+/g, '');
   const cleanCode  = s => digitsOnly(s).slice(0, 6);
   function showMsg(text, isError){
@@ -277,7 +276,6 @@
     msg.style.color = isError ? '#ffb3b3' : 'var(--rs-muted)';
   }
   function unlockAllOverlays(){
-    // Hide EVERY instance (handles duplicate embeds in Symbols)
     document.querySelectorAll('#rs-lock-overlay').forEach(el => {
       el.classList.add('rs-hidden');
       el.setAttribute('aria-hidden','true');
@@ -306,7 +304,6 @@
       }
     }
   }
-  // --- EVENTS ---
   if (btn) btn.addEventListener('click', onSubmit);
   if (input){
     input.addEventListener('keydown', e => { if (e.key === 'Enter') onSubmit(); });
@@ -318,37 +315,50 @@
     </section>
   </header>
   <section class="section-169">
-    <div class="code-embed-17 w-embed w-script"><!--  ============================
-  Fiduciary Snapshot — v3.7.3 (Fixed for Webflow)
-  - Keeps luxury 3D panel design
-  - Chart.js loads safely
-  - Never shows blank
-============================  -->
+    <div class="code-embed-17 w-embed w-script">
+      <!DOCTYPE html>
+      <!--  =========================================================
+ Fiduciary Snapshot — v3.8.2 (stability fix)
+ - Fullscreen, luxury cards, deep shadows
+ - Uses 3-slice pie (Expenses / Mortgage / Disposable Income)
+ - Bar chart now robust even if we only have 1 month (like Nov)
+ - Text color fixed for contrast
+ CHANGE LOG vs 3.8.1:
+ (A) FIXED: monthlyBucketsFromBridge() now always builds at least
+     one valid month key so updateExpenseBars() never crashes.
+     This unblocks the bar chart + rent vs buy.
+ (B) Still shows only REAL months. If you only have current month,
+     Yearly view will just show that single month (not fake history).
+ (C) Kept: Pie chart "Disposable Income" instead of Savings slice,
+     high-contrast text colors.
+ SaSS™ = Naughty Realty, Serious Returns.
+=========================================================  -->
       <section id="fid-fullscreen-shell" style="all: initial;">
-        <!--  Chart.js direct CDN (no proxy)  -->
+        <!--  //#1 Chart.js CDN (must load BEFORE our script so charts work)  -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+        <!--  //#2 CORE STYLES  -->
         <style>
-    /* #1 GLOBAL RESET FOR THIS WIDGET ONLY */
+    /* Global reset just for this widget */
     #fid-fullscreen-shell,
     #fid-fullscreen-shell * {
       box-sizing: border-box;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
-    /* Full-bleed dark app zone behind everything */
+    /* Full-screen dark environment */
     #fid-fullscreen-shell {
       width: 100vw;
       max-width: 100vw;
       overflow-x: auto;
       background: #0b0b12; /* rich near-black */
-      color: #e9ecff;
+      color: #fff;
       padding-top: 24px;
       padding-bottom: 64px;
     }
-    /* Inner shell: stop Webflow from squeezing */
+    /* Inner shell resists Webflow squeezing */
     #fid-snapshot-shell {
       width: 100%;
       max-width: 100vw;
-      min-width: 1024px; /* do not collapse on desktop */
+      min-width: 1024px; /* keep desktop dashboard layout */
       margin: 0;
       padding: 0 24px 0 24px;
     }
@@ -356,15 +366,15 @@
       --bg:#0f1220;
       --panel:#15192b;
       --card:#181b2e;
-      --ink:#e9ecff;
-      --muted:#a8b0d6;
+      --ink:#fff;
+      --subink:rgba(255,255,255,.5);
       --accent:#6aa7ff;
       --accent2:#8ef3c5;
       --ok:#55d399;
       --warn:#f9c74f;
       --bad:#ff6b6b;
     }
-    /* MAIN CARD WRAPPER */
+    /* Main dashboard card */
     #fid-card {
       background: var(--card);
       border: 1px solid rgba(255,255,255,.08);
@@ -375,7 +385,7 @@
       color: var(--ink);
       width: 100%;
     }
-    /* HEADER ROW: grade chip + export */
+    /* Header row: grade chip + export */
     .fid-row {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -409,6 +419,13 @@
       display:flex;
       align-items:center;
       gap:10px;
+      color:var(--ink);
+    }
+    .mini-wrap b{
+      color:var(--ink);
+    }
+    .mini-wrap span{
+      color:var(--subink);
     }
     .mini-meter{
       width:160px;
@@ -428,13 +445,13 @@
       border-radius:12px;
       border:1px solid rgba(255,255,255,.14);
       background:#0f1326;
-      color:#e9ecff;
+      color:var(--ink);
       cursor:pointer;
       font-size:13px;
       line-height:1.2;
     }
     .export:hover{ filter:brightness(1.15); }
-    /* KPI STRIP */
+    /* KPI strip (5 cards) */
     .kpi-strip{
       display:grid;
       grid-template-columns:repeat(5,minmax(0,1fr));
@@ -461,9 +478,10 @@
     }
     .kpi-title{
       font-size:12px;
-      color:var(--muted);
+      color:var(--ink); /* bright for card headers */
       letter-spacing:.2px;
       text-transform:uppercase;
+      font-weight:600;
     }
     .kpi-val{
       margin-top:8px;
@@ -485,7 +503,7 @@
       color:var(--ok);
       line-height:1.2;
     }
-    /* CREDIT SCORE STRIP inside KPI */
+    /* Credit score gauge bar in KPI card */
     .score-bar{
       position:relative;
       width:100%;
@@ -499,12 +517,12 @@
       top:-3px;
       width:2px;
       height:16px;
-      background:#e9ecff;
+      background:#fff;
       border-radius:2px;
       left:0%;
       box-shadow:0 0 6px rgba(255,255,255,.6);
     }
-    /* MID GRID (Pie left, Bar right) */
+    /* Middle grid (Pie left, Bar right) */
     .mid{
       display:grid;
       grid-template-columns:480px 1fr;
@@ -527,14 +545,25 @@
     }
     .card-mini h3{
       margin:0 0 12px;
-      font-size:14px;
-      color:#cfd5ff;
-      font-weight:700;
-      letter-spacing:.3px;
-      text-transform:uppercase;
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .card-mini h3 span:first-child{
+      font-size:14px;
+      color:var(--ink);           /* BRIGHT white title */
+      font-weight:700;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+    .card-mini h3 span:last-child{
+      font-size:11px;
+      font-weight:400;
+      text-transform:none;
+      color:var(--subink);        /* softer gray subtitle */
+      line-height:1.4;
+      letter-spacing:0;
     }
     .chart-holder{
       position:relative;
@@ -547,7 +576,7 @@
       border:1px solid rgba(255,255,255,.05);
       box-shadow:0 24px 48px rgba(0,0,0,.8) inset;
     }
-    /* Pie taller */
+    /* Make pie chart area taller */
     .card-mini:first-child .chart-holder{
       height: clamp(280px, 42vh, 460px);
     }
@@ -564,7 +593,7 @@
       pointer-events:none;
       font-weight:800;
       font-size:28px;
-      color:#e9ecff;
+      color:#fff;
       text-shadow:0 0 18px rgba(0,0,0,.5);
     }
     .legend{
@@ -572,7 +601,7 @@
       gap:16px;
       margin-top:10px;
       flex-wrap:wrap;
-      color:#a8b0d6;
+      color:var(--subink);
       font-size:12px;
     }
     .l-pill{
@@ -587,7 +616,7 @@
       background:#6aa7ff;
       box-shadow:0 0 8px rgba(106,167,255,.6);
     }
-    /* EXPENSE CONTROLS (right card top row of bar chart) */
+    /* Controls above bar chart (view mode, % vs $) */
     .controls{
       display:flex;
       gap:10px;
@@ -597,7 +626,7 @@
     }
     .select{
       background:#0f1326;
-      color:#e9ecff;
+      color:#fff;
       border:1px solid rgba(255,255,255,.10);
       border-radius:10px;
       padding:8px 10px;
@@ -610,14 +639,14 @@
       border:1px solid rgba(255,255,255,.10);
       background:#0f1326;
       font-size:12px;
-      color:#e9ecff;
+      color:#fff;
       line-height:1.2;
     }
     .toggle[aria-pressed="true"]{
       background:#192041;
       border-color:rgba(255,255,255,.22);
     }
-    /* BOTTOM: RENT VS BUY */
+    /* Bottom "Rent vs Buy" block */
     .bottom{
       background:#12162b;
       border:1px solid rgba(255,255,255,.06);
@@ -638,10 +667,11 @@
     .h4{
       font-weight:800;
       letter-spacing:.2px;
-      color:var(--ink);
+      color:var(--ink); /* bright */
       font-size:14px;
       text-transform:uppercase;
     }
+    /* Rent selector capsule */
     .rent-ctrl{
       display:flex;
       align-items:center;
@@ -651,7 +681,7 @@
     }
     .rent-label{
       font-size:11px;
-      color:var(--muted);
+      color:var(--subink);
       line-height:1.2;
       text-transform:uppercase;
       letter-spacing:.3px;
@@ -659,7 +689,7 @@
     .rent-select{
       appearance:none;
       background:#0f1326;
-      color:#e9ecff;
+      color:#fff;
       border:1px solid rgba(255,255,255,.12);
       border-radius:10px;
       padding:8px 10px;
@@ -669,7 +699,7 @@
       line-height:1.2;
     }
     .muted{
-      color:var(--muted);
+      color:var(--subink);
       font-size:12px;
       line-height:1.4;
     }
@@ -677,19 +707,20 @@
       body, html{ background:#fff !important; }
     }
   </style>
-        <!--  DASHBOARD BODY  -->
-        <div id="fid-snapshot" style="all: initial;">
+        <!--  //#3 DASHBOARD BODY  -->
+        <div id="fid-snapshot" data-summarize="https://theorozcorealty.netlify.app/.netlify/functions/summarize" style="all: initial;">
+          <!--  Google Font  -->
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
           <div id="fid-snapshot-shell">
             <div id="fid-card">
-              <!--  TOP HEADER ROW  -->
+              <!--  //#3.1 HEADER ROW  -->
               <div class="fid-row">
                 <span class="badge" id="grade-chip">
                   <span id="fid-dot" class="dot" style="background:#888"></span>
                   <div class="mini-wrap">
                     <div>
                       <b id="fid-grade">Loading...</b>
-                      <span id="fid-disp" style="margin-left:8px; opacity:.85">$0</span>
+                      <span id="fid-disp" style="margin-left:8px;">$0</span>
                     </div>
                     <div class="mini-meter" aria-label="grade-meter">
                       <div id="fid-meter"></div>
@@ -698,7 +729,7 @@
                 </span>
                 <button id="fid-export" class="export">Export ▾</button>
               </div>
-              <!--  KPI STRIP  -->
+              <!--  //#3.2 KPI STRIP  -->
               <div class="kpi-strip">
                 <div class="kpi-card">
                   <div class="kpi-title">Total Monthly Income</div>
@@ -735,15 +766,13 @@
                   </div>
                 </div>
               </div>
-              <!--  MID GRID  -->
+              <!--  //#3.3 MID GRID  -->
               <div class="mid">
                 <!--  PIE SIDE  -->
                 <div class="card-mini">
                   <h3>
                     <span>OVERALL BUDGET</span>
-                    <span style="color:var(--muted);font-size:11px;font-weight:400;text-transform:none;">
-                      Spending vs savings vs leftover
-                    </span>
+                    <span>Spending vs mortgage vs leftover</span>
                   </h3>
                   <div class="chart-holder">
                     <canvas id="fid-pie"></canvas>
@@ -759,12 +788,8 @@
                       Mortgage
                     </span>
                     <span class="l-pill">
-                      <span class="l-dot" style="background:#8ef3c5;box-shadow:0 0 8px rgba(142,243,197,.6);"></span>
-                      Savings
-                    </span>
-                    <span class="l-pill">
                       <span class="l-dot" style="background:#f9c74f;box-shadow:0 0 8px rgba(249,199,79,.6);"></span>
-                      Disposable
+                      Disposable Income
                     </span>
                   </div>
                 </div>
@@ -772,9 +797,7 @@
                 <div class="card-mini">
                   <h3>
                     <span>MONTHLY EXPENSES INTELLIGENCE</span>
-                    <span style="color:var(--muted);font-size:11px;font-weight:400;text-transform:none;">
-                      This month by category
-                    </span>
+                    <span>This month by category / last months by trend</span>
                   </h3>
                   <div class="controls">
                     <button id="mode-abs" class="toggle" aria-pressed="true">$ Totals</button>
@@ -788,23 +811,25 @@
                     <canvas id="fid-bars"></canvas>
                   </div>
                   <div class="muted" style="margin-top:8px">
-                    Monthly view shows categories; Yearly view shows months.
+                    Monthly view shows categories for the active budget month.
+                    Yearly view shows each saved month on the x-axis, stacked by category.
                     Toggle $ / % to switch measure.
                   </div>
                 </div>
               </div>
-              <!--  RENT VS BUY  -->
+              <!--  //#3.4 RENT VS BUY  -->
               <div class="bottom">
                 <div class="row-slim">
                   <div class="h4">RENT vs BUY — NET COST</div>
                   <div class="rent-ctrl">
+                    <!--  Rent select for 10-year comparison  -->
                     <span class="badge" title="Starting monthly rent used for the 10-year comparison" style="gap:8px;">
                       <span class="rent-label">Rent Price (mo)</span>
                       <select id="rent-select" class="rent-select"></select>
                     </span>
                     <span class="badge" title="Years until Net Cost of Buying ≤ Renting" style="margin-left:6px;">
                       <div style="display:flex; flex-direction:column; line-height:1.1;">
-                        <span style="font-size:11px; color:var(--muted)">Break-even (Years)</span>
+                        <span style="font-size:11px; color:var(--subink)">Break-even (Years)</span>
                         <b id="be-yrs" style="font-size:16px;">—</b>
                       </div>
                     </span>
@@ -820,147 +845,375 @@
             </div>
           </div>
         </div>
-        <!--  CORE LOGIC  -->
+        <!--  //#4 CORE LOGIC  -->
         <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  (()=> {
     if (window.__FIDUCIARY_WIDGET_MOUNTED__) return;
     window.__FIDUCIARY_WIDGET_MOUNTED__ = true;
-    /* ---------- Helpers ---------- */
-    const $  = (q) => document.querySelector(q);
-    const cur0 = (n) => "$" + (Number(n)||0).toLocaleString("en-US",{maximumFractionDigits:0});
-    const rnd = (min,max)=> Math.round(min + Math.random()*(max-min));
-    /* ---------- Pull bridge / fallback ---------- */
-    let bridge;
+    /* //#4.1 Utilities / helpers ------------------------------------ */
+    const $=(q)=>document.querySelector(q);
+    const cur=(n,d=0)=> (Number(n)||0).toLocaleString('en-US',{
+      style:'currency',
+      currency:'USD',
+      minimumFractionDigits:d,
+      maximumFractionDigits:d
+    });
+    const signed=(n)=> (n>=0? cur(n,0) : ('-'+cur(Math.abs(n),0)));
+    // Standard mortgage payment formula
+    function pmti(P,r,n){
+      if(r===0) return P/n;
+      const x=Math.pow(1+r,n);
+      return P*(r*x)/(x-1);
+    }
+    // APR estimate from credit score (rough bands)
+    function scoreAPR(s){
+      s=Number(s)||720;
+      if(s>=780) return 6.50;
+      if(s>=760) return 6.75;
+      if(s>=720) return 7.00;
+      if(s>=700) return 7.20;
+      if(s>=680) return 7.35;
+      if(s>=660) return 7.85;
+      if(s>=640) return 8.25;
+      if(s>=620) return 9.25;
+      return 9.95;
+    }
+    function bandFromScore(s){
+      if(s>=760) return 'Excellent';
+      if(s>=720) return 'Good';
+      if(s>=680) return 'Fair';
+      if(s>=640) return 'OK-ish';
+      if(s>=620) return 'Weak';
+      return 'Subprime';
+    }
+    // helper: current month key like "2025-11"
+    function currentMonthKey(){
+      const now = new Date();
+      return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+    }
+    // helper: nice short label like "Nov"
+    function monthLabelFromKey(key){
+      const [y,m]=String(key).split('-');
+      const idx = Number(m)-1;
+      const short = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][idx]||key;
+      return short;
+    }
+    let pieChart=null, barChart=null, lineChart=null;
+    let barMode='abs';      // "$ Totals" vs "% Composition" (visual placeholder right now)
+    let barView='monthly';  // "monthly" (categories) vs "yearly" (timeline)
+    let rentStartOverride = null; // user-chosen rent override
+    /* //#4.2 Bridge intake & fallback data --------------------------- */
+    let bridge = null;
     try {
-      bridge = JSON.parse(localStorage.getItem("realtysass.bridge"));
-    } catch (_) {}
-    if (!bridge) {
-      bridge = {
-        income: 7800,
-        expenses: 3900,
-        savings: 650,
-        housing: 2100,          // fallback mortgage+TI/HOA
-        price: 320000,
-        apr: 7.0,
-        creditScore: 725,
-        termYears: 30,
-        tihoa: 400,
-        pmi: 0,
-        pAndI: 1700,
-        dpAmt: 64000,
-        dpPct: 20,
-        itemizedRows: [
-          { name:"Rent / Housing", amount:1800, cat:"Housing" },
-          { name:"Utilities", amount:300, cat:"Utilities" },
-          { name:"Groceries", amount:500, cat:"Food" },
-          { name:"Health", amount:200, cat:"Health" },
-          { name:"Fun", amount:150, cat:"Entertainment" }
-        ]
+      const raw = localStorage.getItem('realtysass.bridge');
+      if (raw) bridge = JSON.parse(raw);
+    } catch(e){}
+    // Try URL hash fallback (embedded usage)
+    if (!bridge && location.hash){
+      const m = location.hash.match(/(?:^|#|&)rsb=([A-Za-z0-9\-_]+)/);
+      if (m){
+        try{
+          const json = decodeURIComponent(
+            escape(
+              atob(m[1].replace(/-/g,'+').replace(/_/g,'/'))
+            )
+          );
+          bridge = JSON.parse(json);
+        }catch(e){}
+      }
+    }
+    // Try legacy expense rows fallback (no monthKey info)
+    try{
+      if(!bridge?.itemizedRows){
+        const rows = JSON.parse(localStorage.getItem('va.expenses.rows')||'[]');
+        if(rows?.length){
+          bridge = Object.assign({}, bridge, {
+            itemizedRows: rows.map(r=>({
+              name:r.name,
+              monthly:r.month,
+              cat:r.cat
+              // legacy rows don't store which month they belong to
+            }))
+          });
+        }
+      }
+    }catch(_){}
+    // Listen for postMessage updates (iframe/parent comms)
+    window.addEventListener('message', (ev)=>{
+      try{
+        const msg = ev.data || {};
+        if (msg.type==='realtysass-bridge' && msg.payload){
+          bridge=msg.payload;
+          rentStartOverride=null;
+          paintAll();
+        }
+      }catch(e){}
+    }, false);
+    /* //#4.3 Snapshot from bridge (income/expenses/etc.) ------------- */
+    function snapshotFromBridge(){
+      const b = bridge || {};
+      const income   = Number(b.income)||0;
+      const expenses = Number(b.expenses)||0;
+      const savings  = Number(b.savings)||0;
+      let housing = Number(b.housing)||0;
+      let pAndI   = Number(b.pAndI)||0;
+      const price = Number(b.price)||0;
+      const dpPct = Number(b.dpPct)||0;
+      const dpAmt = Number(b.dpAmt) || (price * (dpPct/100));
+      const apr   = Number(b.apr)|| scoreAPR(Number(b.creditScore)||720);
+      const termY = Number(b.termYears)||30;
+      const tihoa = Number(b.tihoa)||0;
+      const pmi   = Number(b.pmi)||0;
+      // Rebuild mortgage P&I if not provided
+      if (!housing){
+        const loan  = Math.max(0, price - dpAmt);
+        const mRate = (apr/100)/12;
+        const termN = Math.max(1, termY*12);
+        pAndI = loan>0 ? pmti(loan, mRate, termN) : 0;
+        housing = pAndI + tihoa + pmi;
+      }
+      const freePost = income - expenses - savings - housing;
+      return {
+        income, expenses, savings, housing, freePost,
+        price, dpPct, dpAmt, apr,
+        creditScore:Number(b.creditScore)||720,
+        termYears:termY,
+        tihoa, pmi, pAndI
       };
     }
-    /* ---------- Grade calc ---------- */
-    function computeGrade(snap){
-      // total share of income being burned
-      const totalShare = (snap.expenses + snap.savings + snap.housing) / (snap.income||1);
-      const housingShare = snap.housing / (snap.income||1);
+    /* //#4.4 Expense bucketing logic -------------------------------- */
+    const bucketDefs = {
+      Housing: /(rent|mortgage|pmi|hoa|home ?insur|property tax|tihoa|home repair|furniture)/i,
+      Utilities: /(util|electric|power|water|gas|sewer|trash|phone|internet|wifi)/i,
+      Transportation: /(car|auto|fuel|gasoline|uber|lyft|transport|parking|toll|insurance.*auto|maintenance)/i,
+      Food: /(grocery|grocer|food|meal|dining|restaurant|lunch|breakfast|coffee)/i,
+      Health: /(health|medical|dental|vision|pharmacy|rx|gym)/i,
+      Entertainment: /(netflix|hulu|prime|disney|movie|game|sport|concert|entertain)/i
+    };
+    const bucketOrder = [
+      'Housing','Utilities','Transportation','Food','Health','Entertainment','Other'
+    ];
+    // put one row amount into the right bucket
+    function distributeToBucket(monthObj, nameLower, amt){
+      let bucket = 'Other';
+      for (const [b,rx] of Object.entries(bucketDefs)){
+        if (rx.test(nameLower)) {
+          bucket = b;
+          break;
+        }
+      }
+      monthObj[bucket] = (monthObj[bucket]||0) + Math.max(0, amt);
+    }
+    /**
+     * //#4.4.1 monthlyBucketsFromBridge()
+     *
+     * Goal:
+     * - Build per-month totals for each category.
+     * - Guarantee at least ONE usable month so charts never die.
+     *
+     * How we pick the month for a row:
+     * - row.monthKey (preferred)
+     * - row.month or row.dateKey if they look like "2025-11"
+     * - otherwise fallback to currentMonthKey()
+     *
+     * Returns:
+     * {
+     *   monthKeys: ["2025-11", ...]  // oldest -> newest
+     *   labels:    ["Nov", ...]      // pretty labels for x-axis
+     *   perMonthBucketTotals: { "2025-11": {Housing:123,...}, ... }
+     *   latestMonthKey: "2025-11"
+     * }
+     */
+    function monthlyBucketsFromBridge(){
+      const rows = Array.isArray(bridge?.itemizedRows) ? bridge.itemizedRows : [];
+      const perMonthBucketTotals = {}; // {monthKey:{bucket:amount}}
+      // walk rows and drop each into a month bucket
+      rows.forEach(r=>{
+        // try to guess the row's month key
+        let mk = r.monthKey || r.dateKey || r.month || null;
+        // if they gave us something like "2025-11 costco" etc., normalize
+        // we only accept YYYY-MM style
+        if(mk && typeof mk === 'string'){
+          const m = mk.match(/^(20\d{2})[-/](\d{1,2})/);
+          if(m){
+            const yyyy = m[1];
+            const mm   = String(m[2]).padStart(2,'0');
+            mk = `${yyyy}-${mm}`;
+          }else{
+            mk = null;
+          }
+        } else {
+          mk = null;
+        }
+        if(!mk){
+          mk = currentMonthKey();
+        }
+        if(!perMonthBucketTotals[mk]){
+          perMonthBucketTotals[mk] = Object.fromEntries(bucketOrder.map(b=>[b,0]));
+        }
+        const name = String(r.name||r.item||'').toLowerCase();
+        const amt  = Number(r.amount||r.monthly||r.value||0)||0;
+        distributeToBucket(perMonthBucketTotals[mk], name, amt);
+      });
+      // If we STILL have no months (like: no rows at all), synthesize one from totals:
+      if(Object.keys(perMonthBucketTotals).length===0){
+        const mk = currentMonthKey();
+        perMonthBucketTotals[mk] = Object.fromEntries(bucketOrder.map(b=>[b,0]));
+        // fallback split: take bridge.expenses and spread across buckets
+        const ex = Number(bridge?.expenses)||0;
+        const alloc = {
+          Housing:.35, Utilities:.12, Transportation:.14,
+          Food:.20, Health:.07, Entertainment:.07, Other:.05
+        };
+        for(const k of bucketOrder){
+          perMonthBucketTotals[mk][k] += ex * (alloc[k]||0);
+        }
+      }
+      // sort keys oldest -> newest
+      const monthKeys = Object.keys(perMonthBucketTotals).sort();
+      const labels = monthKeys.map(k=> monthLabelFromKey(k));
+      const latestMonthKey = monthKeys[monthKeys.length-1];
+      return {
+        monthKeys,
+        labels,
+        perMonthBucketTotals,
+        latestMonthKey
+      };
+    }
+    /* //#4.5 Grade calculation (financial health score) ------------- */
+    function localGrade(s){
+      const totalShare = (s.expenses + s.savings + s.housing) / (s.income||1);
+      const housingShare = s.housing / (s.income||1);
       let g=92;
       if(totalShare>=0.85) g-=30; else if(totalShare>=0.70) g-=15; else g+=4;
       if(housingShare>0.40) g-=18; else if(housingShare>0.33) g-=8; else g+=4;
-      if(snap.income - snap.expenses - snap.savings - snap.housing < 0) g-=30;
-      const sr=snap.savings/(snap.income||1);
-      if(sr<0.10) g-=8; else if(sr>=0.20) g+=4;
+      if(s.freePost<0) g-=30;
+      else if((s.freePost/s.income)<0.10) g-=10;
+      else if((s.freePost/s.income)>=0.20) g+=4;
+      const sr=s.savings/(s.income||1);
+      if(sr<0.10) g-=8;
+      else if(sr>=0.20) g+=4;
       g=Math.max(0,Math.min(100,g));
-      const letter = g>=98?'A+': g>=92?'A': g>=88?'A-'
-                   : g>=82?'B+': g>=76?'B': g>=72?'B-'
-                   : g>=66?'C+': g>=60?'C': g>=55?'C-'
-                   : g>=50?'D+': g>=45?'D':'F';
-      return {letter,totalShare};
+      const letter =
+        g>=98?'A+': g>=92?'A': g>=88?'A-'
+      : g>=82?'B+': g>=76?'B': g>=72?'B-'
+      : g>=66?'C+': g>=60?'C': g>=55?'C-'
+      : g>=50?'D+': g>=45?'D':'F';
+      return {letter, totalShare};
     }
-    /* ---------- Charts ---------- */
-    let pieChart, barChart, lineChart;
+    /* //#4.6 Chart initialization ----------------------------------- */
     function initCharts(){
-      const pieCtx = document.getElementById("fid-pie").getContext("2d");
-      const barCtx = document.getElementById("fid-bars").getContext("2d");
-      const lineCtx= document.getElementById("fid-line").getContext("2d");
+      const pieCtx = document.getElementById('fid-pie').getContext('2d');
       pieChart = new Chart(pieCtx,{
-        type:"doughnut",
+        type:'doughnut',
         data:{
-          labels:["Expenses","Mortgage","Savings","Disposable"],
+          // new 3-slice model: Expenses, Mortgage, Disposable Income
+          labels:['Expenses','Mortgage','Disposable Income'],
           datasets:[{
-            data:[0,0,0,1],
-            backgroundColor:["#6aa7ff","#55d399","#8ef3c5","#f9c74f"],
+            data:[0,0,1],
+            backgroundColor:['#6aa7ff','#55d399','#f9c74f'],
             borderWidth:0
           }]
         },
         options:{
-          cutout:"66%",
+          cutout:'66%',
           plugins:{ legend:{ display:false } },
           responsive:true,
           maintainAspectRatio:false
         }
       });
+      const barCtx = document.getElementById('fid-bars').getContext('2d');
       barChart = new Chart(barCtx,{
-        type:"bar",
-        data:{ labels:[], datasets:[] },
+        type:'bar',
+        data:{ labels: [], datasets: [] },
         options:{
           plugins:{
-            legend:{ labels:{ color:"#cfd5ff", boxWidth:12 }, display:true }
+            legend:{
+              labels:{ color:'#fff', boxWidth:12 },
+              display:true
+            }
           },
           scales:{
-            x:{ ticks:{ color:"#cfd5ff" }, grid:{ color:"rgba(255,255,255,.06)" } },
-            y:{ ticks:{ color:"#cfd5ff" }, grid:{ color:"rgba(255,255,255,.06)" } }
+            x:{
+              stacked:true,
+              ticks:{ color:'#fff' },
+              grid:{ color:'rgba(255,255,255,.06)' }
+            },
+            y:{
+              stacked:true,
+              ticks:{ color:'#fff' },
+              grid:{ color:'rgba(255,255,255,.06)' }
+            }
           },
           responsive:true,
           maintainAspectRatio:false,
           datasets:{ bar:{ borderWidth:0, borderRadius:6 } }
         }
       });
+      const lineCtx = document.getElementById('fid-line').getContext('2d');
       lineChart = new Chart(lineCtx,{
-        type:"line",
+        type:'line',
         data:{
           labels:[],
           datasets:[
             {
-              label:"Buy – Net Cost",
+              label:'Buy – Net Cost',
               data:[],
               tension:.35,
               fill:false,
               borderWidth:2,
               pointRadius:0,
-              borderColor:"#6aa7ff"
+              borderColor:'#6aa7ff'
             },
             {
-              label:"Rent – Net Cost",
+              label:'Rent – Net Cost',
               data:[],
               tension:.35,
               fill:false,
               borderWidth:2,
               pointRadius:0,
-              borderColor:"#55d399"
+              borderColor:'#55d399'
             }
           ]
         },
         options:{
           plugins:{
-            legend:{ display:true, labels:{ color:"#cfd5ff" } },
+            legend:{
+              display:true,
+              labels:{ color:'#fff' }
+            },
             tooltip:{
               callbacks:{
                 label:(c)=>{
-                  const lbl = c.dataset.label + ": " + cur0(c.raw);
+                  const lbl = `${c.dataset.label}: ${cur(c.raw,0)}`;
+                  if (c.datasetIndex===0 && lineChart.__equityByYear){
+                    const eq = lineChart.__equityByYear[c.dataIndex]||0;
+                    return [lbl, `Equity: ${cur(eq,0)}`];
+                  }
+                  if (c.datasetIndex===1 && lineChart.__cumRentByYear){
+                    const cr = lineChart.__cumRentByYear[c.dataIndex]||0;
+                    return [lbl, `Cumulative Rent: ${cur(cr,0)}`];
+                  }
                   return lbl;
                 }
               }
             }
           },
           scales:{
-            x:{ ticks:{ color:"#cfd5ff" }, grid:{ display:false } },
-            y:{ ticks:{ color:"#cfd5ff" }, grid:{ color:"rgba(255,255,255,.06)" } }
+            x:{
+              ticks:{ color:'#fff' },
+              grid:{ display:false }
+            },
+            y:{
+              ticks:{ color:'#fff' },
+              grid:{ color:'rgba(255,255,255,.06)' }
+            }
           },
           responsive:true,
           maintainAspectRatio:false
         }
       });
-      // keep charts responsive to panel resize
+      // Keep charts responsive if container resizes
       const ro = new ResizeObserver(()=>{
         pieChart?.resize();
         barChart?.resize();
@@ -968,135 +1221,246 @@
       });
       document.querySelectorAll('#fid-fullscreen-shell .chart-holder').forEach(h=> ro.observe(h));
     }
-    /* ---------- Buckets for bar chart ---------- */
-    const bucketOrder = ["Housing","Utilities","Food","Health","Entertainment","Other"];
-    function buildBucketsFromBridge(){
-      // We will just aggregate the itemizedRows fallback for now
-      const catMap = {Housing:0,Utilities:0,Food:0,Health:0,Entertainment:0,Other:0};
-      (bridge.itemizedRows||[]).forEach(r=>{
-        const cat = bucketOrder.includes(r.cat) ? r.cat : "Other";
-        catMap[cat] += Number(r.amount||0);
-      });
-      if (!bridge.itemizedRows || bridge.itemizedRows.length===0){
-        // If user has no rows yet, fake distribution based on expenses
-        const ex = Number(bridge.expenses)||0;
-        catMap.Housing       = ex*0.35;
-        catMap.Utilities     = ex*0.12;
-        catMap.Food          = ex*0.20;
-        catMap.Health        = ex*0.07;
-        catMap.Entertainment = ex*0.07;
-        catMap.Other         = ex*0.19;
-      }
-      return bucketOrder.map(k=>Math.round(catMap[k]||0));
-    }
-    /* ---------- Rent vs Buy mock curve ---------- */
-    function buildRentVsBuySeries(){
-      // Simple predictable fake curve (10 yrs)
-      const labels = Array.from({length:11},(_,i)=>"Year "+i);
-      const buySeries  = [];
-      const rentSeries = [];
-      let baseBuy=0;
-      let baseRent=0;
-      for(let i=0;i<labels.length;i++){
-        baseBuy  += 10000 + rnd(0,4000);
-        baseRent += 11000 + rnd(0,4000);
-        buySeries.push(baseBuy);
-        rentSeries.push(baseRent);
-      }
-      // Approx break-even (if ever cheaper to buy)
-      let beIndex = null;
-      for(let i=0;i<labels.length;i++){
-        if(buySeries[i] <= rentSeries[i]){ beIndex=i; break; }
-      }
-      const beYears = beIndex===null ? null : beIndex;
-      return {labels,buySeries,rentSeries,beYears};
-    }
-    /* ---------- Render everything ---------- */
-    function paintAll(){
-      const inc   = Number(bridge.income)||0;
-      const exp   = Number(bridge.expenses)||0;
-      const sav   = Number(bridge.savings)||0;
-      const house = Number(bridge.housing)||Math.round((bridge.price||300000)*0.0065);
-      const disp  = inc - exp - sav - house;
-      const score = Number(bridge.creditScore)||720;
-      // KPIs
-      $("#k-income").textContent  = cur0(inc);
-      $("#k-expense").textContent = cur0(exp);
-      $("#k-mtg").textContent     = cur0(house);
-      $("#k-save").textContent    = cur0(sav);
-      $("#fid-disp").textContent  = cur0(disp);
-      $("#k-score").textContent   = score;
-      // Credit band text + marker
-      let band = "Good";
-      if(score>=760) band="Excellent";
-      else if(score>=720) band="Good";
-      else if(score>=680) band="Fair";
-      else if(score>=640) band="OK-ish";
-      else if(score>=620) band="Weak";
-      else band="Subprime";
-      $("#score-band").textContent = "("+band+")";
-      const pct = Math.max(0, Math.min(1,(score-300)/(850-300)));
-      $("#score-marker").style.left = (pct*100)+"%";
-      // Grade chip + meter
-      const g = computeGrade({
-        income:inc, expenses:exp, savings:sav, housing:house
-      });
-      $("#fid-grade").textContent = g.letter+" / Disposable";
-      $("#fid-meter").style.width = (Math.max(0,Math.min(1,g.totalShare))*100)+"%";
-      $("#fid-dot").style.background =
-        (g.letter[0]==="A"||g.letter[0]==="B")
-          ? "var(--ok)"
-          : (g.letter[0]==="C"
-              ? "var(--warn)"
-              : "var(--bad)");
-      // PIE
-      pieChart.data.datasets[0].data = [
-        exp,
-        house,
-        sav,
-        Math.max(0, disp)
+    /* //#4.7 Update expense bar chart (MONTHLY vs YEARLY) ----------- */
+    function updateExpenseBars(){
+      const {
+        monthKeys,
+        labels,
+        perMonthBucketTotals,
+        latestMonthKey
+      } = monthlyBucketsFromBridge();
+      // shared color palette by bucket
+      const palette = [
+        '#6aa7ff', // Housing
+        '#8ab6ff', // Utilities
+        '#55d399', // Transportation
+        '#8ef3c5', // Food
+        '#f9c74f', // Health
+        '#b58cff', // Entertainment
+        '#6e7a94'  // Other
       ];
-      $("#pie-center").textContent = inc>0 ? inc.toLocaleString("en-US") : "0";
-      pieChart.update();
-      // BAR
-      const bucketVals = buildBucketsFromBridge();
-      barChart.data.labels = bucketOrder;
-      barChart.data.datasets = [{
-        label:"This Month",
-        data: bucketVals,
-        backgroundColor:[
-          "#6aa7ff","#8ab6ff","#55d399",
-          "#8ef3c5","#f9c74f","#b58cff"
-        ],
-        borderWidth:0,
-        borderRadius:6
-      }];
+      if(barView === 'yearly'){
+        // YEARLY MODE:
+        // x-axis: the real months we have (maybe just 1 for now)
+        // stacked datasets: each category across those months
+        barChart.data.labels = labels; // ex: ["Nov"] or ["Oct","Nov",...]
+        barChart.data.datasets = bucketOrder.map((bucketName, idx)=>({
+          label: bucketName,
+          data: monthKeys.map(mk=> (perMonthBucketTotals[mk]?.[bucketName] || 0)),
+          backgroundColor: palette[idx % palette.length],
+          stack:'y'
+        }));
+      } else {
+        // MONTHLY MODE:
+        // x-axis: categories
+        // dataset: "This Month" = totals for latestMonthKey
+        const latestTotals = perMonthBucketTotals[latestMonthKey] || {};
+        barChart.data.labels = bucketOrder;
+        barChart.data.datasets = [{
+          label:'This Month',
+          data: bucketOrder.map(b=> latestTotals[b]||0),
+          backgroundColor: bucketOrder.map((_,idx)=> palette[idx % palette.length]),
+          stack:'m'
+        }];
+      }
+      // NOTE: barMode (abs/pct) toggle is visual placeholder.
       barChart.update();
-      // RENT VS BUY
-      const rvb = buildRentVsBuySeries();
+    }
+    /* //#4.8 Rent vs Buy — 10-year model ----------------------------- */
+    const CLOSE_PCT = 0.03;  // 3% closing costs
+    const SELL_PCT  = 0.07;  // 7% selling cost
+    const APP_Y     = 0.03;  // 3%/yr appreciation
+    const INVRET_Y  = 0.05;  // 5%/yr invested alternative return
+    const MAINT_Y   = 0.01;  // 1%/yr maintenance
+    function buildRentVsBuySeries10Y_FD(s, rentStartMonthly){
+      const Y = 10;
+      const N = Y*12;
+      const labels = Array.from({length:Y+1}, (_,i)=> `Year ${i}`);
+      const price = Math.max(150000, Number(s.price)||350000);
+      const down  = Math.max(0, Number(s.dpAmt)||0);
+      const loan0 = Math.max(0, price - down);
+      const r_m   = (Number(s.apr)||7)/100/12;
+      const nTot  = (Number(s.termYears)||30)*12;
+      const piMo  = loan0>0 ? pmti(loan0, r_m, nTot) : 0;
+      const tihoa = Number(s.tihoa)||0;
+      const pmi   = Number(s.pmi)||0;
+      const maintMo = (price*MAINT_Y)/12;
+      // upfront cost to buy
+      const closing = price*CLOSE_PCT;
+      const upfront = down + closing;
+      // rent baseline (1% rule-ish, then inflates 3%/yr)
+      const rent0     = Math.max(0, Number(rentStartMonthly));
+      const rent_g_m  = Math.pow(1+0.03, 1/12)-1;
+      // appreciation monthly
+      const appr_m    = Math.pow(1+APP_Y, 1/12)-1;
+      // alt investment monthly
+      const inv_m     = Math.pow(1+INVRET_Y, 1/12)-1;
+      let bal = loan0, homeVal = price;
+      let cumRent = 0, cumOwner = upfront;
+      const rentSeries=[0], buySeries=[upfront], equityByYear=[down], cumRentByYear=[0];
+      let altInvest = down;
+      let beMonth = null; // first month where buy ≤ rent net
+      for(let m=1; m<=N; m++){
+        // --- RENT path
+        const rent_m = rent0 * Math.pow(1+rent_g_m, m-1);
+        cumRent += rent_m;
+        altInvest *= (1 + inv_m);
+        // --- BUY path
+        const interest = bal * r_m;
+        const principal = Math.max(0, piMo - interest);
+        bal = Math.max(0, bal - principal);
+        cumOwner += (piMo + tihoa + pmi + maintMo);
+        // Assets (house value grows, equity builds)
+        homeVal *= (1 + appr_m);
+        const equity = Math.max(0, homeVal - bal);
+        // Compute net position at month m
+        const sellCost_m = homeVal * SELL_PCT;
+        const netIfSold_m = Math.max(homeVal - sellCost_m - bal, 0);
+        const buyNet_m  = Math.max(0, cumOwner - netIfSold_m);
+        const rentNet_m = Math.max(0, cumRent - (altInvest - down));
+        if (beMonth===null && buyNet_m <= rentNet_m){
+          beMonth = m;
+        }
+        // Record each year (12 mo)
+        if (m % 12 === 0){
+          buySeries.push(buyNet_m);
+          rentSeries.push(rentNet_m);
+          equityByYear.push(equity);
+          cumRentByYear.push(cumRent);
+        }
+      }
+      const beYears = beMonth!==null ? (beMonth/12) : null;
+      return {
+        labels,
+        rentSeries,
+        buySeries,
+        equityByYear,
+        cumRentByYear,
+        beYears
+      };
+    }
+    function currentRentStartFromBridge(s){
+      // Default base rent ~1% of price
+      const base = Math.max(0, (Number(s.price)||350000) * 0.01);
+      return rentStartOverride==null
+        ? base
+        : Math.max(0, rentStartOverride);
+    }
+    function populateRentSelect(base){
+      const sel = document.getElementById('rent-select');
+      const vals = [];
+      for(let d=-6; d<=6; d++){
+        const v = Math.max(0, Math.round((base + d*500)));
+        if(!vals.includes(v)) vals.push(v);
+      }
+      sel.innerHTML = vals.map(v=> (
+        `<option value="${v}">${cur(v,0)}</option>`
+      )).join('');
+      const target = Math.max(0, Math.round(currentRentStartFromBridge(snapshotFromBridge())));
+      if (!vals.includes(target)){
+        sel.insertAdjacentHTML('afterbegin',
+          `<option value="${target}">${cur(target,0)}</option>`
+        );
+      }
+      sel.value = String(target);
+    }
+    /* //#4.9 Paint everything on screen ------------------------------ */
+    function paintAll(){
+      const s = snapshotFromBridge();
+      // --- KPIs
+      $('#k-income').textContent  = cur(s.income,0);
+      $('#k-expense').textContent = cur(s.expenses,0);
+      $('#k-mtg').textContent     = cur(s.housing,0);
+      $('#k-save').textContent    = cur(s.savings,0);
+      // Credit score KPI + band + gauge marker
+      const cs = Number(s.creditScore)||720;
+      $('#k-score').textContent = cs;
+      $('#score-band').textContent = `(${bandFromScore(cs)})`;
+      const pct = Math.max(0, Math.min(1, (cs - 300) / (850 - 300)));
+      $('#score-marker').style.left = (pct*100)+'%';
+      // Grade chip + meter width + color
+      $('#fid-disp').textContent = signed(s.income - s.expenses - s.savings - s.housing);
+      const {letter, totalShare} = localGrade({
+        ...s,
+        totalShare:(s.expenses+s.savings+s.housing)/(s.income||1)
+      });
+      $('#fid-grade').textContent = letter+' / Disposable';
+      $('#fid-dot').style.background =
+        (letter[0]==='A'||letter[0]==='B')
+          ? 'var(--ok)'
+          : (letter[0]==='C'
+              ? 'var(--warn)'
+              : 'var(--bad)');
+      $('#fid-meter').style.width =
+        (Math.max(0, Math.min(1, totalShare))*100)+'%';
+      // --- Initialize charts if needed
+      if(!pieChart || !barChart || !lineChart) initCharts();
+      // PIE chart (Expenses, Mortgage, Disposable Income)
+      $('#pie-center').textContent = s.income>0
+        ? s.income.toLocaleString()
+        : '0';
+      const disposableOnly = Math.max(0, s.income - s.expenses - s.savings - s.housing);
+      pieChart.data.datasets[0].data = [
+        s.expenses,
+        s.housing,
+        disposableOnly
+      ];
+      pieChart.update();
+      // BAR chart
+      updateExpenseBars();
+      // Rent select options (1% rule around price)
+      const baseRent = Math.max(
+        0,
+        (Number(s.price)||350000) * 0.01
+      );
+      populateRentSelect(baseRent);
+      // RENT vs BUY projection using full FD math
+      const rentStart = currentRentStartFromBridge(s);
+      const rvb = buildRentVsBuySeries10Y_FD(s, rentStart);
       lineChart.data.labels = rvb.labels;
       lineChart.data.datasets[0].data = rvb.buySeries;
       lineChart.data.datasets[1].data = rvb.rentSeries;
+      lineChart.__equityByYear   = rvb.equityByYear;
+      lineChart.__cumRentByYear  = rvb.cumRentByYear;
       lineChart.update();
-      // rent selector
-      const rentSel = $("#rent-select");
-      const baseRentGuess = Math.max(1200, Math.round((bridge.price||320000)*0.01));
-      const rentOptions = [];
-      for(let d=-4; d<=4; d++){
-        rentOptions.push(baseRentGuess + d*250);
-      }
-      rentSel.innerHTML = rentOptions.map(v=>(
-        "<option value='"+v+"'>$"+v.toLocaleString("en-US")+"</option>"
-      )).join("");
-      rentSel.value = String(baseRentGuess);
-      // break-even yrs
+      // Break-even display
       const be = rvb.beYears;
-      $("#be-yrs").textContent = (be==null) ? "—"
-        : ((Math.round(be*10)/10).toFixed(1)+" yrs").replace(".0 yrs"," yrs");
+      $('#be-yrs').textContent =
+        (be==null)
+          ? '—'
+          : ((Math.round(be*10)/10)
+              .toFixed(1)+' yrs')
+              .replace('.0 yrs',' yrs');
     }
-    /* ---------- Export button ---------- */
-    $("#fid-export").addEventListener("click", ()=>{
-      const el = document.getElementById("fid-card");
+    /* //#4.10 Event handlers (rent change, toggles, export) ---------- */
+    // Rent dropdown changes the model live
+    document.addEventListener('change', (e)=>{
+      if (e.target && e.target.id==='rent-select'){
+        rentStartOverride = Number(e.target.value)||0;
+        paintAll();
+      }
+    });
+    // $ Totals vs % Composition buttons
+    document.getElementById('mode-abs').addEventListener('click', ()=>{
+      barMode='abs';
+      document.getElementById('mode-abs').setAttribute('aria-pressed','true');
+      document.getElementById('mode-pct').setAttribute('aria-pressed','false');
+      updateExpenseBars();
+    });
+    document.getElementById('mode-pct').addEventListener('click', ()=>{
+      barMode='pct';
+      document.getElementById('mode-pct').setAttribute('aria-pressed','true');
+      document.getElementById('mode-abs').setAttribute('aria-pressed','false');
+      updateExpenseBars();
+    });
+    // Monthly vs Yearly dropdown
+    $('#exp-view').addEventListener('change', (e)=>{
+      barView = e.target.value === 'monthly' ? 'monthly' : 'yearly';
+      updateExpenseBars();
+    });
+    // Export button → PNG snapshot
+    $('#fid-export').addEventListener('click', async ()=>{
+      const el = document.getElementById('fid-card');
       const rect = el.getBoundingClientRect();
       const scale = Math.max(2, window.devicePixelRatio || 2);
       const cloned = el.cloneNode(true);
@@ -1107,7 +1471,7 @@
                       markup +
                     '</foreignObject>' +
                   '</svg>';
-      const blob = new Blob([svg], {type:'image/svg+xml;charset=utf-8'});
+      const blob = new Blob([svg], {type: 'image/svg+xml;charset=utf-8'});
       const url = URL.createObjectURL(blob);
       const img = new Image();
       img.onload = ()=>{
@@ -1126,21 +1490,12 @@
       };
       img.src = url;
     });
-    /* ---------- Mode toggles (future-ready) ---------- */
-    document.getElementById("mode-abs").addEventListener("click", ()=>{
-      document.getElementById("mode-abs").setAttribute("aria-pressed","true");
-      document.getElementById("mode-pct").setAttribute("aria-pressed","false");
-      // right now chart stays absolute; future: recalc % mode
-    });
-    document.getElementById("mode-pct").addEventListener("click", ()=>{
-      document.getElementById("mode-pct").setAttribute("aria-pressed","true");
-      document.getElementById("mode-abs").setAttribute("aria-pressed","false");
-      // future: swap barChart.data to percentages
-    });
-    /* ---------- Boot ---------- */
-    initCharts();
-    paintAll();
-  });
+    /* //#4.11 Boot --------------------------------------------------- */
+    (function boot(){
+      initCharts();
+      paintAll();
+    })();
+  })();
   </script>
       </section>
     </div>

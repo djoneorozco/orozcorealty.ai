@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Fri Oct 31 2025 03:23:53 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Sat Nov 01 2025 16:45:00 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68fad0393e405a7cd0d856d2" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -59,21 +59,6 @@
           <section class="section-111">
             <section class="section-114">
               <section class="section-113">
-                <section class="section-118">
-                  <div class="w-layout-vflex landing-home-page-wrap">
-                    <div class="w-layout-vflex landing-home-page-wrap">
-                      <div class="landing-home-page-big-text">Realty SaSS</div>
-                      <h2 data-w-id="b5292a2c-bd45-7034-0393-a0e22b4b0e1f" style="opacity:0" class="text-center">Psychology &amp; A.I Powered technology <br> </h2>
-                    </div>
-                    <div class="text-marquee-wrap">
-                      <div class="text-marquee-box the-orozco-realty"></div>
-                      <div class="text-marquee-box the-orozco-realty">
-                        <div class="home-one-marquee-large-text-two landing-large-marquee-text">A.I Technology</div>
-                      </div>
-                      <div class="text-marquee-box the-orozco-realty"></div>
-                    </div>
-                  </div>
-                </section>
                 <header class="style-two-header">
                   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-left-container style-three-header-container w-nav">
                     <div class="container-two">
@@ -104,7 +89,9 @@
                                   <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055a7" class="home-three-dropdaown-2 w-dropdown">
                                     <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                                       <div class="home-three-dropdown">
-                                        <div class="home-three-dropdown-menu black-color">Home </div>
+                                        <a href="index.html" class="w-inline-block">
+                                          <div class="home-three-dropdown-menu black-color">Home </div>
+                                        </a>
                                         <div class="home-three-dropdown-menu black-color">Home </div>
                                       </div><img width="9" height="9" alt="Plus" src="images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                                     </div>
@@ -122,7 +109,9 @@
                                   <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055ba" class="home-three-dropdaown-2 w-dropdown">
                                     <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                                       <div class="home-three-dropdown">
-                                        <div class="home-three-dropdown-menu black-color">FEATURES</div>
+                                        <a href="features/financial-dashboard.html" class="w-inline-block">
+                                          <div class="home-three-dropdown-menu black-color">DashBoard</div>
+                                        </a>
                                         <div class="home-three-dropdown-menu black-color">Properties</div>
                                       </div><img width="9" height="9" alt="Plus" src="images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                                     </div>
@@ -141,7 +130,9 @@
                                   <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055d2" class="home-three-dropdaown-2 w-dropdown">
                                     <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                                       <div class="home-three-dropdown">
-                                        <div class="home-three-dropdown-menu black-color">ABOUT US</div>
+                                        <a href="about-us.html" class="w-inline-block">
+                                          <div class="home-three-dropdown-menu black-color">ABOUT US</div>
+                                        </a>
                                         <div class="home-three-dropdown-menu black-color">Pages</div>
                                       </div><img width="9" height="9" alt="Plus" src="images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                                     </div>
@@ -172,7 +163,9 @@
                                   <div data-delay="0" data-hover="true" data-w-id="3648297c-ddce-044b-87fb-9eff0b3055ff" class="home-three-dropdaown-2 w-dropdown">
                                     <div class="style-three-menu-dropdown-toggle-3 w-dropdown-toggle">
                                       <div class="home-three-dropdown">
-                                        <div class="home-three-dropdown-menu black-color">Blog</div>
+                                        <a href="blogs-more.html" class="w-inline-block">
+                                          <div class="home-three-dropdown-menu black-color">Blog</div>
+                                        </a>
                                         <div class="home-three-dropdown-menu black-color">Blog</div>
                                       </div><img width="9" height="9" alt="Plus" src="images/Plus.svg" loading="lazy" class="home-three-dropdown-icon">
                                     </div>
@@ -231,10 +224,9 @@
                   </div>
                   <section>
                     <div class="w-embed w-script"><!--  =========================================================
-  RealtySaSS • Frosted Glass Lock (Global • ONLY lock /realtysass)
-  - Keep ONE embed sitewide.
-  - Locks pages that MATCH ALLOW_PATHS (allow-list mode).
-  - All other pages are OPEN (no prompt).
+  RealtySaSS • Frosted Glass Lock (Updated to support .html)
+  - Global lock for /realtysass and /realtysass.html
+  - Keep ONE embed sitewide
 =========================================================  -->
                       <div id="rs-lock-overlay" aria-hidden="true" style="visibility:hidden; opacity:0;">
                         <div class="rs-lock-centered" role="dialog" aria-labelledby="rs-lock-title" aria-modal="true">
@@ -295,36 +287,28 @@
 (function(){
   "use strict";
   // --- CONFIG ---
-  const VALID_CODE = "123456";   // <--- your 6-digit code (numbers only)
-  // Allow-list mode: ONLY paths that match ALLOW_PATHS will be locked.
+  const VALID_CODE = "123456";
+  // Supports both /realtysass and /realtysass.html
   const USE_ALLOW_LIST = true;
   const ALLOW_PATHS = [
-    /\/realtysass\/?$/i,            // exactly /realtysass (with optional trailing slash)
-    // If you also have a subpage like /realtysass/something, add another line, e.g.:
-    // /\/realtysass\/.+/i,
+    /\/realtysass(?:\.html)?$/i,
   ];
-  // (EXEMPT_PATHS is ignored in allow-list mode, but keeping here for reference)
   const EXEMPT_PATHS = [];
-  // --- PAGE DECISION ---
   const path = (location.pathname || "/").toLowerCase();
   const isAllowed = ALLOW_PATHS.some(re => re.test(path));
   const shouldLock = USE_ALLOW_LIST ? isAllowed : !EXEMPT_PATHS.some(re => re.test(path));
-  // If this page shouldn't be locked, remove all overlays and exit.
   if (!shouldLock) {
     document.querySelectorAll('#rs-lock-overlay').forEach(el => el.remove());
     return;
   }
-  // --- ELEMENTS ---
   const overlay = document.getElementById('rs-lock-overlay');
   const input   = document.getElementById('rs-code-input');
   const btn     = document.getElementById('rs-code-btn');
   const msg     = document.getElementById('rs-lock-msg');
-  // Show overlay now (we start hidden so non-locked pages never flash)
   overlay.classList.remove('rs-hidden');
   overlay.setAttribute('aria-hidden','false');
   overlay.style.visibility = 'visible';
   overlay.style.opacity = '1';
-  // --- HELPERS ---
   const digitsOnly = s => String(s || '').replace(/\D+/g, '');
   const cleanCode  = s => digitsOnly(s).slice(0, 6);
   function showMsg(text, isError){
@@ -332,7 +316,6 @@
     msg.style.color = isError ? '#ffb3b3' : 'var(--rs-muted)';
   }
   function unlockAllOverlays(){
-    // Hide EVERY instance (handles duplicate embeds in Symbols)
     document.querySelectorAll('#rs-lock-overlay').forEach(el => {
       el.classList.add('rs-hidden');
       el.setAttribute('aria-hidden','true');
@@ -361,7 +344,6 @@
       }
     }
   }
-  // --- EVENTS ---
   if (btn) btn.addEventListener('click', onSubmit);
   if (input){
     input.addEventListener('keydown', e => { if (e.key === 'Enter') onSubmit(); });
@@ -435,7 +417,7 @@
                       <div class="slide-animation-wrapper">
                         <div class="text-overflow-hidden-18">
                           <div class="first-line">
-                            <div class="small-text"><strong>A.I Concierge</strong></div>
+                            <div class="small-text"><strong class="bold-text-6">A.I Concierge</strong></div>
                           </div>
                         </div>
                       </div>
@@ -518,14 +500,14 @@
                       <div class="slide-animation-wrapper">
                         <div class="text-overflow-hidden-18">
                           <div class="first-line">
-                            <div class="small-text"><strong>Image Enhancement &amp;  Creation</strong></div>
+                            <div class="small-text"><strong class="bold-text-7">Image Enhancement &amp;  Creation</strong></div>
                           </div>
                         </div>
                       </div>
                       <div class="slide-animation-wrapper">
                         <div class="text-overflow-hidden-18">
                           <div class="second-line">
-                            <h1 class="text-align-center-14 none-margin second-home-title left">RE-DEfined, <span class="is--color-green-variable-4">Hassle-Free</span></h1>
+                            <h1 class="text-align-center-14 none-margin second-home-title left">RE-DEfined, <span class="is--color-green-variable-4"><br>Image Enhancer</span></h1>
                           </div>
                         </div>
                       </div>
@@ -592,11 +574,34 @@
           <section>
             <section class="section-195">
               <section class="section-196">
-                <div data-poster-url="https://uploads-ssl.webflow.com/6569b214e912016a672d14f6/6593e7e173954868b9c55f32_pexels-marros-11187237-1080p-poster-00001.jpg" data-video-urls="videos/pexels-marros-11187237-1080p-poster-00001.jpg,videos/pexels-marros-11187237-1080p-transcode.mp4,videos/pexels-marros-11187237-1080p-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="home-one-destination-large-image-wrap-3 w-background-video w-background-video-atom"><video id="4cb96424-9356-7d07-e2ff-991702f4b50b-video" autoplay="" loop="" style="background-image:url(&quot;https://uploads-ssl.webflow.com/6569b214e912016a672d14f6/6593e7e173954868b9c55f32_pexels-marros-11187237-1080p-poster-00001.jpg&quot;)" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
-                    <source src="videos/pexels-marros-11187237-1080p-poster-00001.jpg" data-wf-ignore="true">
-                    <source src="videos/pexels-marros-11187237-1080p-transcode.mp4" data-wf-ignore="true">
-                    <source src="videos/pexels-marros-11187237-1080p-transcode.webm" data-wf-ignore="true">
-                  </video></div>
+                <div class="w-layout-vflex landing-home-page-wrap-copy">
+                  <div class="w-layout-vflex landing-home-page-wrap-copy">
+                    <div class="landing-home-page-big-text-copy">Services</div>
+                    <div data-w-id="6b9421b2-7f84-7e1c-725c-b30525ce2d72" style="opacity:0" class="center-flex">
+                      <a href="agent-page/realtor-agents.html" data-w-id="6b9421b2-7f84-7e1c-725c-b30525ce2d73" style="opacity:0" target="_blank" class="primary-glow-wrapper-19 w-inline-block">
+                        <div data-w-id="6b9421b2-7f84-7e1c-725c-b30525ce2d74" class="button-overflow-hidden">
+                          <div class="box-shadow-block-16">
+                            <div class="pedding-stroke-12"></div>
+                            <div class="glow-wrapper stroke">
+                              <div class="glow-item left"></div>
+                              <div class="glow-item"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <h2 data-w-id="6b9421b2-7f84-7e1c-725c-b30525ce2d7d" style="opacity:0" class="text-center">Empowering the military community</h2>
+                  </div>
+                  <div class="text-marquee-wrap">
+                    <div class="text-marquee-box the-orozco-realty"></div>
+                    <div class="text-marquee-box-copy the-orozco-realty">
+                      <a href="agent-page/realtor-agents.html" class="w-inline-block">
+                        <div class="home-one-marquee-large-text-two-copy landing-large-marquee-text">Orozco Realty</div>
+                      </a>
+                    </div>
+                    <div class="text-marquee-box the-orozco-realty"></div>
+                  </div>
+                </div>
               </section>
             </section>
           </section>
@@ -611,7 +616,7 @@
                         <div class="slide-animation-wrapper">
                           <div class="text-overflow-hidden-18">
                             <div class="first-line">
-                              <div class="small-text"><strong>Image Enhancement &amp;  Creation</strong></div>
+                              <div class="small-text"><strong class="bold-text-8">Image Enhancement &amp;  Creation</strong></div>
                             </div>
                           </div>
                         </div>
