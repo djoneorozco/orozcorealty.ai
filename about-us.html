@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 03 2025 00:03:46 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 03 2025 04:11:20 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68fcd708e7d265f140efc750" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -143,6 +143,124 @@
         </div>
       </div>
     </div>
+    <div class="w-embed w-script"><!--  About Us • Concierge Voice Embed (Image Version + Cinematic Reveal)  -->
+      <audio id="about-audio" preload="auto">
+        <source src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/6907fbe04cb2d0116ffc9c43_ElevenLabs_2025-11-03T00_43_40_Rachel_pre_sp100_s50_sb75_v3.mp3" type="audio/mpeg">
+      </audio>
+      <div id="voice-trigger" style="
+    position:fixed;
+    bottom:1rem;
+    right:1rem;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    gap:.75rem;
+    background:rgba(11,14,26,0.6);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:1rem;
+    padding:.75rem 1rem;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 18px 48px rgba(0,0,0,.6);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    min-width:220px;
+    /* cinematic intro state */
+    opacity:0;
+    transform:translateY(20px) scale(.98);
+    transition:
+      opacity .6s cubic-bezier(.16,1,.3,1),
+      transform .6s cubic-bezier(.16,1,.3,1),
+      box-shadow .4s ease;
+    pointer-events:none; /* off until revealed */
+  ">
+        <!--  Avatar Image  -->
+        <img src="images/a-modern-living-room-with-a-large-window.png" alt="Elena Concierge" style="
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.3);
+      box-shadow:0 10px 30px rgba(142,243,197,.4);
+      flex-shrink:0;
+    ">
+        <div style="display:flex; flex-direction:column; line-height:1.2;">
+          <div style="font-size:.8rem; font-weight:600; color:#fff;">
+            Hear Our Story
+          </div>
+          <div style="font-size:.7rem; color:#a8b0d6;">
+            Elena • A.I. Concierge
+          </div>
+        </div>
+        <div id="voice-status" style="
+      margin-left:auto;
+      font-size:.7rem;
+      font-weight:600;
+      color:#8ef3c5;
+      border:1px solid rgba(142,243,197,.4);
+      background:rgba(142,243,197,.08);
+      padding:.4rem .6rem;
+      border-radius:.5rem;
+      line-height:1.1;
+      white-space:nowrap;
+    ">
+          ▶ Play
+        </div>
+      </div>
+      <script>
+  (function () {
+    const card = document.getElementById('voice-trigger');
+    const audio = document.getElementById('about-audio');
+    const statusEl = document.getElementById('voice-status');
+    if (!card || !audio || !statusEl) return;
+    // //#1 Cinematic fade-in on scroll
+    let revealed = false;
+    function revealCardIfReady() {
+      // adjust 150 if you want different trigger point
+      if (!revealed && window.scrollY > 150) {
+        revealed = true;
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0) scale(1)';
+        card.style.pointerEvents = 'auto';
+      }
+    }
+    // run once in case user is already scrolled
+    revealCardIfReady();
+    window.addEventListener('scroll', revealCardIfReady, { passive: true });
+    // //#2 Play / Pause behavior
+    card.addEventListener('click', () => {
+      // pause if playing
+      if (!audio.paused) {
+        audio.pause();
+        statusEl.textContent = '▶ Play';
+        statusEl.style.color = '#8ef3c5';
+        statusEl.style.background = 'rgba(142,243,197,.08)';
+        statusEl.style.borderColor = 'rgba(142,243,197,.4)';
+        return;
+      }
+      // play (with glow pulse)
+      audio.play().then(() => {
+        statusEl.textContent = '● Playing';
+        statusEl.style.color = '#fff';
+        statusEl.style.background = 'rgba(142,243,197,.28)';
+        statusEl.style.borderColor = 'rgba(142,243,197,.6)';
+        card.style.boxShadow =
+          '0 30px 80px rgba(142,243,197,.22), 0 0 30px rgba(142,243,197,.4)';
+      }).catch(err => {
+        console.warn('Audio play blocked:', err);
+      });
+    });
+    // //#3 When audio finishes, update button text
+    audio.addEventListener('ended', () => {
+      statusEl.textContent = '▶ Replay';
+      statusEl.style.color = '#8ef3c5';
+      statusEl.style.background = 'rgba(142,243,197,.08)';
+      statusEl.style.borderColor = 'rgba(142,243,197,.4)';
+    });
+  })();
+</script>
+    </div>
   </div>
   <section>
     <div id="who-we-are" class="section-67">
@@ -156,7 +274,7 @@
                 <h2 class="heading-28">Who We Are</h2>
                 <p class="max-width-450px-5">OrozcoRealty Is a Real Estate consumer platform design to enhance buyer knowledge by providing a systematic approach to home buying. <br>By using Artificial Intelligence as the Engine behind Process, we provide clear and unbiased information and statistics.<br>We hope to breach the knowledge gap between You and Realtors in order to effectively achieve your home buying goals. </p>
               </div>
-              <div class="about-us-image-2"><img width="533" height="750" alt="" src="https://cdn.prod.website-files.com/68c7b62d4f6dd22676ce77c4/68cee1bcda95556b8fabe0c6_Facalty%20Image.webp" loading="lazy" class="about-features-image-3"></div>
+              <div class="about-us-image-2"><img width="533" height="750" alt="Vartical Accordion Image" src="images/Vartical-Accordion-Image-3.webp" loading="lazy" srcset="images/Vartical-Accordion-Image-3-p-500.webp 500w, images/Vartical-Accordion-Image-3-p-800.webp 800w, images/Vartical-Accordion-Image-3-p-1080.webp 1080w, images/Vartical-Accordion-Image-3-p-1600.webp 1600w, images/Vartical-Accordion-Image-3.webp 1680w" sizes="(max-width: 767px) 100vw, 533px" class="about-features-image-3"></div>
             </div>
           </div>
         </div>
@@ -177,31 +295,21 @@
                       <div class="mask-testimonial w-slider-mask">
                         <div class="slide-2 w-slide">
                           <div class="testimonial-text-wrapper-2">
-                            <h3 class="heading-35">Our HIstory: </h3>
-                            <p class="max-width-36rem-3">THE HISTORY OF OROZCO REALTY. </p>
+                            <h3 class="heading-35">Our HIstory: </h3><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 864px" srcset="images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-500.png 500w, images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-800.png 800w, images/a-modern-living-room-with-a-large-window.png 864w" alt="a modern living room with a large window" src="images/a-modern-living-room-with-a-large-window.png" loading="lazy" class="image-small-circle-02">
+                            <p class="max-width-36rem-3">Founded in Mexico in 1970s by “Chabella” Rivera de Orozco. Orozco Realty began with a simple but POWERFUL mission: To provide housing accommodations to anyone, regardless of financial circumstances.  Driven by compassion and a deep sense of community Chabella sought to ensure all had access to a place to call home.</p>
                           </div>
-                          <div class="testimonial-image-wrapper">
-                            <div class="testimonial-client-wrapper-5"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 864px" srcset="images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-500.png 500w, images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-800.png 800w, images/a-modern-living-room-with-a-large-window.png 864w" alt="a modern living room with a large window" src="images/a-modern-living-room-with-a-large-window.png" loading="lazy" class="image-small-circle-02">
-                              <div class="testimonial-info-wrapper">
-                                <div class="stars-wrapper"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"></div>
-                                <h6 class="color-white-2 centered-on-mobile">Founded in 1970s</h6>
-                              </div>
-                            </div><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa30_quote.png" alt="" class="testimonial-icon-02 invert">
-                          </div>
+                          <div class="testimonial-image-wrapper"></div>
                         </div>
                         <div class="slide-2 w-slide">
                           <div class="testimonial-text-wrapper-2">
-                            <h6>TESTIMONIALS</h6>
-                            <h2>Client Reviews</h2>
-                            <p class="max-width-36rem-3">When it comes to luxury real estate, High-end Realty is in a league of its own. From the first consultation to the final closing, their team demonstrated an exceptional level of professionalism.</p>
+                            <h6>Our Present</h6><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 864px" srcset="images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-500.png 500w, images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-800.png 800w, images/a-modern-living-room-with-a-large-window.png 864w" alt="a modern living room with a large window" src="images/a-modern-living-room-with-a-large-window.png" loading="lazy" class="image-small-circle-02"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 864px" srcset="images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-500.png 500w, images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-800.png 800w, images/a-modern-living-room-with-a-large-window.png 864w" alt="a modern living room with a large window" src="images/a-modern-living-room-with-a-large-window.png" loading="lazy" class="image-small-circle-02">
+                            <p class="max-width-36rem-3">OrozcoRealty is a veteran-owned, family-based business with a mission to Empower the Military Community. We are an A.I Powered Real Estate Intelligence Company designed to enhance the buying process through the use of Psychology, Data Science, and A.I Assisted Technology.</p>
                           </div>
-                          <div class="testimonial-image-wrapper">
-                            <div class="testimonial-client-wrapper-5"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa41_apuesto-joven-empresario-traje-Flip-Square.webp" alt="" class="image-small-circle-02">
-                              <div class="testimonial-info-wrapper">
-                                <div class="stars-wrapper"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa2f_star.png" alt="" class="star"></div>
-                                <h6 class="color-white-2 centered-on-mobile">Christian Cooper</h6>
-                              </div>
-                            </div><img loading="lazy" src="https://cdn.prod.website-files.com/68c9616402ea9a2f039df988/68c9616502ea9a2f039dfa30_quote.png" alt="" class="testimonial-icon-02 invert">
+                        </div>
+                        <div class="w-slide">
+                          <div class="testimonial-text-wrapper-2">
+                            <h6>Our Future</h6><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 864px" srcset="images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-500.png 500w, images/cadde6b11c41871bcfcaa77aebe5fbb7_a-modern-living-room-with-a-large-window-p-800.png 800w, images/a-modern-living-room-with-a-large-window.png 864w" alt="a modern living room with a large window" src="images/a-modern-living-room-with-a-large-window.png" loading="lazy" class="image-small-circle-02">
+                            <p class="max-width-36rem-3">Over the decades that founding philosophy remains at the heart of OrozcoRealty.  Now with over 20 years of managerial experience and Master’s degree from both Duke, and Johns Hopkins University, the company is perfectly aligned to Empower both Buyers and Realtors. <br><br>We are the Future of Real Estate!</p>
                           </div>
                         </div>
                       </div>

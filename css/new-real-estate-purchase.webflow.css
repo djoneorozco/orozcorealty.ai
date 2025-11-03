@@ -10852,9 +10852,14 @@ img {
 }
 
 .container-full-3.reviews-image.no-max-width {
-  background-image: linear-gradient(#0000, #0000), url('../images/a-chair-in-a-room-Square.jpg');
+  background-image: linear-gradient(#0000, #0000), url('../images/Vartical-Accordion-Image-3.webp');
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
   border-radius: 20px;
+  max-width: 1200px;
   margin-top: 15px;
+  margin-left: -38px;
+  padding-left: 0;
   transform: translate(16px);
 }
 
@@ -11606,7 +11611,7 @@ img {
   width: 1250px;
   max-width: 1300px;
   margin-top: -200px;
-  margin-left: -53px;
+  margin-left: 0;
   margin-right: 50px;
   padding-top: 10px;
   padding-bottom: 31px;
@@ -23507,6 +23512,16 @@ img {
     margin-left: -11px;
   }
 
+  .max-width-36rem-3 {
+    color: var(--white);
+    margin-left: 56px;
+  }
+
+  .testimonial-text-wrapper-2 {
+    text-align: center;
+    margin-left: 26px;
+  }
+
   .section-71 {
     margin-left: -62px;
     margin-right: auto;
@@ -23541,6 +23556,7 @@ img {
     background-color: #0000;
     border-radius: 20px;
     margin-top: 15px;
+    box-shadow: 0 2px 7px 1px #000000e6;
   }
 
   .hp-inner-page-demos-content-wrap {
@@ -23653,6 +23669,9 @@ img {
   .about-features-image-3 {
     width: 100%;
     margin-left: 2px;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
     left: 0%;
   }
 
@@ -23691,6 +23710,7 @@ img {
   }
 
   .hp-template-content-wrap-5 {
+    box-shadow: none;
     width: 1400px;
     height: 631px;
     margin-top: -200px;
@@ -23794,12 +23814,12 @@ img {
   }
 
   .max-width-450px-7.align-right.centered-on-mobile {
-    width: 605px;
-    max-width: 600px;
+    width: 650px;
+    max-width: 650px;
     margin-top: -66px;
-    margin-left: 8px;
+    margin-left: 29px;
     padding-left: 0;
-    padding-right: 42px;
+    padding-right: 0;
   }
 
   .max-width-450px-7.centered-on-mobile {
@@ -23817,6 +23837,10 @@ img {
     margin-left: -26px;
     padding-left: 3px;
     padding-right: 0;
+  }
+
+  .features-card-wrapper-5 {
+    margin-left: -20px;
   }
 
   .card-link-3 {
@@ -26354,6 +26378,10 @@ img {
     font-family: Gilda Display, sans-serif;
     font-size: 2rem;
   }
+
+  .paragraph-10 {
+    text-align: left;
+  }
 }
 
 @media screen and (min-width: 1440px) {
@@ -27702,9 +27730,24 @@ img {
     padding-bottom: 16px;
   }
 
+  .slide-nav-testimonial {
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .image-small-circle-02 {
+    margin-left: 220px;
+    transform: translate(120px, -7px);
+  }
+
   .max-width-36rem-3 {
-    color: var(--white-2);
-    font-size: 1.6rem;
+    color: var(--white);
+    width: 650px;
+    max-width: 615px;
+    margin-left: 71px;
+    padding-right: 14px;
+    font-family: Gilda Display, sans-serif;
+    font-size: 1.3rem;
   }
 
   .testimonial-text-wrapper-2 {
@@ -27727,6 +27770,10 @@ img {
 
   .hp-template-grid {
     margin-top: 192px;
+  }
+
+  .testimonial-image-wrapper {
+    padding-bottom: 77px;
   }
 
   .container-full-2.reviews-image.no-max-width {
@@ -27984,6 +28031,10 @@ img {
     transform: translate(147px, -120px);
   }
 
+  .space-large-5 {
+    margin-top: 15px;
+  }
+
   .section-102 {
     margin-top: -57px;
     margin-left: 101px;
@@ -28026,6 +28077,8 @@ img {
   }
 
   .hp-template-content-wrap-5 {
+    box-shadow: none;
+    background-position: 100% 0;
     width: 1400px;
     max-width: 1400px;
     margin-top: -39px;
@@ -28086,7 +28139,7 @@ img {
   }
 
   .section-107 {
-    margin-left: 35px;
+    margin-left: 80px;
   }
 
   .paragraph, .paragraph-2, .paragraph-3, .paragraph-4, .paragraph-5 {
@@ -28300,6 +28353,13 @@ img {
   .image-29 {
     margin-top: 156px;
     padding-top: 94px;
+  }
+
+  .heading-35 {
+    color: var(--theam-color);
+    text-align: center;
+    margin-left: 101px;
+    font-family: PT Serif, serif;
   }
 
   .text-block-2 {
@@ -31254,6 +31314,11 @@ img {
     height: 80px;
     margin-top: 3px;
     padding-left: 48px;
+  }
+
+  .code-embed-18 {
+    width: 445px;
+    height: 90px;
   }
 }
 
