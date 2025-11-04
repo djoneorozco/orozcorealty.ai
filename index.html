@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 03 2025 04:11:20 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Tue Nov 04 2025 01:33:50 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="69031120bd622a4f0726feea" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -169,122 +169,111 @@
         </div>
         <div class="hero-wrapper">
           <div class="hero-flex slide-up-animation"><img width="741" height="Auto" alt="" src="images/TOR.png" loading="lazy" srcset="images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-500.png 500w, images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-800.png 800w, images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-1080.png 1080w, images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-1600.png 1600w, images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2000.png 2000w, images/1394a00d76ce9dd861ade690dfb1a058_TOR-p-2600.png 2600w, images/TOR.png 2851w" sizes="(max-width: 767px) 100vw, 741px" class="image-10">
-            <div class="w-embed w-script"><!--  About Us • Concierge Voice Embed (Image Version + Cinematic Reveal)  -->
-              <audio id="about-audio" preload="auto">
-                <source src="https://cdn.prod.website-files.com/68cecb820ec3dbdca3ef9099/6908298398659d321f2f9888_Main%20Intro.mp3" type="audio/mpeg">
-              </audio>
+            <div class="w-embed w-script"><!--  About Us • Concierge Video Embed (Cinematic Reveal + Auto-Disappear + Taller Player)  -->
+              <div id="about-video-wrap" style="
+  position:fixed; bottom:5.5rem; right:1rem; z-index:2147480000;
+  width:360px; height:420px; max-width:90vw; border-radius:12px; overflow:hidden;
+  background:rgba(0,0,0,.85); border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  opacity:0; transform:translateY(20px) scale(.98); pointer-events:none;
+  transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:.5rem .75rem;">
+                  <div style="color:#a8b0d6; font:600 .8rem/1 Inter,system-ui,sans-serif;">Your Journey Begins — Now</div>
+                  <button id="about-video-close" aria-label="Close video" style="
+      appearance:none; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
+      color:#fff; font:.8rem/1 Inter,system-ui,sans-serif; padding:.25rem .5rem; border-radius:.5rem; cursor:pointer;
+    ">✕</button>
+                </div>
+                <video id="about-video" playsinline="" controls="" preload="auto" style="display:block; width:100%; height:calc(100% - 2rem); object-fit:cover; background:#000;">
+                  <source src="https://s3.amazonaws.com/webflow-prod-assets/68cecb820ec3dbdca3ef9099/690955fcf5154342d320a60f_TOR.mp4">
+                </video>
+              </div>
+              <!--  Concierge Trigger  -->
               <div id="voice-trigger" style="
-    position:fixed;
-    bottom:1rem;
-    right:1rem;
-    z-index:99999;
-    display:flex;
-    align-items:center;
-    gap:.75rem;
-    background:rgba(11,14,26,0.6);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:1rem;
-    padding:.75rem 1rem;
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    color:#fff;
-    cursor:pointer;
-    box-shadow:0 18px 48px rgba(0,0,0,.6);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    min-width:220px;
-    /* cinematic intro state */
-    opacity:0;
-    transform:translateY(20px) scale(.98);
-    transition:
-      opacity .6s cubic-bezier(.16,1,.3,1),
-      transform .6s cubic-bezier(.16,1,.3,1),
-      box-shadow .4s ease;
-    pointer-events:none; /* off until revealed */
-  ">
-                <!--  Avatar Image  -->
-                <img src="images/a-modern-living-room-with-a-large-window.png" alt="Elena Concierge" style="
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      object-fit:cover;
-      border:1px solid rgba(255,255,255,.3);
-      box-shadow:0 10px 30px rgba(142,243,197,.4);
-      flex-shrink:0;
-    ">
+  position:fixed; bottom:1rem; right:1rem; z-index:2147480000;
+  display:flex; align-items:center; gap:.75rem; min-width:220px;
+  background:rgba(11,14,26,0.6); border:1px solid rgba(255,255,255,.12); border-radius:1rem;
+  padding:.75rem 1rem; color:#fff; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  cursor:pointer; box-shadow:0 18px 48px rgba(0,0,0,.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  opacity:0; transform:translateY(20px) scale(.98); pointer-events:none;
+  transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+">
+                <img src="images/a-modern-living-room-with-a-large-window.png" alt="Elena Concierge" style="width:44px; height:44px; border-radius:50%; object-fit:cover;
+       border:1px solid rgba(255,255,255,.3); box-shadow:0 10px 30px rgba(142,243,197,.4);">
                 <div style="display:flex; flex-direction:column; line-height:1.2;">
-                  <div style="font-size:.8rem; font-weight:600; color:#fff;">
-                    How to Start
-                  </div>
-                  <div style="font-size:.7rem; color:#a8b0d6;">
-                    Elena • A.I. Concierge
-                  </div>
+                  <div style="font-size:.8rem; font-weight:600;">Process Overview</div>
+                  <div style="font-size:.7rem; color:#a8b0d6;">Elena • A.I. Concierge</div>
                 </div>
                 <div id="voice-status" style="
-      margin-left:auto;
-      font-size:.7rem;
-      font-weight:600;
-      color:#8ef3c5;
-      border:1px solid rgba(142,243,197,.4);
-      background:rgba(142,243,197,.08);
-      padding:.4rem .6rem;
-      border-radius:.5rem;
-      line-height:1.1;
-      white-space:nowrap;
-    ">
-                  ▶ Play
-                </div>
+    margin-left:auto; font-size:.7rem; font-weight:600; color:#8ef3c5;
+    border:1px solid rgba(142,243,197,.4); background:rgba(142,243,197,.08);
+    padding:.4rem .6rem; border-radius:.5rem; white-space:nowrap;">▶ Play</div>
               </div>
               <script>
-  (function () {
-    const card = document.getElementById('voice-trigger');
-    const audio = document.getElementById('about-audio');
-    const statusEl = document.getElementById('voice-status');
-    if (!card || !audio || !statusEl) return;
-    // //#1 Cinematic fade-in on scroll
-    let revealed = false;
-    function revealCardIfReady() {
-      // adjust 150 if you want different trigger point
-      if (!revealed && window.scrollY > 150) {
-        revealed = true;
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0) scale(1)';
-        card.style.pointerEvents = 'auto';
-      }
+(function () {
+  const chip = document.getElementById('voice-trigger');
+  const statusEl = document.getElementById('voice-status');
+  const wrap = document.getElementById('about-video-wrap');
+  const video = document.getElementById('about-video');
+  const closeBtn = document.getElementById('about-video-close');
+  if (!chip || !statusEl || !wrap || !video || !closeBtn) return;
+  // Reveal concierge chip on scroll
+  let revealed = false;
+  function revealChip() {
+    if (!revealed && window.scrollY > 150) {
+      revealed = true;
+      chip.style.opacity = '1';
+      chip.style.transform = 'translateY(0) scale(1)';
+      chip.style.pointerEvents = 'auto';
     }
-    // run once in case user is already scrolled
-    revealCardIfReady();
-    window.addEventListener('scroll', revealCardIfReady, { passive: true });
-    // //#2 Play / Pause behavior
-    card.addEventListener('click', () => {
-      // pause if playing
-      if (!audio.paused) {
-        audio.pause();
-        statusEl.textContent = '▶ Play';
-        statusEl.style.color = '#8ef3c5';
-        statusEl.style.background = 'rgba(142,243,197,.08)';
-        statusEl.style.borderColor = 'rgba(142,243,197,.4)';
-        return;
-      }
-      // play (with glow pulse)
-      audio.play().then(() => {
+  }
+  revealChip();
+  window.addEventListener('scroll', revealChip, { passive: true });
+  function showPlayer() {
+    wrap.style.opacity = '1';
+    wrap.style.transform = 'translateY(0) scale(1)';
+    wrap.style.pointerEvents = 'auto';
+  }
+  function hidePlayer() {
+    wrap.style.opacity = '0';
+    wrap.style.transform = 'translateY(20px) scale(.98)';
+    wrap.style.pointerEvents = 'none';
+  }
+  // Click chip → show player + play video
+  chip.addEventListener('click', () => {
+    const visible = wrap.style.pointerEvents === 'auto';
+    if (!visible) showPlayer();
+    if (!video.paused) {
+      video.pause();
+      statusEl.textContent = '▶ Play';
+      statusEl.style.color = '#8ef3c5';
+    } else {
+      video.play().then(() => {
         statusEl.textContent = '● Playing';
         statusEl.style.color = '#fff';
-        statusEl.style.background = 'rgba(142,243,197,.28)';
-        statusEl.style.borderColor = 'rgba(142,243,197,.6)';
-        card.style.boxShadow =
-          '0 30px 80px rgba(142,243,197,.22), 0 0 30px rgba(142,243,197,.4)';
-      }).catch(err => {
-        console.warn('Audio play blocked:', err);
-      });
-    });
-    // //#3 When audio finishes, update button text
-    audio.addEventListener('ended', () => {
-      statusEl.textContent = '▶ Replay';
-      statusEl.style.color = '#8ef3c5';
-      statusEl.style.background = 'rgba(142,243,197,.08)';
-      statusEl.style.borderColor = 'rgba(142,243,197,.4)';
-    });
-  })();
+        chip.style.boxShadow = '0 30px 80px rgba(142,243,197,.22), 0 0 30px rgba(142,243,197,.4)';
+      }).catch(err => console.warn('Video play blocked:', err));
+    }
+  });
+  // Close video manually
+  closeBtn.addEventListener('click', () => {
+    video.pause();
+    hidePlayer();
+    statusEl.textContent = '▶ Play';
+  });
+  // When video ends → fade out both player & chip
+  video.addEventListener('ended', () => {
+    hidePlayer();
+    chip.style.transition = 'opacity .5s ease';
+    chip.style.opacity = '0';
+    chip.style.pointerEvents = 'none';
+    setTimeout(() => {
+      chip.remove();
+      wrap.remove();
+    }, 600);
+  });
+})();
 </script>
             </div>
             <div class="hero-title-wrapper align-left width-560px">
@@ -343,7 +332,7 @@
           </div>
           <div class="features-card-wrapper-5">
             <div class="image-steps-wrapper-5">
-              <div class="div-block-4"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.984375px, 939.96875px" srcset="images/68c7b62d4f6dd22676ce7916_luxurypool-p-500.jpg 500w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-800.jpg 800w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-1080.jpg 1080w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-1600.jpg 1600w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-2000.jpg 2000w, images/68c7b62d4f6dd22676ce7916_luxurypool.jpg 2505w" alt="" src="images/68c7b62d4f6dd22676ce7916_luxurypool.jpg" loading="lazy" class="image-scroll-movement"></div>
+              <div class="div-block-4"><img sizes="100vw" srcset="images/68c7b62d4f6dd22676ce7916_luxurypool-p-500.jpg 500w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-800.jpg 800w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-1080.jpg 1080w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-1600.jpg 1600w, images/68c7b62d4f6dd22676ce7916_luxurypool-p-2000.jpg 2000w, images/68c7b62d4f6dd22676ce7916_luxurypool.jpg 2505w" alt="" src="images/68c7b62d4f6dd22676ce7916_luxurypool.jpg" loading="lazy" class="image-scroll-movement"></div>
             </div>
             <div class="steps-text-flex-4">
               <h3 class="heading-34">Realty SaSS</h3>
@@ -379,7 +368,7 @@
                 </div>
                 <div class="space-text-half"></div>
               </div>
-              <div class="cta-image-wrapper-8"><img class="cta-image" src="images/green-plant-on-white-ceramic-pot-Square_1.png" alt="green plant on white ceramic pot" style="opacity:0" sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.984375px, 939.984375px" data-w-id="6337061b-642e-d4a3-d9a0-e042eedf9f86" loading="lazy" srcset="images/green-plant-on-white-ceramic-pot-Square_1-p-500.png 500w, images/green-plant-on-white-ceramic-pot-Square_1-p-800.png 800w, images/green-plant-on-white-ceramic-pot-Square_1.png 1080w">
+              <div class="cta-image-wrapper-8"><img class="cta-image" src="images/green-plant-on-white-ceramic-pot-Square_1.png" alt="green plant on white ceramic pot" style="opacity:0" sizes="100vw" data-w-id="6337061b-642e-d4a3-d9a0-e042eedf9f86" loading="lazy" srcset="images/green-plant-on-white-ceramic-pot-Square_1-p-500.png 500w, images/green-plant-on-white-ceramic-pot-Square_1-p-800.png 800w, images/green-plant-on-white-ceramic-pot-Square_1.png 1080w">
                 <div class="gradient-overlay-bottom"></div>
                 <div class="gradient-overlay-bottom-copy"></div>
                 <div class="gradient-overlay-bottom"></div>
@@ -566,7 +555,7 @@
           </div>
           <div class="steps-flex-2">
             <div class="steps-wrapper-2">
-              <div class="image-steps-wrapper-8"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.984375px, 939.984375px" srcset="images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-500.jpg 500w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-800.jpg 800w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-1080.jpg 1080w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-1600.jpg 1600w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-2000.jpg 2000w, images/Tier1.jpg 2200w" alt="" src="images/Tier1.jpg" loading="lazy" class="steps-image shrink-in-animation">
+              <div class="image-steps-wrapper-8"><img sizes="100vw" srcset="images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-500.jpg 500w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-800.jpg 800w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-1080.jpg 1080w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-1600.jpg 1600w, images/b2fea7c42953f2170c36ba0b9472f550_Tier1-p-2000.jpg 2000w, images/Tier1.jpg 2200w" alt="" src="images/Tier1.jpg" loading="lazy" class="steps-image shrink-in-animation">
                 <div class="trigger-2"></div>
                 <div class="image-overlay-3"></div>
                 <div class="line-bottom-02"></div>
@@ -577,7 +566,7 @@
               </div>
             </div>
             <div class="steps-wrapper-2">
-              <div class="image-steps-wrapper-8"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.984375px, 939.984375px" srcset="images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-500.jpg 500w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-800.jpg 800w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-1080.jpg 1080w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-1600.jpg 1600w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-2000.jpg 2000w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-2600.jpg 2600w, images/VEP_VOB-Logo.jpg 2700w" alt="" src="images/VEP_VOB-Logo.jpg" loading="lazy" class="steps-image shrink-in-animation">
+              <div class="image-steps-wrapper-8"><img sizes="100vw" srcset="images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-500.jpg 500w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-800.jpg 800w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-1080.jpg 1080w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-1600.jpg 1600w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-2000.jpg 2000w, images/dbc612a34474aa29f03da63f71dbcd24_VEP_VOB-Logo-p-2600.jpg 2600w, images/VEP_VOB-Logo.jpg 2700w" alt="" src="images/VEP_VOB-Logo.jpg" loading="lazy" class="steps-image shrink-in-animation">
                 <div class="trigger-2"></div>
                 <div class="image-overlay-3"></div>
                 <div class="line-bottom-02"></div>
@@ -588,7 +577,7 @@
               </div>
             </div>
             <div class="steps-wrapper-2">
-              <div class="image-steps-wrapper-8"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 727.984375px, 939.984375px" srcset="images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-500.jpg 500w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-800.jpg 800w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-1080.jpg 1080w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-1600.jpg 1600w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-2000.jpg 2000w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-2600.jpg 2600w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-3200.jpg 3200w, images/TOR-A.I.jpg 6250w" alt="" src="images/TOR-A.I.jpg" loading="lazy" class="steps-image shrink-in-animation">
+              <div class="image-steps-wrapper-8"><img sizes="100vw" srcset="images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-500.jpg 500w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-800.jpg 800w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-1080.jpg 1080w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-1600.jpg 1600w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-2000.jpg 2000w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-2600.jpg 2600w, images/1f8bbbb4bc069296ff326983fa249807_TOR-A.I-p-3200.jpg 3200w, images/TOR-A.I.jpg 6250w" alt="" src="images/TOR-A.I.jpg" loading="lazy" class="steps-image shrink-in-animation">
                 <div class="trigger-2"></div>
                 <div class="image-overlay-3"></div>
                 <div class="line-bottom-02"></div>
