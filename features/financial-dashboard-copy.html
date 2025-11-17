@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Nov 05 2025 13:44:19 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 17 2025 00:32:40 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="690ae0eb75359955df89fff3" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Inconsolata:400,700","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
   <link href="../images/favicon.svg" rel="shortcut icon" type="image/x-icon">
   <link href="../images/webclip.jpg" rel="apple-touch-icon">
@@ -143,241 +143,1230 @@
       </div>
     </div>
   </section>
-  <div class="code-embed-11 w-embed"><!--  ============================
- OrozcoRealty • Financial Dashboard v4.1 (A.I.O.U Theme)
- EMBED #1 of 2  (HTML + CSS + Section Containers)
- - Full re-theme to A.I.O.U. visual system
- - Gradient-glass, mint+blue dual accent, glow logic preserved
-============================  -->
-    <div id="rs-shell" style="all: initial;">
+  <div class="code-embed-11 w-embed"><!--  PART 1 of 3 — OrozcoRealty • Financial Dashboard v4.0 — AIOU Deep Navy / Teal-Mint Theme
+     NOTE: This file is the first ~400+ lines of the single-file build.
+     All JS and table structures are preserved for later parts.
+     Paste Parts 1, 2, and 3 one after another to form the complete .html.  -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>Financial Dashboard v4.0 — AIOU Shell</title>
       <!--  Fonts  -->
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
       <style>
-  /* =========================================================
-     //#1 GLOBAL TOKENS / RESET
-     ========================================================= */
-  #rs-shell, #rs-shell * {
-    box-sizing: border-box;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  }
-  :root {
-    --bg: #0b0e1a;
-    --panel: #101426;
-    --panel-2: #0f1324;
-    --ink: #e9ecff;
-    --muted: #a8b0d6;
-    --border: rgba(255,255,255,.10);
-    --accent: #8ef3c5;
-    --accent2: #6aa7ff;
-    --accent-glow: 0 0 24px rgba(142,243,197,.25), 0 0 12px rgba(106,167,255,.25);
-    --radius: 18px;
-    --blur: 20px;
-    --speed: .2s;
-    --on: #d9e7ff;
-    --off: #7d8db0;
-    --warn: #f9c74f;
-    --bad: #ff6b6b;
-    --ok: #55d399;
-  }
-  body, html, #rs-shell {
-    background: radial-gradient(1200px 480px at 70% -10%, rgba(142,243,197,.08), transparent 60%),
-                radial-gradient(900px 420px at 40% -6%, rgba(106,167,255,.06), transparent 55%),
-                linear-gradient(180deg,#0b0e1a 0%,#090c17 100%);
-    color: var(--ink);
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
-  }
-  /* =========================================================
-     //#2 GRID STRUCTURE
-     ========================================================= */
-  #rs-shell .app {
-    display: grid;
-    grid-template-columns: 270px 1fr;
-    min-height: 100vh;
-  }
-  @media (max-width: 800px) {
-    #rs-shell .app { grid-template-columns: 1fr; }
-  }
-  /* =========================================================
-     //#3 SIDEBAR
-     ========================================================= */
-  .rs-sidebar {
-    background: rgba(16,20,38,0.9);
-    backdrop-filter: blur(var(--blur));
-    border-right: 1px solid var(--border);
-    padding: 24px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    box-shadow: inset 0 0 40px rgba(0,0,0,.6);
-  }
-  @media (max-width: 800px) {
-    .rs-sidebar {
-      border-right: none;
-      border-bottom: 1px solid var(--border);
+/* =========================================================================================
+   AIOU DEEP NAVY / TEAL-MINT BLEND
+   - This Part #1 includes full theme tokens + structural styles + layout + component chrome.
+   - No JS logic is included in Part #1. That arrives in Part #2 and Part #3.
+   - Keep markup/IDs intact. Only visual shell updated.
+========================================================================================= */
+/* RESET + BASE */
+html, body { margin:0; padding:0; }
+* { box-sizing:border-box; }
+:root{
+  --ink:#EAF2FF;
+  --ink-strong:#FFFFFF;
+  --muted:#9FB1DE;
+  --bg:#0b0e1a;                /* deep navy */
+  --panel:#0f1626;             /* darker navy */
+  --panel-2:#101426;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.14);
+  --accent:#8EF3C5;            /* mint-teal glow */
+  --accent-2:#6AA7FF;          /* cool blue */
+  --accent-3:#2DF5C7;          /* alt mint */
+  --warn:#F9C74F;
+  --bad:#FF6B6B;
+  --ok:#55D399;
+  --on:#D9E7FF;
+  --off:#7D8DB0;
+  --radius:16px;
+  --radius-sm:12px;
+  --radius-lg:18px;
+  --blur:22px;
+  --speed:.2s;
+}
+#rs-shell, #rs-shell *{
+  font-family:"Plus Jakarta Sans", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink);
+}
+/* BACKDROP */
+#rs-shell{
+  background:
+    radial-gradient(1400px 520px at 72% -10%, rgba(142,243,197,.16), transparent 60%),
+    radial-gradient(900px 420px at 35% -6%, rgba(106,167,255,.12), transparent 55%),
+    linear-gradient(180deg,#0b0e1a 0%,#0a1019 100%);
+  min-height:100vh;
+}
+/* LAYOUT GRID */
+.app{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  min-height:100vh;
+}
+@media (max-width: 860px){
+  .app{ grid-template-columns:1fr; }
+}
+/* SIDEBAR */
+.rs-sidebar{
+  background:rgba(15,22,38,.90);
+  backdrop-filter:blur(var(--blur));
+  -webkit-backdrop-filter:blur(var(--blur));
+  border-right:1px solid var(--line);
+  padding:20px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+@media (max-width: 860px){
+  .rs-sidebar{ border-right:0; border-bottom:1px solid var(--line); }
+}
+/* BRANDING */
+.rs-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  color:#CFE3FF;
+  font-size:14px;
+  line-height:1.2;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+.rs-brand .dot{
+  width:10px; height:10px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#8EF3C5,#6AA7FF);
+  box-shadow:0 0 10px rgba(142,243,197,.9), 0 0 18px rgba(106,167,255,.45);
+}
+/* SIDEBAR SECTIONS */
+.rs-section{
+  margin-top:10px;
+  font-size:11px;
+  letter-spacing:.4px;
+  color:#8AA0CF;
+  text-transform:uppercase;
+  font-weight:700;
+}
+/* NAV */
+.rs-nav{ display:flex; flex-direction:column; gap:8px; }
+.rs-item{
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:#CFE3FF;
+  padding:12px;
+  cursor:pointer;
+  transition:all var(--speed);
+  font-size:13px;
+  font-weight:700;
+  line-height:1.3;
+  box-shadow:0 10px 24px rgba(0,0,0,.45);
+  position:relative;
+  overflow:hidden;
+}
+.rs-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(220px 100px at 120% -20%, rgba(142,243,197,.18), transparent 60%);
+  opacity:.0;
+  transition:opacity var(--speed);
+  pointer-events:none;
+}
+.rs-item:hover{
+  border-color:var(--accent);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.4),
+    0 0 14px rgba(142,243,197,.35);
+}
+.rs-item:hover::after{ opacity:1; }
+.rs-item.active{
+  background:
+    linear-gradient(135deg, rgba(142,243,197,.16), rgba(106,167,255,.12));
+  border-color:rgba(142,243,197,.45);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.6),
+    0 0 18px rgba(142,243,197,.45);
+}
+.rs-item.enabled{
+  color:var(--on);
+  box-shadow:0 0 0 1px rgba(142,243,197,.25) inset, 0 6px 22px rgba(0,0,0,.35);
+  background:
+    linear-gradient(135deg, rgba(142,243,197,.15), rgba(106,167,255,.12));
+}
+.rs-item.locked{
+  color:var(--off);
+  opacity:.6;
+  pointer-events:none;
+  background:rgba(255,255,255,.03);
+  border-color:rgba(255,255,255,.05);
+}
+/* ANALYZE BUTTON */
+.rs-chip{
+  display:block;
+  text-align:center;
+  font-weight:900;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#041125;
+  transition:all var(--speed);
+  font-size:13px;
+  line-height:1.2;
+  text-decoration:none;
+  box-shadow:0 10px 24px rgba(0,0,0,.6),0 0 20px rgba(142,243,197,.5);
+}
+.rs-chip:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 28px rgba(0,0,0,.7),0 0 26px rgba(142,243,197,.65);
+}
+.rs-chip.enabled{
+  box-shadow:
+    0 0 0 1px rgba(142,243,197,.45) inset,
+    0 6px 22px rgba(0,0,0,.35),
+    0 0 28px rgba(142,243,197,.6);
+}
+.rs-footer{ margin-top:8px; }
+/* MAIN */
+.rs-main{ padding:26px; }
+/* KPIs + Grade */
+.rs-top{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:20px;
+}
+@media (max-width: 860px){
+  .rs-top{ grid-template-columns:1fr; }
+}
+.rs-kpis{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(180px, 1fr));
+  gap:16px;
+}
+@media (max-width: 1100px){
+  .rs-kpis{ grid-template-columns:repeat(4, minmax(180px, 1fr)); }
+}
+@media (max-width: 980px){
+  .rs-kpis{ grid-template-columns:repeat(3, minmax(180px, 1fr)); }
+}
+@media (max-width: 720px){
+  .rs-kpis{ grid-template-columns:repeat(2, minmax(160px, 1fr)); }
+}
+@media (max-width: 440px){
+  .rs-kpis{ grid-template-columns:1fr; }
+}
+/* KPI CARD */
+.kpi{
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  backdrop-filter:blur(calc(var(--blur)*.7));
+  -webkit-backdrop-filter:blur(calc(var(--blur)*.7));
+  color:var(--ink);
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 16px 32px rgba(0,0,0,.6),
+    0 0 36px rgba(142,243,197,.14) inset;
+}
+.kpi::before{
+  content:"";
+  position:absolute; inset:auto -60px -60px auto;
+  width:220px; height:220px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(142,243,197,.15), transparent 60%);
+  filter:blur(10px);
+}
+.kpi .label{
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:8px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+  font-weight:700;
+}
+.kpi .value{
+  font-size:21px;
+  font-weight:800;
+  color:var(--ink-strong);
+  line-height:1.2;
+  display:flex; align-items:center; gap:6px;
+}
+/* GRADE PILL */
+.rs-grade{
+  min-width:220px;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  color:var(--ink);
+  font-size:13px;
+  font-weight:700;
+  line-height:1.4;
+  box-shadow:
+    0 16px 32px rgba(0,0,0,.6),
+    0 0 36px rgba(142,243,197,.14) inset;
+}
+@media (max-width: 860px){
+  .rs-grade{ min-width:auto; }
+}
+.rs-grade-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.grade-main{
+  display:flex; align-items:flex-start; gap:8px; line-height:1.2;
+}
+.grade-dot{
+  width:10px; height:10px; border-radius:50%;
+  background:#8EF3C5;
+  box-shadow:0 0 8px rgba(142,243,197,.8);
+}
+.grade-letter{ font-size:16px; font-weight:900; color:var(--ink-strong); }
+.grade-desc{ font-size:11px; color:var(--muted); font-weight:600; }
+.grade-meter-shell{
+  width:180px; height:8px; border-radius:999px;
+  background:#0b0f23; border:1px solid rgba(255,255,255,.12); overflow:hidden;
+}
+.grade-meter-bar{
+  width:0%; height:100%;
+  background:linear-gradient(90deg,var(--accent-2),#F9C74F,#FF6B6B);
+}
+.grade-net{ font-size:12px; color:var(--ink); font-weight:800; }
+/* CONTENT WRAP */
+.rs-content{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+}
+/* GLASS CARD */
+.va-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.8),
+    0 0 40px rgba(142,243,197,.18) inset;
+  background-clip:padding-box;
+}
+/* SECTION VISIBILITY */
+.ap-section{ display:none; }
+.ap-section.active{ display:block; }
+/* CARD HEADERS */
+.va-card h2{
+  margin:0 0 12px;
+  font-size:18px;
+  color:var(--accent);
+  font-weight:900;
+  letter-spacing:.25px;
+  line-height:1.3;
+  display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:10px;
+}
+/* FORM GRID */
+.va-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+@media (max-width: 700px){
+  .va-row{ grid-template-columns:1fr; }
+}
+/* FIELDS */
+.va-field{ display:flex; flex-direction:column; gap:8px; }
+.va-field label{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.3;
+  font-weight:700;
+  display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:6px;
+}
+.va-chip{
+  font-size:11px;
+  font-weight:800;
+  color:var(--ink);
+  background:#0f1626;
+  border:1px solid var(--line);
+  padding:2px 6px;
+  border-radius:8px;
+  line-height:1.2;
+}
+/* INPUTS */
+.va-input,
+.va-select,
+.va-slider,
+.va-btn{
+  border:1px solid rgba(255,255,255,.12);
+  background:#0f1220;
+  color:#E9ECFF;
+  border-radius:12px;
+  padding:12px;
+  font-size:14px;
+  outline:none;
+  width:100%;
+  line-height:1.3;
+  font-family:inherit;
+}
+.va-input[disabled],
+.va-select[disabled]{
+  background:#1a2035;
+  color:#9FB1DE;
+  opacity:.80;
+}
+.va-select{ appearance:none; cursor:pointer; }
+.va-slider{ padding:0; height:38px; cursor:pointer; }
+.va-btn{
+  cursor:pointer;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#041125;
+  line-height:1.2;
+  text-align:center;
+  box-shadow:0 16px 32px rgba(0,0,0,.6),0 0 24px rgba(142,243,197,.5);
+  border-radius:12px;
+  transition:transform var(--speed), box-shadow var(--speed);
+}
+.va-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 18px 34px rgba(0,0,0,.72),0 0 28px rgba(142,243,197,.65);
+}
+.va-btn.secondary{
+  background:linear-gradient(135deg,#7DE9BD,var(--accent-2));
+  color:#0b1a10;
+  box-shadow:0 16px 32px rgba(0,0,0,.6),0 0 24px rgba(77,224,195,.5);
+}
+.va-btn.ghost{
+  background:#0f1220;
+  border:1px dashed rgba(255,255,255,.22);
+  color:#E9ECFF;
+  box-shadow:none;
+  font-weight:800;
+}
+.va-note{ color:#9FB1DE; font-size:12px; line-height:1.5; font-weight:600; }
+.muted-help{ font-size:11px; color:#9FB1DE; margin-top:-2px; line-height:1.4; }
+/* PROFILE STACK */
+.profile-stack{ display:flex; flex-direction:column; gap:16px; }
+.profile-card{
+  background:#0f1326;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.8),
+    0 0 32px rgba(142,243,197,.2) inset;
+}
+.profile-title{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:6px; flex-wrap:wrap; gap:8px;
+}
+.profile-title .idx{
+  font-weight:900;
+  color:#CFE3FF;
+  font-size:14px;
+  line-height:1.3;
+  display:flex; align-items:center; gap:8px;
+}
+/* MILITARY TOGGLES */
+.mil-toggle{
+  display:flex; gap:8px; justify-content:flex-start; flex-wrap:wrap; margin:6px 0 2px;
+}
+.mil-pill{
+  display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+  border-radius:999px; border:1px solid var(--line); background:#0f1220;
+  color:#CFE3FF; font-weight:900; font-size:12px; cursor:pointer; opacity:.9; line-height:1.2;
+  box-shadow:0 16px 32px rgba(0,0,0,.8);
+  transition:transform var(--speed), box-shadow var(--speed), background var(--speed);
+}
+.mil-pill:hover{ transform:translateY(-1px); }
+.mil-pill.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#041125;
+  box-shadow:
+    0 0 0 1px rgba(142,243,197,.4) inset,
+    0 16px 32px rgba(0,0,0,.8),
+    0 0 24px rgba(142,243,197,.6);
+}
+.ad-only{ display:none; }
+.vet-only{ display:none; }
+/* Credit slider color state */
+#cs-slider.good{ accent-color:#2DDC7A; }
+#cs-slider.bad{ accent-color:#FF4D4D; }
+/* INNER CARDS */
+.va-card-inner{
+  background:#0f1326;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:14px;
+  margin-top:14px;
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.8),
+    0 0 32px rgba(142,243,197,.2) inset;
+}
+/* BENEFITS GRID (Mortgage) */
+.benefit-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(220px,1fr));
+  gap:12px;
+  margin-top:10px;
+}
+@media (max-width: 900px){
+  .benefit-grid{ grid-template-columns:1fr; }
+}
+.benefit{
+  background:#0f1326;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  padding:12px;
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.8),
+    0 0 32px rgba(142,243,197,.18) inset;
+  font-size:13px;
+  line-height:1.45;
+  color:var(--ink);
+}
+.benefit .t{
+  font-size:11px;
+  color:#9FB1DE;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  letter-spacing:.35px;
+  font-weight:800;
+}
+.benefit .v{
+  font-weight:900;
+  color:var(--ink-strong);
+  font-size:13px;
+  line-height:1.3;
+}
+.benefit.ok{ outline:2px solid rgba(85,211,153,.28); box-shadow:0 0 24px rgba(85,211,153,.45); }
+.benefit.warn{ outline:2px solid rgba(249,199,79,.28);  box-shadow:0 0 24px rgba(249,199,79,.45); }
+/* EXPENSE BUILDER */
+.bp-panel{
+  margin-top:10px;
+  border:1px dashed rgba(255,255,255,.18);
+  border-radius:12px;
+  padding:12px;
+  background:#0f1326;
+  color:var(--ink);
+  box-shadow:
+    0 24px 48px rgba(0,0,0,.8),
+    0 0 32px rgba(142,243,197,.18) inset;
+}
+.bp-row{
+  display:grid;
+  grid-template-columns:110px 1fr 140px 100px;
+  gap:8px;
+  align-items:center;
+}
+@media (max-width: 720px){
+  .bp-row{ grid-template-columns:1fr; }
+}
+.bp-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 8px;
+  margin-top:8px;
+}
+.bp-tr{
+  background:#0f1220;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,.7);
+}
+.bp-th, .bp-td{
+  padding:8px 10px;
+  font-size:13px;
+  color:#FFFFFF;
+  text-align:left;
+  line-height:1.3;
+}
+.bp-th{
+  color:#EAF2FF;
+  font-weight:900;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.bp-td .va-input,
+.bp-td .va-select{
+  font-size:13px;
+  padding:8px 10px;
+  border-radius:10px;
+}
+.bp-td .va-btn.ghost{
+  padding:8px 10px;
+  font-size:13px;
+  line-height:1.2;
+  border-radius:10px;
+  min-width:40px;
+  text-align:center;
+}
+.bp-controls{
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; align-items:flex-start;
+}
+.bp-chip{
+  padding:6px 10px;
+  border-radius:999px;
+  background:#0f1220;
+  border:1px solid rgba(255,255,255,.18);
+  font-size:12px;
+  color:#FFFFFF;
+  font-weight:800;
+  line-height:1.2;
+  box-shadow:0 10px 24px rgba(0,0,0,.7);
+}
+/* month helper text */
+#bp-note{
+  font-size:12px;
+  line-height:1.4;
+  color:#9FB1DE;
+  font-weight:700;
+}
+/* MONTH PICKER */
+.month-row{
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; margin-bottom:12px;
+}
+.month-col{
+  display:flex; flex-direction:column; gap:6px; min-width:160px;
+}
+.month-col label{
+  font-size:12px; line-height:1.3; color:var(--muted); font-weight:800;
+}
+.month-saved-hint{
+  font-size:11px; line-height:1.3; color:var(--muted); font-weight:600;
+}
+/* PRINT CLEANUP */
+@media print {
+  html, body{ background:#fff !important; }
+  .rs-sidebar{ display:none !important; }
+  .rs-main{ padding:0 !important; }
+  .va-card{ border-color:#ddd !important; box-shadow:none !important; }
+}
+</style>
+    </head>
+    <body>
+      <!--  ======================================================================================
+     APP BODY
+======================================================================================  -->
+      <div id="rs-shell">
+        <div class="app">
+          <!--  ====================== SIDEBAR ======================  -->
+          <aside class="rs-sidebar">
+            <div class="rs-brand">
+              <div class="dot"></div>
+              <div>Financial Dashboard</div>
+            </div>
+            <div class="rs-section">Dashboard</div>
+            <div class="rs-nav">
+              <div class="rs-item enabled" data-panel="profile">Profile</div>
+              <div class="rs-item enabled active" data-panel="income">Income</div>
+              <div class="rs-item enabled" data-panel="expenses">Expenses</div>
+              <div class="rs-item enabled" data-panel="savings">Savings</div>
+              <div class="rs-item enabled" data-panel="mortgage">Home Purchase</div>
+            </div>
+            <div class="rs-footer">
+              <a id="btn-analyze" class="rs-chip enabled" href="../verify.html">Analyze</a>
+            </div>
+          </aside>
+          <!--  ======================== MAIN =======================  -->
+          <main class="rs-main">
+            <!--  KPIs + Grade  -->
+            <div class="rs-top">
+              <div class="rs-kpis">
+                <div class="kpi">
+                  <div class="label">Total Monthly Income</div>
+                  <div class="value" id="kpi-income">$ —</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Monthly Expenses</div>
+                  <div class="value" id="kpi-expenses">$ —</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Mortgage Estimate</div>
+                  <div class="value" id="kpi-mortgage">$ —</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Total Savings</div>
+                  <div class="value" id="kpi-savings">$ —</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Disposable Income</div>
+                  <div class="value" id="kpi-disposable">$ —</div>
+                </div>
+              </div>
+              <div class="rs-grade" id="grade-card">
+                <div class="rs-grade-top">
+                  <div class="grade-main">
+                    <div class="grade-dot" id="grade-dot"></div>
+                    <div>
+                      <div class="grade-letter" id="grade-letter">—</div>
+                      <div class="grade-desc" id="grade-band">Spending Load</div>
+                    </div>
+                  </div>
+                  <div class="grade-meter-shell">
+                    <div class="grade-meter-bar" id="grade-meter"></div>
+                  </div>
+                </div>
+                <div class="grade-net" style="margin-top:10px;">
+                  Net Leftover / Month:
+                  <span id="grade-leftover" style="font-weight:900;">$0</span>
+                </div>
+              </div>
+            </div>
+            <!--  CONTENT CARD  -->
+            <div class="rs-content">
+              <div class="va-card">
+                <!--  ===================== PROFILE =====================  -->
+                <section class="ap-section" id="sec-profile">
+                  <h2>Profile
+                    <span class="va-chip" style="background:#0f1626;border:1px solid var(--line);color:var(--ink);">Household Details</span>
+                  </h2>
+                  <div id="profile-stack" class="profile-stack">
+                    <!--  MEMBER CARD  -->
+                    <div class="profile-card" data-profile-idx="1">
+                      <div class="profile-title">
+                        <div class="idx">Service Member's Information</div>
+                      </div>
+                      <div class="va-row">
+                        <div class="va-field">
+                          <label>First Name</label>
+                          <input class="va-input pf-fname">
+                        </div>
+                        <div class="va-field">
+                          <label>Last Name</label>
+                          <input class="va-input pf-lname">
+                        </div>
+                      </div>
+                      <div class="va-row" style="margin-top:8px">
+                        <div class="va-field">
+                          <label>Email</label>
+                          <input class="va-input pf-email" type="email" placeholder="name@example.com">
+                        </div>
+                        <div class="va-field">
+                          <label>Phone #</label>
+                          <input class="va-input pf-phone" type="tel" placeholder="(xxx) xxx-xxxx">
+                        </div>
+                      </div>
+                      <div class="va-card-inner" style="margin-top:14px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                          <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:900;letter-spacing:.3px;text-transform:uppercase;">Military Profile</h2>
+                          <div class="mil-toggle">
+                            <div class="mil-pill" data-mode="AD">ACTIVE DUTY</div>
+                            <div class="mil-pill active" data-mode="VET">VETERAN</div>
+                          </div>
+                        </div>
+                        <div class="muted-help">Choose status. Income logic + fields will adapt.</div>
+                        <!--  Active Duty  -->
+                        <div class="va-row ad-only" style="margin-top:10px">
+                          <div class="va-field">
+                            <label>Rank / Pay Grade</label>
+                            <select class="va-select sel-rank"></select>
+                          </div>
+                          <div class="va-field">
+                            <label>Years in Service</label>
+                            <select class="va-select sel-years"></select>
+                          </div>
+                        </div>
+                        <div class="va-row ad-only" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Dependents</label>
+                            <select class="va-select sel-deps">
+                              <option value="with" selected="">With Dependents</option>
+                              <option value="without">Without Dependents</option>
+                            </select>
+                          </div>
+                          <div class="va-field">
+                            <label>ZIP / Duty Location</label>
+                            <select class="va-select sel-zip" disabled="">
+                              <option value="78236" selected="">78236 – Lackland AFB (San Antonio, TX)</option>
+                            </select>
+                          </div>
+                        </div>
+                        <!--  Veteran  -->
+                        <div class="va-row vet-only" style="margin-top:10px">
+                          <div class="va-field">
+                            <label>Retirement Rank (High-3)</label>
+                            <select class="va-select ret-rank"></select>
+                          </div>
+                          <div class="va-field">
+                            <label>Total Years of Service</label>
+                            <input class="va-input ret-years" type="number" min="0" max="40" step="1" value="20">
+                          </div>
+                        </div>
+                        <div class="va-row vet-only" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>VA Disability Rating <span class="va-rate-label">70%</span></label>
+                            <input class="va-slider va-rate" type="range" min="0" max="100" step="10" value="70">
+                          </div>
+                          <div class="va-field">
+                            <label>Spouse?</label>
+                            <select class="va-select va-has-spouse">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="va-row vet-only" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Children under 18</label>
+                            <input class="va-input va-kids-u18" type="number" min="0" step="1" value="0">
+                          </div>
+                          <div class="va-field">
+                            <label>Children 18–23 in school</label>
+                            <input class="va-input va-kids-s" type="number" min="0" step="1" value="0">
+                          </div>
+                        </div>
+                        <div class="va-row vet-only" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Parents as dependents (0–2)</label>
+                            <input class="va-input va-parents" type="number" min="0" max="2" step="1" value="0">
+                          </div>
+                          <div class="va-field">
+                            <label>Spouse Needs Aid &amp; Attendance?</label>
+                            <select class="va-select va-spouse-aanda">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div><!--  /va-card-inner military  -->
+                      <!--  TX / VA eligibility  -->
+                      <div class="va-card-inner" style="margin-top:14px;">
+                        <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:900;letter-spacing:.3px;text-transform:uppercase;">VA Benefits &amp; Eligibility</h2>
+                        <div class="va-row" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Surviving Spouse Eligible?</label>
+                            <select class="va-select va-survivor">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                          <div class="va-field">
+                            <label>Property State</label>
+                            <select class="va-select prop-state">
+                              <option value="TX">Texas</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="va-row" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Homestead (Primary Residence)?</label>
+                            <select class="va-select prop-home">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                          <div class="va-field">
+                            <label>Disabled-Vet Property-Tax Relief Likely?</label>
+                            <select class="va-select prop-tax-relief">
+                              <option>Unsure</option>
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="va-row" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>Accessibility Modifications Needed?</label>
+                            <select class="va-select va-access">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                          <div class="va-field">
+                            <label>Plan Energy-Efficiency Upgrades (EEM)?</label>
+                            <select class="va-select va-eem">
+                              <option>No</option>
+                              <option>Yes</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="va-row" style="margin-top:8px">
+                          <div class="va-field">
+                            <label>EEM Amount ($, optional)</label>
+                            <input class="va-input va-eem-amt" type="number" min="0" step="100" placeholder="e.g., 6000">
+                          </div>
+                          <div class="va-field">
+                            <label>Seller Concessions % (VA cap 4%)</label>
+                            <input class="va-input va-seller" type="number" min="0" max="4" step="0.1" value="0">
+                          </div>
+                        </div>
+                      </div><!--  /va-card-inner eligibility  -->
+                    </div><!--  /profile-card  -->
+                  </div><!--  /profile-stack  -->
+                  <div class="va-row" style="margin-top:12px">
+                    <div class="va-field">
+                      <label>&nbsp;</label>
+                      <button class="va-btn secondary" id="pf-addprofile">Add Profile</button>
+                    </div>
+                    <div class="va-field">
+                      <small class="va-note">Add a 2nd household member (dual-military, spouse income). Fields duplicate.</small>
+                    </div>
+                  </div>
+                </section>
+                <!--  ====================== INCOME ======================  -->
+                <section class="ap-section active" id="sec-income">
+                  <h2>1) Income
+                    <span class="va-chip">Military + Household</span>
+                  </h2>
+                  <!--  ACTIVE DUTY  -->
+                  <div class="va-row ad-only">
+                    <div class="va-field">
+                      <label>Base Pay ($/mo)</label>
+                      <input class="va-input" id="in-base" type="number" disabled="">
+                    </div>
+                    <div class="va-field">
+                      <label>BAH – San Antonio ($/mo)</label>
+                      <input class="va-input" id="in-bah" type="number" disabled="">
+                    </div>
+                  </div>
+                  <div class="va-row ad-only" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>BAS ($/mo)</label>
+                      <input class="va-input" id="in-bas" type="number" disabled="">
+                    </div>
+                    <div class="va-field">
+                      <label>Additional Income ($/mo)</label>
+                      <input class="va-input" id="in-addl" type="number" min="0" step="1" placeholder="Spouse / side income">
+                    </div>
+                  </div>
+                  <!--  VETERAN  -->
+                  <div class="va-row vet-only">
+                    <div class="va-field">
+                      <label>Retirement Pay ($/mo)</label>
+                      <input class="va-input" id="in-ret" type="number" disabled="">
+                    </div>
+                    <div class="va-field">
+                      <label>VA Disability ($/mo)</label>
+                      <input class="va-input" id="in-va" type="number" disabled="">
+                    </div>
+                  </div>
+                  <div class="va-row vet-only" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Additional Income ($/mo)</label>
+                      <input class="va-input" id="in-addl-vet" type="number" min="0" step="1" placeholder="Spouse / side income">
+                    </div>
+                    <div class="va-field">
+                      <label>&nbsp;</label>
+                      <div class="va-note">Retirement + VA comp auto-calc from Military Profile (Veteran).</div>
+                    </div>
+                  </div>
+                  <div class="va-note" style="margin-top:8px">
+                    KPI uses Active Duty (Base+BAS+BAH+Addl) or Veteran (Retirement+VA+Addl), based on the status toggle above.
+                  </div>
+                  <div class="va-note" id="mil-breakdown" style="margin-top:8px">—</div>
+                </section>
+                <!--  ===================== EXPENSES =====================  -->
+                <section class="ap-section" id="sec-expenses">
+                  <h2>2) Expenses
+                    <span class="va-chip">Live Monthly Budget</span>
+                  </h2>
+                  <div class="month-row">
+                    <div class="month-col">
+                      <label for="month-select">Budget Month</label>
+                      <select class="va-select" id="month-select"></select>
+                    </div>
+                    <div class="month-col">
+                      <label>Active Month Status</label>
+                      <div class="month-saved-hint" id="month-status-hint">No data saved for this month.</div>
+                    </div>
+                  </div>
+                  <div class="va-row">
+                    <div class="va-field">
+                      <label>Fixed / Core Bills ($)</label>
+                      <input class="va-input" id="ex-core" type="number" min="0" step="1">
+                    </div>
+                    <div class="va-field">
+                      <label>Discretionary ($)</label>
+                      <input class="va-input" id="ex-disc" type="number" min="0" step="1">
+                    </div>
+                  </div>
+                  <div class="va-note" style="margin-top:6px">
+                    Itemized budget below is stored per-month. You can build November, December, January, etc.
+                  </div>
+                  <div id="bp-panel" class="bp-panel">
+                    <div class="bp-row">
+                      <select id="bp-cat" class="va-select" style="min-width:110px;">
+                        <option>Essentials</option>
+                        <option>Discretionary</option>
+                        <option>Debt</option>
+                        <option>Other</option>
+                      </select>
+                      <input id="bp-name" class="va-input" placeholder="Item name (e.g., Rent, Groceries)">
+                      <input id="bp-month" class="va-input" type="number" min="0" step="1" placeholder="Monthly $" style="min-width:120px;">
+                      <button id="bp-add" class="va-btn" style="min-width:90px;">Add</button>
+                    </div>
+                    <table class="bp-table">
+                      <thead>
+                        <tr class="bp-tr">
+                          <th class="bp-th">Category</th>
+                          <th class="bp-th">Item</th>
+                          <th class="bp-th">Monthly</th>
+                          <th class="bp-th">Annual</th>
+                          <th class="bp-th">Del</th>
+                        </tr>
+                      </thead>
+                      <tbody id="bp-body"></tbody>
+                    </table>
+                    <div class="bp-controls">
+                      <span class="bp-chip">Essentials: <b id="bp-t-Essentials">$0</b></span>
+                      <span class="bp-chip">Discretionary: <b id="bp-t-Discretionary">$0</b></span>
+                      <span class="bp-chip">Debt: <b id="bp-t-Debt">$0</b></span>
+                      <span class="bp-chip">Other: <b id="bp-t-Other">$0</b></span>
+                      <span class="bp-chip">Total: <b id="bp-t-All">$0</b></span>
+                      <button id="bp-save-month" class="va-btn secondary" style="margin-left:auto;min-width:150px;">
+                        Save Month Budget
+                      </button>
+                    </div>
+                    <div class="va-note" id="bp-note" style="margin-top:6px">
+                      Month saved. These numbers auto-fill the fields above, feed KPIs, and feed the Analysis Dashboard.
+                    </div>
+                  </div>
+                </section>
+                <!--  ===================== SAVINGS ======================  -->
+                <section class="ap-section" id="sec-savings">
+                  <h2>3) Savings Target
+                    <span class="va-chip">% Plan</span>
+                  </h2>
+                  <div class="va-row">
+                    <div class="va-field">
+                      <label>
+                        Desired Savings Rate
+                        <span id="save-rate-label" class="va-chip">15%</span>
+                      </label>
+                      <input class="va-slider" id="save-rate" type="range" min="0" max="40" step="1" value="15">
+                    </div>
+                    <div class="va-field">
+                      <label>Current Savings ($)</label>
+                      <input class="va-input" id="sv-current" type="number" min="0" step="1">
+                    </div>
+                  </div>
+                  <div class="va-row" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Monthly Investments ($)</label>
+                      <input class="va-input" id="sv-invest" type="number" min="0" step="1">
+                    </div>
+                    <div class="va-field">
+                      <label>Notes</label>
+                      <input class="va-input" id="sv-notes" type="text">
+                    </div>
+                  </div>
+                </section>
+                <!--  ===================== MORTGAGE =====================  -->
+                <section class="ap-section" id="sec-mortgage">
+                  <h2>4) Home Purchase (What-If)
+                    <span class="va-chip">VA / Conventional</span>
+                  </h2>
+                  <div class="va-field">
+                    <label>
+                      Credit Score
+                      <span id="cs-label">720 – Good</span>
+                    </label>
+                    <input class="va-slider" id="cs-slider" type="range" min="500" max="850" step="5" value="720">
+                  </div>
+                  <div class="va-note">
+                    Estimated APR from credit score: <b id="apr-label">7.00%</b> (illustrative).
+                  </div>
+                  <div class="va-row" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Home Price ($)</label>
+                      <input class="va-input" id="h-price" type="number" min="0" step="1000">
+                    </div>
+                    <div class="va-field">
+                      <label>
+                        Down Payment %
+                        <span id="dp-pct-label">20%</span> =
+                        <span id="dp-amt-label">$0</span>
+                      </label>
+                      <input class="va-slider" id="dp-slider" type="range" min="0" max="100" step="1" value="20">
+                    </div>
+                  </div>
+                  <div class="va-row" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Interest Rate (APR %)</label>
+                      <input class="va-input" id="h-rate" type="number" step="0.01" value="7.00">
+                    </div>
+                    <div class="va-field">
+                      <label>Down Payment ($)</label>
+                      <input class="va-input" id="dp-amt" type="text" disabled="">
+                    </div>
+                  </div>
+                  <div class="va-row" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Term (years)</label>
+                      <input class="va-input" id="h-term" type="number" min="5" max="40" step="1" value="30">
+                    </div>
+                    <div class="va-field">
+                      <label>Taxes + Insurance + HOA ($/mo)</label>
+                      <input class="va-input" id="h-tihoa" type="number" min="0" step="1" value="0">
+                    </div>
+                  </div>
+                  <div class="va-row" style="margin-top:8px">
+                    <div class="va-field">
+                      <label>Include PMI? ($/mo)</label>
+                      <input class="va-input" id="h-pmi" type="number" min="0" step="1" value="0">
+                    </div>
+                    <div class="va-field">
+                      <label>&nbsp;</label>
+                      <div class="va-note">APR/PMI are illustrative only; verify with your lender.</div>
+                    </div>
+                  </div>
+                  <div class="va-card-inner" style="margin-top:12px;">
+                    <h2 style="margin:0;font-size:14px;color:var(--accent);font-weight:900;letter-spacing:.3px;text-transform:uppercase;">VA Benefits &amp; Adjustments</h2>
+                    <div class="benefit-grid" style="margin-top:10px">
+                      <div class="benefit ok" id="b-funding">
+                        <div class="t">Funding Fee</div>
+                        <div class="v">—</div>
+                      </div>
+                      <div class="benefit" id="b-tax">
+                        <div class="t">Property-Tax Relief</div>
+                        <div class="v">—</div>
+                      </div>
+                      <div class="benefit" id="b-eem">
+                        <div class="t">Energy-Efficiency (EEM)</div>
+                        <div class="v">—</div>
+                      </div>
+                      <div class="benefit" id="b-seller">
+                        <div class="t">Seller Concessions (Cap)</div>
+                        <div class="v">—</div>
+                      </div>
+                      <div class="benefit" id="b-access">
+                        <div class="t">Accessibility Grants</div>
+                        <div class="v">—</div>
+                      </div>
+                      <div class="benefit" id="b-purple">
+                        <div class="t">Purple Heart (AD)</div>
+                        <div class="v">—</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="va-row" style="justify-content:flex-end;margin-top:12px">
+                    <button class="va-btn secondary" id="btn-clear" style="min-width:120px;">Reset</button>
+                    <button class="va-btn" id="btn-calc" style="min-width:160px;">Update Calculations</button>
+                  </div>
+                </section>
+              </div><!--  /va-card  -->
+            </div><!--  /rs-content  -->
+          </main>
+        </div><!--  /app  -->
+      </div><!--  /rs-shell  -->
+      <!--  Part 2 (JS + data models) starts next  -->
+  </body></html></div>
+  <div class="w-embed w-script"><!--  About Us • Concierge Video Embed (Cinematic Reveal + Auto-Disappear + Taller Player)  -->
+    <div id="about-video-wrap" style="
+  position:fixed; bottom:5.5rem; right:1rem; z-index:2147480000;
+  width:360px; height:420px; max-width:90vw; border-radius:12px; overflow:hidden;
+  background:rgba(0,0,0,.85); border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  opacity:0; transform:translateY(20px) scale(.98); pointer-events:none;
+  transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:.5rem .75rem;">
+        <div style="color:#a8b0d6; font:600 .8rem/1 Inter,system-ui,sans-serif;">Your Journey Begins — Now</div>
+        <button id="about-video-close" aria-label="Close video" style="
+      appearance:none; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);
+      color:#fff; font:.8rem/1 Inter,system-ui,sans-serif; padding:.25rem .5rem; border-radius:.5rem; cursor:pointer;
+    ">✕</button>
+      </div>
+      <video id="about-video" playsinline="" controls="" preload="auto" style="display:block; width:100%; height:calc(100% - 2rem); object-fit:cover; background:#000;">
+        <source src="https://s3.amazonaws.com/webflow-prod-assets/68cecb820ec3dbdca3ef9099/690bfb7185347ccff7bdae26_Finance%20Dashboard.mp4">
+      </video>
+    </div>
+    <!--  Concierge Trigger  -->
+    <div id="voice-trigger" style="
+  position:fixed; bottom:1rem; right:1rem; z-index:2147480000;
+  display:flex; align-items:center; gap:.75rem; min-width:220px;
+  background:rgba(11,14,26,0.6); border:1px solid rgba(255,255,255,.12); border-radius:1rem;
+  padding:.75rem 1rem; color:#fff; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  cursor:pointer; box-shadow:0 18px 48px rgba(0,0,0,.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  opacity:0; transform:translateY(20px) scale(.98); pointer-events:none;
+  transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+">
+      <img src="../images/a-modern-living-room-with-a-large-window.png" alt="Elena Concierge" style="width:44px; height:44px; border-radius:50%; object-fit:cover;
+       border:1px solid rgba(255,255,255,.3); box-shadow:0 10px 30px rgba(142,243,197,.4);">
+      <div style="display:flex; flex-direction:column; line-height:1.2;">
+        <div style="font-size:.8rem; font-weight:600;">Process Overview</div>
+        <div style="font-size:.7rem; color:#a8b0d6;">Elena • A.I. Concierge</div>
+      </div>
+      <div id="voice-status" style="
+    margin-left:auto; font-size:.7rem; font-weight:600; color:#8ef3c5;
+    border:1px solid rgba(142,243,197,.4); background:rgba(142,243,197,.08);
+    padding:.4rem .6rem; border-radius:.5rem; white-space:nowrap;">▶ Play</div>
+    </div>
+    <script>
+(function () {
+  const chip = document.getElementById('voice-trigger');
+  const statusEl = document.getElementById('voice-status');
+  const wrap = document.getElementById('about-video-wrap');
+  const video = document.getElementById('about-video');
+  const closeBtn = document.getElementById('about-video-close');
+  if (!chip || !statusEl || !wrap || !video || !closeBtn) return;
+  // Reveal concierge chip on scroll
+  let revealed = false;
+  function revealChip() {
+    if (!revealed && window.scrollY > 150) {
+      revealed = true;
+      chip.style.opacity = '1';
+      chip.style.transform = 'translateY(0) scale(1)';
+      chip.style.pointerEvents = 'auto';
     }
   }
-  .rs-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 14px;
-    color: var(--on);
-    text-transform: uppercase;
-    letter-spacing: .4px;
+  revealChip();
+  window.addEventListener('scroll', revealChip, { passive: true });
+  function showPlayer() {
+    wrap.style.opacity = '1';
+    wrap.style.transform = 'translateY(0) scale(1)';
+    wrap.style.pointerEvents = 'auto';
   }
-  .rs-brand .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent2));
-    box-shadow: var(--accent-glow);
+  function hidePlayer() {
+    wrap.style.opacity = '0';
+    wrap.style.transform = 'translateY(20px) scale(.98)';
+    wrap.style.pointerEvents = 'none';
   }
-  .rs-section {
-    margin-top: 12px;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: var(--muted);
-    letter-spacing: .4px;
-    font-weight: 600;
-  }
-  .rs-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .rs-item {
-    position: relative;
-    background: rgba(255,255,255,.03);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--ink);
-    padding: 12px;
-    font-weight: 600;
-    transition: all var(--speed);
-    cursor: pointer;
-    text-align: left;
-    box-shadow: 0 8px 18px rgba(0,0,0,.5);
-  }
-  .rs-item:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(142,243,197,.25), 0 0 10px rgba(106,167,255,.25);
-  }
-  .rs-item.active {
-    background: linear-gradient(135deg, rgba(142,243,197,.15), rgba(106,167,255,.12));
-    border-color: rgba(142,243,197,.35);
-    box-shadow: var(--accent-glow);
-  }
-  .rs-item.locked {
-    opacity: .5;
-    pointer-events: none;
-  }
-  .rs-chip {
-    display: block;
-    text-align: center;
-    font-weight: 800;
-    border-radius: var(--radius);
-    padding: 12px;
-    font-size: 13px;
-    text-decoration: none;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #0b0e1a;
-    box-shadow: var(--accent-glow);
-    border: none;
-  }
-  /* =========================================================
-     //#4 MAIN PANEL / KPI STRIP
-     ========================================================= */
-  .rs-main {
-    padding: 28px;
-  }
-  .rs-main section {
-    display: none;
-    opacity: 0;
-    transition: opacity .4s ease;
-  }
-  .rs-main section.active {
-    display: block;
-    opacity: 1;
-  }
-  .va-card {
-    background: rgba(255,255,255,.03);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: inset 0 0 32px rgba(142,243,197,.1), 0 16px 40px rgba(0,0,0,.75);
-    margin-bottom: 20px;
-  }
-  .va-card h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .va-card p {
-    font-size: 14px;
-    color: var(--muted);
-  }
-  </style>
-      <!--  =========================================================
-       //#7 HTML STRUCTURE (with functional sections)
-       =========================================================  -->
-      <div class="app">
-        <!--  SIDEBAR  -->
-        <aside class="rs-sidebar">
-          <div class="rs-brand">
-            <div class="dot"></div>
-            <div>Financial Dashboard</div>
-          </div>
-          <div class="rs-section">Dashboard</div>
-          <div class="rs-nav">
-            <div class="rs-item active" data-panel="profile">Profile</div>
-            <div class="rs-item" data-panel="income">Income</div>
-            <div class="rs-item" data-panel="expenses">Expenses</div>
-            <div class="rs-item" data-panel="savings">Savings</div>
-            <div class="rs-item" data-panel="mortgage">Home Purchase</div>
-          </div>
-          <div class="rs-footer">
-            <a id="btn-analyze" class="rs-chip" href="../verify.html">Analyze</a>
-          </div>
-        </aside>
-        <!--  MAIN PANELS  -->
-        <main class="rs-main">
-          <section id="sec-profile" class="active">
-            <div class="va-card">
-              <h2>Profile</h2>
-              <p>Enter your rank, branch, and family details here. Your information will personalize calculations and BAH data.</p>
-            </div>
-          </section>
-          <section id="sec-income">
-            <div class="va-card">
-              <h2>Income</h2>
-              <p>Input your monthly base pay, BAH, BAS, and any secondary income to calculate your total net monthly income.</p>
-            </div>
-          </section>
-          <section id="sec-expenses">
-            <div class="va-card">
-              <h2>Expenses</h2>
-              <p>Add your recurring monthly costs (utilities, groceries, childcare, subscriptions, etc.) to project disposable income.</p>
-            </div>
-          </section>
-          <section id="sec-savings">
-            <div class="va-card">
-              <h2>Savings</h2>
-              <p>Track your savings balance, contribution rate, and emergency fund goals. Results will affect your financial grade.</p>
-            </div>
-          </section>
-          <section id="sec-mortgage">
-            <div class="va-card">
-              <h2>Home Purchase</h2>
-              <p>Enter your target home price, interest rate, and down payment. The dashboard will estimate monthly mortgage and break-even timeline.</p>
-            </div>
-          </section>
-        </main>
-      </div>
-    </div>
+  // Click chip → show player + play video
+  chip.addEventListener('click', () => {
+    const visible = wrap.style.pointerEvents === 'auto';
+    if (!visible) showPlayer();
+    if (!video.paused) {
+      video.pause();
+      statusEl.textContent = '▶ Play';
+      statusEl.style.color = '#8ef3c5';
+    } else {
+      video.play().then(() => {
+        statusEl.textContent = '● Playing';
+        statusEl.style.color = '#fff';
+        chip.style.boxShadow = '0 30px 80px rgba(142,243,197,.22), 0 0 30px rgba(142,243,197,.4)';
+      }).catch(err => console.warn('Video play blocked:', err));
+    }
+  });
+  // Close video manually
+  closeBtn.addEventListener('click', () => {
+    video.pause();
+    hidePlayer();
+    statusEl.textContent = '▶ Play';
+  });
+  // When video ends → fade out both player & chip
+  video.addEventListener('ended', () => {
+    hidePlayer();
+    chip.style.transition = 'opacity .5s ease';
+    chip.style.opacity = '0';
+    chip.style.pointerEvents = 'none';
+    setTimeout(() => {
+      chip.remove();
+      wrap.remove();
+    }, 600);
+  });
+})();
+</script>
   </div>
   <section>
     <section>
@@ -526,6 +1515,8 @@
   /* =======================
      #3 DATA TABLES / LOOKUPS
   ======================= */
+  // NOTE: these fallback objects get overwritten in future versions
+  // when you add live pay tables / VA tables from Netlify.
   const PAYGRADE_TITLES={
     "E-1":"AB","E-2":"Amn","E-3":"A1C","E-4":"SrA","E-5":"SSgt","E-6":"TSgt",
     "E-7":"MSgt","E-8":"SMSgt","E-9":"CMSgt",
@@ -533,13 +1524,16 @@
     "O-1":"2nd Lt","O-2":"1st Lt","O-3":"Captain","O-4":"Major","O-5":"Lt Col",
     "O-6":"Colonel","O-7":"Brig Gen","O-8":"Maj Gen","O-9":"Lt Gen","O-10":"Gen"
   };
+  // localStorage fetch helper
   function LSget(k){
     try{ return JSON.parse(localStorage.getItem(k)||'null'); }
     catch{ return null; }
   }
+  // locally cached pay tables (placeholder minimal)
   const BASEPAY = LSget('rs.pay.BASEPAY') || { "E-6":{o8:4444} };
   const BAS     = LSget('rs.pay.BAS') || {enlisted:465.77,officer:320.78};
   const BAH78236= LSget('rs.pay.BAH.78236') || {with:{E6:2154}, without:{E6:1656}};
+  // VA comp table fallback (condensed)
   const VATABLE = LSget('va.comp.table') || {
     70:{
       vet:1716.28,
@@ -554,6 +1548,7 @@
     0:{vet:0,vet_spouse:0,vet_one_child:0,vet_spouse_one_child:0,
        add_child_u18:0,add_child_s:0,spouse_aanda:0,add_parent:0}
   };
+  // Year-of-service tiers
   const yosTiers=['a2','o2','o3','o4','o6','o8','o10','o12','o14','o16','o18','o20','o22','o24'];
   function yosTier(y){
     y=+y||0;
@@ -602,12 +1597,14 @@
     const table=BAH78236[deps==='without'?'without':'with'];
     return table?.[norm]??0;
   }
+  // Retirement calc
   function retirementMonthly(rank,years){
     years=Math.max(0,Math.min(40,+years||0));
     const high3=basePayNearest(rank,Math.max(2,years));
     const mult=years*0.025;
     return Math.round(high3*mult);
   }
+  // VA comp calc
   function vaCompMonthly(opts){
     const r = Math.max(0,Math.min(100,Number(opts.rating)||0));
     const rating = (r===0?0:(r===100?100:Math.round(r/10)*10));
@@ -617,15 +1614,18 @@
     const kidsS   = Math.max(0,+opts.kidsS||0);
     const parents = Math.max(0,Math.min(2,+opts.parents||0));
     const spouseA = opts.spouseA==='Yes';
+    // pick base
     let base=0;
     if(spouse){
       base = (kidsU18+kidsS)>0?row.vet_spouse_one_child:row.vet_spouse;
     } else {
       base = (kidsU18+kidsS)>0?row.vet_one_child:row.vet;
     }
+    // extras
     let add=0;
     const extraCount=Math.max(0,(kidsU18+kidsS)-1);
     if(extraCount>0){
+      // distribute extras
       const takeU18=Math.max(0,Math.min(extraCount,Math.max(0,kidsU18-1)));
       const takeS = extraCount-takeU18;
       add += takeU18*(row.add_child_u18||0) + takeS*(row.add_child_s||0);
@@ -640,13 +1640,26 @@
   /* =======================
      #4 STATE
   ======================= */
-  let MODE='VET';
+  let MODE='VET'; // "AD" or "VET"
+  // month budgeting: we hold many months in localStorage key 'rs.monthly'
+  // {
+  //   "2025-11": {
+  //      rows:[{id,cat,name,month}],
+  //      core:1234,
+  //      disc:456,
+  //      meta:{saved:true,timestamp:...}
+  //   },
+  //   ...
+  // }
   let monthData=LSget('rs.monthly')||{};
+  // active month key
   let activeMonthKey = (()=>{
+    // default = current year-month
     const nowKey = monthKeyFromDate(new Date());
     if(monthData[nowKey]) return nowKey;
     return nowKey;
   })();
+  // in-panel working rows (for active month)
   let BP_ROWS=[];
   let BP_ID=1;
   /* =======================
@@ -659,13 +1672,15 @@
     $$('.vet-only').forEach(n=>{
       n.style.display = (MODE==='VET')?'grid':'none';
     });
+    // update mil-pill highlight
     $$('.mil-pill').forEach(p=>{
       p.classList.toggle('active', p.dataset.mode===MODE);
     });
-    updateIncomeNumbers();
-    renderAll();
-    persistIdentity();
+    updateIncomeNumbers(); // recalc AD/VET income fields
+    renderAll();           // recalc KPIs with new mode
+    persistIdentity();     // sync identity after mode flip
   }
+  /* hydrate rank dropdowns etc for a profile card */
   function hydrateProfileCard(card){
     const selRank   = card.querySelector('.sel-rank');
     const retRank   = card.querySelector('.ret-rank');
@@ -686,18 +1701,21 @@
       selYears.innerHTML=yOpt;
       selYears.value='10';
     }
+    // toggle AD/VET pills
     card.querySelector('.mil-toggle')?.addEventListener('click', e=>{
       const pill=e.target.closest('.mil-pill');
       if(!pill) return;
       MODE = (pill.dataset.mode==='AD')?'AD':'VET';
       applyMode();
     });
+    // disability % label live update
     const vslider=card.querySelector('.va-rate');
     const vlabel=card.querySelector('.va-rate-label');
     vslider?.addEventListener('input',()=>{
       if(vlabel) vlabel.textContent=vslider.value+'%';
       if(MODE==='VET') updateIncomeNumbers();
     });
+    // recalc + persist identity triggers
     [
       '.pf-fname','.pf-lname','.pf-email','.pf-phone',
       '.sel-rank','.ret-rank','.sel-years','.sel-deps',
@@ -715,6 +1733,7 @@
         persistIdentity();
       });
     });
+    // benefits triggers (property state, etc.)
     [
       '.va-survivor','.prop-state','.prop-home','.prop-tax-relief',
       '.va-access','.va-eem','.va-eem-amt','.va-seller'
@@ -731,7 +1750,9 @@
       });
     });
   }
+  // first card is hydrated on load
   hydrateProfileCard($('.profile-card'));
+  // Add secondary member
   elMap.btnAddProfile?.addEventListener('click',()=>{
     const stack = $('#profile-stack');
     const base  = stack.querySelector('.profile-card');
@@ -739,6 +1760,7 @@
     const newIdx= stack.querySelectorAll('.profile-card').length+1;
     clone.setAttribute('data-profile-idx',String(newIdx));
     clone.querySelector('.idx').textContent = 'Member '+newIdx;
+    // wipe text/range fields appropriately
     clone.querySelectorAll('input').forEach(inp=>{
       if(inp.type==='range') return;
       if(!inp.classList.contains('ret-years')){
@@ -747,6 +1769,7 @@
     });
     stack.appendChild(clone);
     hydrateProfileCard(clone);
+    // flash feedback
     const oldTxt = elMap.btnAddProfile.textContent;
     elMap.btnAddProfile.textContent='Profile Added ✓';
     setTimeout(()=>{ elMap.btnAddProfile.textContent=oldTxt; },1100);
@@ -755,7 +1778,7 @@
      #6 IDENTITY / PROFILE STORAGE
   ======================= */
   function getActiveCard(){
-    return $('.profile-card');
+    return $('.profile-card'); // for now: first card is primary
   }
   function currentPaygrade(){
     const card=getActiveCard();
@@ -835,6 +1858,7 @@
           `AD: Base ${fmt(base)} + BAS ${fmt(basPay)} + BAH ${fmt(bah)} = ${fmt(base+basPay+bah)}.`;
       }
     } else {
+      // VET mode
       const card=getActiveCard();
       const ret=retirementMonthly(
         card?.querySelector('.ret-rank')?.value || 'E-6',
@@ -856,7 +1880,9 @@
       }
     }
   }
+  /* compute() combines all pieces into snapshot numbers used for KPIs */
   function computeSnapshot(){
+    // income
     let income=0;
     if(MODE==='AD'){
       income =
@@ -870,18 +1896,23 @@
         (+elMap.inVA.value||0)+
         (+elMap.inAddlVet.value||0);
     }
+    // expenses base for ACTIVE MONTH
     const baseCore = +elMap.exCore.value||0;
     const baseDisc = +elMap.exDisc.value||0;
+    // savings target calc
     const saveRatePct = Math.max(0,Math.min(40,Number(elMap.saveRate.value)||0));
     const saveContribution = income*(saveRatePct/100);
     const totalExpenses = baseCore + baseDisc + saveContribution;
+    // savings KPI = current stash + new contribution
     const currentSavings = +elMap.svCurrent.value||0;
     const savingsTotalKPI = saveContribution + currentSavings;
+    // mortgage (p& i etc.)
     const inferredAPR = rsAPRFromScore(elMap.cs.value);
     const usedAPR = Number(elMap.hRate.value)||inferredAPR;
     const price = +elMap.hPrice.value||0;
     const dpPct = (Number(elMap.dpSlider.value)||0)/100;
     const downAmount = Math.max(0, price*dpPct);
+    // EEM add-on (VA energy efficiency financed)
     const prof=getProfileStore();
     const eemAdd = (prof.eem==='Yes')
       ? Math.max(0, Math.min(+prof.eemAmt||0,15000))
@@ -893,7 +1924,7 @@
     const tihoa = +elMap.hTIHOA.value||0;
     const pmi   = +elMap.hPMI.value||0;
     const housing = pAndI + tihoa + pmi;
-    const disposable = income - totalExpenses - housing;
+    const disposable = income - totalExpenses - housing; // leftover after everything including housing
     return {
       income,
       baseCore,
@@ -917,6 +1948,7 @@
      #8 GRADE + BENEFITS
   ======================= */
   function computeGrade(snap){
+    // % income being burned (expenses+housing+saveContribution)
     const burnShare = (snap.baseCore + snap.baseDisc + snap.saveContribution + snap.housing) / (snap.income||1);
     const housingShare = snap.housing / (snap.income||1);
     let g=92;
@@ -931,6 +1963,7 @@
       : g>=82?'B+': g>=76?'B': g>=72?'B-'
       : g>=66?'C+': g>=60?'C': g>=55?'C-'
       : g>=50?'D+': g>=45?'D':'F';
+    // credit band text from mortgage panel
     const score=+elMap.cs.value||720;
     const band = score>=760?'Excellent'
                : score>=720?'Good'
@@ -941,7 +1974,7 @@
     return {letter, burnShare, band};
   }
   function renderBenefits(){
-    const prof = persistProfileToStorage();
+    const prof = persistProfileToStorage(); // ensures latest
     const price = +elMap.hPrice.value||0;
     const sellerCapPct = Math.min(4, Math.max(0, +(prof.seller||0)));
     const sellerCapAmt = price*(sellerCapPct/100);
@@ -979,7 +2012,7 @@
         : 'Not indicated';
     }
     if(elMap.bPurple){
-      elMap.bPurple.textContent = '—';
+      elMap.bPurple.textContent = '—'; // reserved for Purple Heart logic
     }
   }
   /* =======================
@@ -1029,6 +2062,7 @@
         </td>`;
       elMap.bpBody.appendChild(tr);
     });
+    // wire row edits
     $$('.bp-cat').forEach(x=>{
       x.addEventListener('change',e=>{
         const rr=BP_ROWS.find(z=>z.id==e.target.dataset.id);
@@ -1056,6 +2090,7 @@
     });
     bpTotalsUI();
   }
+  // build month select dropdown around current & +/-5 months
   function populateMonthSelect(){
     if(!elMap.monthSelect) return;
     const baseDate=new Date();
@@ -1071,8 +2106,10 @@
     elMap.monthSelect.innerHTML = opts.map(o=>
       `<option value="${o.key}">${o.label}</option>`
     ).join('');
+    // select the active one if it exists
     elMap.monthSelect.value = activeMonthKey;
   }
+  // helper for initial default math
   function bpTotalsAfterRowsTemp(rows){
     const t={Essentials:0,Discretionary:0,Debt:0,Other:0};
     rows.forEach(r=>{
@@ -1081,16 +2118,20 @@
     t.All=t.Essentials+t.Discretionary+t.Debt+t.Other;
     return t;
   }
+  // load data from monthData[activeMonthKey] → BP_ROWS, ex-core, ex-disc
   function loadMonthData(key){
     activeMonthKey = key;
     const mObj = monthData[key] || {};
     BP_ROWS = Array.isArray(mObj.rows) ? JSON.parse(JSON.stringify(mObj.rows)) : [];
     BP_ID = BP_ROWS.reduce((mx,r)=>Math.max(mx,r.id||0),0)+1;
+    // fill exCore/exDisc if stored
     if(mObj.core!=null) elMap.exCore.value = mObj.core;
     else elMap.exCore.value = '';
     if(mObj.disc!=null) elMap.exDisc.value = mObj.disc;
     else elMap.exDisc.value = '';
+    // rerender table
     if(BP_ROWS.length===0){
+      // if brand new month, create starter defaults
       BP_ROWS=[
         {id:1,cat:'Essentials',name:'Rent',month:1200},
         {id:2,cat:'Essentials',name:'Utilities',month:250},
@@ -1101,6 +2142,7 @@
         {id:7,cat:'Debt',name:'Credit Cards',month:300}
       ];
       BP_ID=8;
+      // also preload core/disc if empty
       const t=bpTotalsAfterRowsTemp(BP_ROWS);
       if(!elMap.exCore.value) elMap.exCore.value = Math.round(t.Essentials+t.Debt+t.Other);
       if(!elMap.exDisc.value) elMap.exDisc.value = Math.round(t.Discretionary);
@@ -1108,6 +2150,7 @@
     bpRender();
     renderMonthStatusHint();
   }
+  // save current month back into monthData + localStorage
   function saveCurrentMonth(){
     const core = +elMap.exCore.value||0;
     const disc = +elMap.exDisc.value||0;
@@ -1135,11 +2178,13 @@
         "Saved • " + d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     }
   }
+  // events for month select
   elMap.monthSelect?.addEventListener('change',e=>{
     loadMonthData(e.target.value);
     renderAll();
-    persistBridge();
+    persistBridge(); // update link preview
   });
+  // add row
   elMap.bpAdd?.addEventListener('click',()=>{
     const cat = elMap.bpCat.value || 'Essentials';
     const name= elMap.bpName.value.trim() || 'Item';
@@ -1150,15 +2195,18 @@
     bpRender();
     renderAll();
   });
+  // save month
   elMap.bpSaveMonth?.addEventListener('click',()=>{
     saveCurrentMonth();
     elMap.bpNote.textContent="Saved! Month totals copied up top and will flow into analysis.";
     setTimeout(()=>{
       elMap.bpNote.textContent="Month saved. These numbers auto-fill the fields above, feed KPIs, and feed the Analysis Dashboard.";
     },2000);
+    // push totals up to inputs (core/disc already used)
     renderAll();
     persistBridge();
   });
+  // core/disc manual edits
   elMap.exCore?.addEventListener('input',()=>{
     renderAll();
   });
@@ -1172,6 +2220,7 @@
     elMap.saveRateLbl.textContent = elMap.saveRate.value+'%';
     renderAll();
   });
+  // mortgage: credit score slider also drives APR unless user overrides
   elMap.cs?.addEventListener('input',()=>{
     const score=+elMap.cs.value||720;
     const band = score>=760?'Excellent'
@@ -1210,18 +2259,22 @@
       renderAll();
     });
   });
+  // "Update Calculations" button just forces re-render
   elMap.btnCalc?.addEventListener('click',()=>{
     renderAll();
     persistBridge();
   });
+  // "Reset" clears user-editable numeric fields
   elMap.btnClear?.addEventListener('click',()=>{
+    // clear text/number except range + disabled
     $$('input').forEach(inp=>{
       if(inp.type==='range') return;
       if(inp.disabled) return;
-      if(inp===elMap.cs || inp===elMap.dpSlider) return;
+      if(inp===elMap.cs || inp===elMap.dpSlider) return; // keep sliders
       if(inp===elMap.hRate) { inp.dataset.touched=''; }
       inp.value='';
     });
+    // reset sliders to defaults
     elMap.saveRate.value=15;
     elMap.saveRateLbl.textContent='15%';
     elMap.cs.value=720;
@@ -1231,6 +2284,7 @@
     elMap.dpPctLabel.textContent='20%';
     elMap.dpAmtLabel.textContent='$0';
     elMap.dpAmt.value='$0';
+    // clear breakdown text
     elMap.milBreak.textContent='—';
     renderAll();
     persistBridge();
@@ -1239,10 +2293,11 @@
      #11 KPI / GRADE RENDER
   ======================= */
   function renderAll(){
-    updateIncomeNumbers();
-    renderBenefits();
+    updateIncomeNumbers(); // ensures in-base/in-ret are correct first
+    renderBenefits();      // sets VA / TX flags, seller concessions, etc.
     const snap = computeSnapshot();
     const grd  = computeGrade(snap);
+    // KPIs
     if(elMap.kIncome)   elMap.kIncome.textContent   = fmt(snap.income);
     if(elMap.kExp)      elMap.kExp.textContent      = fmt(snap.baseCore+snap.baseDisc+snap.saveContribution);
     if(elMap.kMortgage) elMap.kMortgage.textContent = fmt(snap.housing);
@@ -1253,6 +2308,7 @@
         ? fmt(dispAfterAll)
         : ('-'+fmt(Math.abs(dispAfterAll)));
     }
+    // Grade card visuals
     if(elMap.gradeLetter) elMap.gradeLetter.textContent = grd.letter;
     if(elMap.gradeBand)   elMap.gradeBand.textContent   = grd.band+' / Spending Load';
     if(elMap.gradeLeft){
@@ -1260,6 +2316,7 @@
         ? fmt(dispAfterAll)
         : ('-'+fmt(Math.abs(dispAfterAll)));
     }
+    // dot color
     if(elMap.gradeDot){
       if(grd.letter[0]==='A'||grd.letter[0]==='B'){
         elMap.gradeDot.style.background='var(--ok)';
@@ -1270,36 +2327,46 @@
       }
       elMap.gradeDot.style.boxShadow='0 0 8px rgba(255,255,255,.4)';
     }
+    // meter fill width (burnShare ~ 0..1)
     if(elMap.gradeMeter){
       const w = Math.max(0,Math.min(1,grd.burnShare))*100;
       elMap.gradeMeter.style.width = w+'%';
     }
+    // APR label
     const inferredAPR = rsAPRFromScore(elMap.cs.value);
     const usedAPR = Number(elMap.hRate.value)||inferredAPR;
     if(elMap.aprLabel){
       elMap.aprLabel.textContent = usedAPR.toFixed(2)+'%';
     }
+    // update down labels
     updateDownLabels();
   }
   /* =======================
      #12 BRIDGE BUILDER (→ /verify)
-     ======================= */
+     UPDATED:
+     - We now include ALL months (rs.monthly) in 'monthlyHistory'.
+     - Analysis Dashboard can loop these to build trends / stacked charts.
+  ======================= */
   function b64url(str){
     return btoa(unescape(encodeURIComponent(str)))
       .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
   }
+  // final object to ship to /verify (and to Supabase / email, etc.)
   function buildBridgePayload(){
     const snap=computeSnapshot();
     const score=+elMap.cs.value||720;
-    const id = persistIdentity();
+    const id = persistIdentity(); // ensures identity object is fresh
     const prof = getProfileStore();
+    // itemized budget rows for the active month
     const itemRows = BP_ROWS.map(r=>({
       name:r.name,
       amount:+r.month||0,
       cat:r.cat||'Other'
     }));
+    // Grab ALL monthly budgets (multi-month history)
     let allMonths = {};
     try { allMonths = JSON.parse(localStorage.getItem('rs.monthly') || '{}'); } catch { allMonths = {}; }
+    // We'll also attach meta for which month user saved
     const monthMeta = {
       activeMonth: activeMonthKey,
       totalMonths: Object.keys(allMonths).length
@@ -1316,6 +2383,7 @@
         rank: id.rankPaygrade,
         branch: ''
       },
+      // high-level finance snapshot
       income: Math.round(snap.income),
       expenses: Math.round(snap.baseCore + snap.baseDisc + snap.saveContribution),
       savings: Math.round(snap.savingsTotalKPI),
@@ -1329,9 +2397,13 @@
       dpAmt: Math.round(snap.downAmount),
       pAndI: Math.round(snap.pAndI),
       housing: Math.round(snap.housing),
+      // per-month rows for currently active month
       itemizedRows: itemRows,
+      // NEW: full multi-month history for charts
       monthlyHistory: allMonths,
+      // Month context
       monthInfo: monthMeta,
+      // VA/Benefits profile
       benefitsProfile: prof
     };
   }
@@ -1342,6 +2414,7 @@
     }catch(_){}
     return payload;
   }
+  // enrich and route when user taps "Analyze"
   function cleanPhone(p){
     return String(p||'').replace(/[^\d+]/g,'').trim();
   }
@@ -1352,12 +2425,15 @@
     const payload = persistBridge() || {};
     const ident = JSON.parse(localStorage.getItem('realtysass.identity')||'{}') || {};
     const who   = ident;
+    // flatten important identity info for downstream email function
     payload.identity = payload.identity || {};
     Object.assign(payload.identity, who);
+    // also top-level copies
     payload.email    = who.email || payload.email || '';
     payload.phone    = cleanPhone(who.phone) || payload.phone || '';
     payload.lastName = who.lastName || payload.lastName || lastNameOf(who.name||who.firstName||'');
     payload.rank     = who.rankTitle || who.rankPaygrade || payload.rank || '';
+    // persist again
     try{
       localStorage.setItem('realtysass.bridge', JSON.stringify(payload));
     }catch(_){}
@@ -1367,11 +2443,16 @@
   /* =======================
      #13 INIT
   ======================= */
+  // 1) default MODE='VET' (you can flip to AD)
   MODE='VET';
+  // 2) set up month select and load default month
   populateMonthSelect();
   loadMonthData(activeMonthKey);
+  // 3) wire identity now
   persistIdentity();
+  // 4) apply mode visibility
   applyMode();
+  // 5) initial compute/render/persist
   renderAll();
   persistBridge();
 })();

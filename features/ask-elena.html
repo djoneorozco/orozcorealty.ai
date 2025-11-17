@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Nov 05 2025 13:44:19 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 17 2025 00:32:40 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68d8f26a66e007935c932b2e" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Inconsolata:400,700","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
   <link href="../images/favicon.svg" rel="shortcut icon" type="image/x-icon">
   <link href="../images/webclip.jpg" rel="apple-touch-icon">
@@ -285,62 +285,244 @@
       <div class="gradient-overlay-7"></div>
       <div class="gradient-overlay-7"></div>
     </div>
-    <div class="code-embed-2 w-embed w-script"><!--  ============================================
-  Ask Elena — Webflow Embed (Always-On, No Key Gate)
-  Version: 2025-10-23 (with typewriter)
-===============================================  -->
+    <div class="code-embed-2 w-embed w-script"><!--  ============================================================
+  Ask Elena — Original UI + RealtySaSS Theme Upgrade
+  Compact Widget • Frosted Glass • Mint/Sapphire Accents
+  Version: 2025-11-16
+===============================================================  -->
       <div id="ask-elena-widget" data-endpoint="https://theorozcorealty.netlify.app/.netlify/functions/ask-elena" style="all: initial;">
         <style>
-    #ask-elena-widget * { box-sizing: border-box; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    #ask-elena { position: relative; width: 100%; max-width: 720px; margin: 0 auto; background: #0f1220; color: #e9ecff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
-    .ae-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; background: linear-gradient(90deg,#0f1220,#181b2e); border-bottom: 1px solid rgba(255,255,255,.06); }
-    .ae-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; background-image: url("https://cdn.prod.website-files.com/68ab0c767e65bfdde9efba3b/68b6f1c7c6e9aa25891ff487_ElenaSultry%20E4EDF8CF.png"); background-size: cover; background-position: center; }
-    .ae-title { font-weight: 700; font-size: 16px; letter-spacing: .2px; }
-    .ae-sub { font-size: 12px; opacity: .75; margin-top: -2px; }
-    .ae-badge { font-size:11px; opacity:.65; margin-left:4px; }
-    .ae-body { display: grid; grid-template-rows: 1fr auto; height: 520px; }
-    .ae-chat { padding: 16px; overflow: auto; display: flex; flex-direction: column; gap: 12px; }
-    .ae-msg { max-width: 85%; padding: 10px 12px; border-radius: 12px; line-height: 1.4; font-size: 14px; white-space: pre-wrap; }
-    .ae-user { align-self: flex-end; background: #2a2f4a; }
-    .ae-bot  { align-self: flex-start; background: #1b2140; border: 1px solid rgba(255,255,255,.06); }
-    .ae-typing { font-size:12px; opacity:.7; }
-    .ae-footer { border-top: 1px solid rgba(255,255,255,.06); padding: 12px; display: grid; grid-template-columns: 1fr auto; gap: 8px; background:#0f1220; }
-    .ae-input { width: 100%; outline: none; border: 1px solid rgba(255,255,255,.12); background: #11152a; color: #e9ecff; padding: 12px 14px; border-radius: 10px; font-size: 14px; }
-    .ae-btn { padding: 12px 14px; background: #4f46e5; color: #fff; border: 0; border-radius: 10px; cursor: pointer; font-weight: 600; }
-    .ae-btn:disabled { opacity: .6; cursor: not-allowed; }
-    /* Blog links row */
-    .ae-links { display:flex; flex-wrap:wrap; gap:8px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.06); background:#0f1220; }
-    .ae-link-btn { font-size:12px; border:1px solid rgba(255,255,255,.12); color:#e9ecff; padding:6px 10px; border-radius:999px; text-decoration:none; transition:background .2s; }
-    .ae-link-btn:hover { background:#181b2e; }
-    /* Typewriter caret */
-    .tw-caret { display:inline-block; width:1px; height:1.2em; margin-left:2px; background: currentColor; vertical-align:-2px; animation: tw-blink 1s steps(1, end) infinite; }
+    /* ============================================================
+       // #1 GLOBAL RESET + FONTS
+    ============================================================ */
+    #ask-elena-widget,
+    #ask-elena-widget * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    :root {
+      --bg: #0b0e1a;
+      --panel: #101426;
+      --panel2: #0f1324;
+      --ink: #ffffff;
+      --muted: #a8b0d6;
+      --accent: #8ef3c5;
+      --accent2: #6aa7ff;
+      --radius: 16px;
+    }
+    /* ============================================================
+       // #2 MAIN WIDGET CONTAINER — ORIGINAL SIZE, NEW THEME
+    ============================================================ */
+    #ask-elena {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+      color: var(--ink);
+      border-radius: var(--radius);
+      box-shadow: 0 20px 40px rgba(0,0,0,.55);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    /* ============================================================
+       // #3 HEADER — AVATAR + TITLE
+    ============================================================ */
+    .ae-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      background: linear-gradient(90deg, #0f1324, #12182a);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .ae-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-image: url("https://cdn.prod.website-files.com/68ab0c767e65bfdde9efba3b/68b6f1c7c6e9aa25891ff487_ElenaSultry%20E4EDF8CF.png");
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,.22);
+      box-shadow: 0 0 16px rgba(142,243,197,.35);
+    }
+    .ae-title {
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: .2px;
+      color: var(--ink);
+    }
+    .ae-sub {
+      font-size: 12px;
+      opacity: .75;
+      margin-top: -2px;
+      color: var(--muted);
+    }
+    .ae-badge {
+      font-size: 11px;
+      opacity:.75;
+      margin-left: 4px;
+      color: var(--accent);
+    }
+    /* ============================================================
+       // #4 BLOG LINKS (ORIGINAL LAYOUT, NEW THEME)
+    ============================================================ */
+    .ae-links {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding:10px 14px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background: #0f1324;
+    }
+    .ae-link-btn {
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.18);
+      color: var(--ink);
+      padding:6px 10px;
+      border-radius:999px;
+      text-decoration:none;
+      background: rgba(255,255,255,.06);
+      transition: background .2s, border .2s;
+    }
+    .ae-link-btn:hover {
+      background: rgba(255,255,255,.12);
+    }
+    /* ============================================================
+       // #5 MAIN BODY (Chat + Input)
+    ============================================================ */
+    .ae-body {
+      display:grid;
+      grid-template-rows: 1fr auto;
+      height: 520px;
+    }
+    .ae-chat {
+      padding: 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    /* ============================================================
+       // #6 CHAT MESSAGES — FROSTED CARDS
+    ============================================================ */
+    .ae-msg {
+      max-width: 85%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      line-height: 1.45;
+      font-size: 14px;
+      white-space: pre-wrap;
+      color: #ffffff !important;
+      backdrop-filter: blur(6px);
+    }
+    .ae-user {
+      align-self: flex-end;
+      background: rgba(142,243,197,.08);
+      border: 1px solid rgba(142,243,197,.30);
+      box-shadow: 0 0 12px rgba(142,243,197,.18);
+    }
+    .ae-bot {
+      align-self: flex-start;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .ae-typing {
+      font-size:12px;
+      opacity: .75;
+      color: #ffffff !important;
+    }
+    /* ============================================================
+       // #7 FOOTER — INPUT + BUTTON
+    ============================================================ */
+    .ae-footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      background: #101426;
+    }
+    .ae-input {
+      width: 100%;
+      outline: none;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.07);
+      color: var(--ink) !important;
+      padding: 13px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+    .ae-input::placeholder {
+      color: rgba(255,255,255,.55);
+    }
+    .ae-btn {
+      padding: 12px 20px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #000;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition:.25s;
+    }
+    .ae-btn:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+    .ae-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    /* ============================================================
+       // #8 TYPEWRITER CARET
+    ============================================================ */
+    .tw-caret {
+      display:inline-block;
+      width:1px;
+      height:1.2em;
+      margin-left:2px;
+      background: currentColor;
+      animation: tw-blink 1s steps(1,end) infinite;
+    }
     @keyframes tw-blink { 50% { opacity: 0; } }
-    @media (prefers-reduced-motion: reduce) { .tw-caret { animation: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .tw-caret { animation:none; }
+    }
   </style>
+        <!--  ============================================================
+       // #9 WIDGET HTML
+  ============================================================  -->
         <div id="ask-elena" role="region" aria-label="Ask Elena chat widget">
           <div class="ae-header">
-            <div class="ae-avatar" aria-hidden="true"></div>
+            <div class="ae-avatar"></div>
             <div>
-              <div class="ae-title">Elena <span class="ae-badge">Your Virtual Concierge</span></div>
+              <div class="ae-title">Elena
+                <span class="ae-badge">Your Virtual Concierge</span>
+              </div>
               <div class="ae-sub">Real Estate & Financial Expert</div>
             </div>
           </div>
-          <!--  blog buttons  -->
+          <!--  BLOG BUTTONS  -->
           <div class="ae-links">
-            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/va-loan-process" target="_blank" rel="noopener">VA Loan Process</a>
-            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/home-buying-steps" target="_blank" rel="noopener">Benefits & Risks</a>
-            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/do-i-need-a-realtor" target="_blank" rel="noopener">Do I Need A Realtor</a>
-            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/new-blog" target="_blank" rel="noopener">New Blog</a>
-            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/new-blog-2" target="_blank" rel="noopener">New Blog 2</a>
+            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/va-loan-process" target="_blank">VA Loan Process</a>
+            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/home-buying-steps" target="_blank">Benefits & Risks</a>
+            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/do-i-need-a-realtor" target="_blank">Do I Need A Realtor</a>
+            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/new-blog" target="_blank">New Blog</a>
+            <a class="ae-link-btn" href="https://new-real-estate-purchase.webflow.io/blog-page/new-blog-2" target="_blank">New Blog 2</a>
           </div>
           <div class="ae-body">
-            <div class="ae-chat" id="ae-chat" aria-live="polite" aria-label="Ask Elena chat log"></div>
+            <div class="ae-chat" id="ae-chat"></div>
             <div class="ae-footer">
-              <input id="ae-input" class="ae-input" type="text" placeholder="Ask Elena anything about buying, VA, comps, or investing…" aria-label="Message input">
-              <button id="ae-send" class="ae-btn" aria-label="Send message">Send</button>
+              <input id="ae-input" class="ae-input" type="text" placeholder="Ask Elena anything about buying, VA, comps, or investing…">
+              <button id="ae-send" class="ae-btn">Send</button>
             </div>
           </div>
         </div>
+        <!--  ============================================================
+       // #10 JAVASCRIPT — CHAT ENGINE + TYPEWRITER
+  ============================================================  -->
         <script>
     (() => {
       const root   = document.getElementById("ask-elena-widget");
@@ -350,14 +532,17 @@
       const sendBtn= root.querySelector("#ae-send");
       const prefersReduced = () =>
         window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      function scrollToBottom() { chatEl.scrollTop = chatEl.scrollHeight; }
-      // Create a chat bubble and (optionally) type into it
+      function scrollToBottom() {
+        chatEl.scrollTop = chatEl.scrollHeight;
+      }
+      // -------------------------------
+      // CREATE NEW MESSAGE BUBBLE
+      // -------------------------------
       async function pushMsg(role, content, opts = {}) {
         const { typewriter = false, speed = 22, delay = 150 } = opts;
         const msg = document.createElement("div");
         msg.className = "ae-msg " + (role === "user" ? "ae-user" : "ae-bot");
         msg.setAttribute("data-role", role);
-        // text container node (we'll type into this)
         const textNode = document.createElement("span");
         msg.appendChild(textNode);
         chatEl.appendChild(msg);
@@ -367,7 +552,6 @@
           scrollToBottom();
           return;
         }
-        // Typewriter effect for assistant replies
         await typewriterInto(textNode, content, speed, delay);
         scrollToBottom();
       }
@@ -383,10 +567,8 @@
         const t = root.querySelector("#ae-typing");
         if (t) t.remove();
       }
-      // Type characters into a node with a blinking caret
       function typewriterInto(el, text, speed = 22, startDelay = 150) {
         return new Promise((resolve) => {
-          // Clear and add caret
           el.textContent = "";
           const caret = document.createElement("span");
           caret.className = "tw-caret";
@@ -405,6 +587,9 @@
           setTimeout(tick, startDelay);
         });
       }
+      // -------------------------------
+      // SEND MESSAGE TO BACKEND
+      // -------------------------------
       async function callElena(userText) {
         sendBtn.disabled = true;
         showTyping();
@@ -414,35 +599,43 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               message: userText,
-              context: { source: "webflow", widget: "ask-elena", version: "always-on-2025-10-23" }
+              context: { 
+                source: "webflow", 
+                widget: "ask-elena", 
+                version: "realitysass-v1" 
+              }
             })
           });
           const data = await res.json();
           hideTyping();
           if (!res.ok) throw new Error(data?.error || "Request failed");
           const reply = data.reply || "I’m here. What would you like to explore?";
-          const ui = data.ui || {}; // from server, optional
+          const ui = data.ui || {};
           const speed = Number(ui.speed || 22);
-          const startDelay = Number(ui.startDelay || 150);
-          await pushMsg("assistant", reply, { typewriter: true, speed, delay: startDelay });
-          // If you later return quick replies, you can render them here using data.quickReplies
-        } catch (e) {
+          const delay = Number(ui.startDelay || 150);
+          await pushMsg("assistant", reply, { typewriter: true, speed, delay });
+        } catch (err) {
           hideTyping();
-          await pushMsg("assistant", "Hmm, I hit a connection snag. Mind asking that again?", { typewriter: true, speed: 20, delay: 80 });
+          await pushMsg("assistant", "Hmm… I hit a connection snag. Try again?", { typewriter: true });
         } finally {
           sendBtn.disabled = false;
         }
       }
+      // -------------------------------
+      // TRY SEND
+      // -------------------------------
       function trySend() {
         const text = (inputEl.value || "").trim();
         if (!text) return;
-        pushMsg("user", text); // users post instantly, no typing effect
+        pushMsg("user", text);
         inputEl.value = "";
         callElena(text);
       }
       sendBtn.addEventListener("click", trySend);
-      inputEl.addEventListener("keydown", (e) => { if (e.key === "Enter") trySend(); });
-      // Warm, typed greeting on load
+      inputEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") trySend();
+      });
+      // Warm greeting
       const greeting = "Hey — I’m Elena, your Virtual Concierge. I’ll keep this simple and precise. Tell me your goal, and I’ll carve the path. Want to start with budget, VA options, or neighborhoods?";
       pushMsg("assistant", greeting, { typewriter: true, speed: 22, delay: 300 });
     })();

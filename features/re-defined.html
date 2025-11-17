@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Nov 05 2025 13:44:19 GMT+0000 (Coordinated Universal Time)  -->
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Mon Nov 17 2025 00:32:40 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="68de5a1528928bb372bea36d" data-wf-site="68cecb820ec3dbdca3ef9099" lang="en">
 <head>
   <meta charset="utf-8">
@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Droid Serif:400,400italic,700,700italic","PT Serif:400,400italic,700,700italic","Bitter:400,700,400italic","Vollkorn:400,400italic,700,700italic","Inconsolata:400,700","Varela:400","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Great Vibes:400","Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","DM Sans:300,regular,500,600,700","Gilda Display:regular","Barlow Condensed:regular","Barlow:300italic,regular,italic,500","Material Icons Outlined:regular","Material Icons:regular"]  }});</script>
   <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
   <link href="../images/favicon.svg" rel="shortcut icon" type="image/x-icon">
   <link href="../images/webclip.jpg" rel="apple-touch-icon">
@@ -276,226 +276,440 @@
     </header>
     <section class="section-133"><img src="../images/68c7b62d4f6dd22676ce7916_luxurypool.jpg" loading="lazy" sizes="(max-width: 2505px) 100vw, 2505px" srcset="../images/68c7b62d4f6dd22676ce7916_luxurypool-p-500.jpg 500w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-800.jpg 800w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-1080.jpg 1080w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-1600.jpg 1600w, ../images/68c7b62d4f6dd22676ce7916_luxurypool-p-2000.jpg 2000w, ../images/68c7b62d4f6dd22676ce7916_luxurypool.jpg 2505w" alt="" class="image-42">
       <section class="section-143">
-        <div class="code-embed-13 w-embed w-script"><!--  RE-Defined • Multi-Feature Embed w/ Slider (DECOR8) — Safe Styles  -->
+        <div class="code-embed-13 w-embed w-script"><!--  =========================================================
+RE-Defined v5.3 • FIXED — Fullscreen, Clean Compare Slider,
+No Green Webflow Track, Same UI, Working Backend
+=========================================================  -->
           <div id="redef-pro" style="font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;">
+            <!--  FORCE FULL WIDTH INSIDE WEBFLOW  -->
             <style>
-    #redef-pro{color:#e9ecff;background:#0b0e1a;padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:12px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-    label span{display:block;font-size:12px;color:#a8b0d6;margin:0 0 6px}
-    input[type="file"],input[type="url"],input[type="text"],input[type="number"],select{
-      width:100%;background:#fff;color:#0b0e1a;border:1px solid rgba(0,0,0,.2);border-radius:10px;padding:10px;font-size:14px
+    .w-embed, .w-embed * {
+      max-width: 100% !important;
+      width: 100% !important;
     }
-    .btn{display:inline-block;padding:10px 14px;border:0;border-radius:10px;background:#6aa7ff;color:#061020;font-weight:700;cursor:pointer}
-    .status{font-size:12px;color:#8ef3c5;margin-left:10px}
-    .muted{font-size:12px;color:#a8b0d6}
-    .hidden{display:none}
-    /* Compare slider */
-    .compare{position:relative;border-radius:14px;overflow:hidden;background:#0d1126;border:1px solid rgba(255,255,255,.08);
-             box-shadow:0 8px 22px rgba(0,0,0,.35);user-select:none;touch-action:none}
-    .pane{position:absolute;inset:0}
-    .compare img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-    .front{clip-path:inset(0 50% 0 0)}
-    .divider{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.95);left:50%;transform:translateX(-1px)}
-    .knob{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:999px;background:#fff;
-          color:#0b0e1a;display:grid;place-items:center;font-weight:900;box-shadow:0 2px 10px rgba(0,0,0,.45);border:1px solid rgba(0,0,0,.2)}
-    .scrub{position:absolute;left:0;right:0;bottom:10px;width:60%;margin:0 auto}
-    .scrub input[type="range"]{width:100%;appearance:none;background:transparent}
-    .scrub input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.2);cursor:ew-resize}
-    .labels{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.12em;color:#a8b0d6;text-transform:uppercase;pointer-events:none}
-    @media (max-width: 900px){ .row,.row3{grid-template-columns:1fr} }
+    #redef-pro, #redef-pro * {
+      max-width: 100% !important;
+    }
   </style>
-            <!--  Inputs  -->
+            <style>
+    /* =========================================================
+       //#1 GLOBAL TOKENS — House of SaSS
+    ========================================================= */
+    :root {
+      --bg:#0b0e1a;
+      --panel:#101426;
+      --panel-2:#0f1324;
+      --ink:#e9ecff;
+      --muted:#a8b0d6;
+      --accent:#8ef3c5;
+      --accent2:#6aa7ff;
+      --border:rgba(255,255,255,.10);
+    }
+    /* =========================================================
+       //#2 WEBFLOW GREEN SLIDER REMOVAL — FINAL FIX
+    ========================================================= */
+    #redef-pro input[type="range"],
+    #redef-pro input[type="range"]::-webkit-slider-runnable-track,
+    #redef-pro input[type="range"]::-moz-range-track,
+    #redef-pro input[type="range"]::-ms-track {
+      background: transparent !important;
+      border: none !important;
+      height: 0px !important;
+      box-shadow: none !important;
+    }
+    input[type="range"]::-webkit-slider-runnable-track { background: transparent !important; }
+    input[type="range"]::-moz-range-track { background: transparent !important; }
+    input[type="range"]::-ms-track { background: transparent !important; }
+    /* Keep your knob only */
+    #redef-pro input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance:none !important;
+      width:18px !important;
+      height:18px !important;
+      border-radius:50% !important;
+      background:var(--accent2) !important;
+      cursor:ew-resize !important;
+      position:relative !important;
+      z-index:100 !important;
+      border:1px solid rgba(0,0,0,.25) !important;
+    }
+    /* =========================================================
+       //#3 LAYOUT
+    ========================================================= */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+    }
+    #redef-pro {
+      background: var(--bg);
+      color: var(--ink);
+      padding: 40px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    h2 { font-weight:900; font-size:24px; color:var(--ink); text-align:center; margin:0 0 10px; text-transform:uppercase; }
+    .muted { color:var(--muted); font-size:13px; text-align:center; }
+    .row {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      width:100%;
+      max-width:1400px;
+      margin:0 auto;
+    }
+    @media(max-width:900px){ .row{grid-template-columns:1fr;} }
+    input[type="file"],
+    input[type="text"],
+    select {
+      width:100%;
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--ink);
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      box-shadow:inset 0 16px 32px rgba(0,0,0,.6);
+    }
+    input::placeholder {color:#c9d2ff88;}
+    .btn {
+      padding:12px 18px;
+      border:none;
+      border-radius:12px;
+      font-weight:800;
+      font-size:13px;
+      cursor:pointer;
+      background:linear-gradient(180deg,var(--accent2),var(--accent));
+      color:#06112b;
+      box-shadow:0 16px 32px rgba(0,0,0,.8);
+      transition:opacity .2s;
+    }
+    .btn:hover {opacity:.85;}
+    .panel {
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px;
+      box-shadow:0 16px 32px rgba(0,0,0,.6);
+      display:flex;
+      flex-direction:column;
+    }
+    /* =========================================================
+       //#4 STYLE GRID
+    ========================================================= */
+    .style-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:14px;
+      margin-top:10px;
+    }
+    .style-tile {
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      cursor:pointer;
+      background:#0b0e1a;
+      transition:transform .2s, box-shadow .2s;
+      position:relative;
+    }
+    .style-tile img { width:100%; height:100%; object-fit:cover; }
+    .style-tile span {
+      position:absolute; bottom:0; left:0; right:0;
+      font-size:12px; font-weight:700; color:#fff;
+      background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,0));
+      text-align:center; padding:6px 0;
+    }
+    .style-tile.active {
+      outline:2px solid var(--accent2);
+      transform:scale(1.02);
+      box-shadow:0 0 20px var(--accent2);
+    }
+    /* =========================================================
+       //#5 COMPARE PANEL — FIXED, CLEAN, WORKING
+    ========================================================= */
+    .compare {
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      background:#0d1126;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 8px 22px rgba(0,0,0,.35);
+      width:100%;
+      min-height:550px;
+    }
+    .compare img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .pane {position:absolute; inset:0;}
+    .front { clip-path:inset(0 50% 0 0); }
+    .divider {
+      position:absolute;
+      top:0;
+      bottom:0;
+      width:2px;
+      background:var(--accent2);
+      left:50%;
+      transform:translateX(-1px);
+    }
+    .knob {
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      background:var(--accent);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#06112b;
+      box-shadow:0 2px 10px rgba(0,0,0,.45);
+      z-index:20;
+    }
+    .scrub {
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:12px;
+      width:60%;
+      margin:0 auto;
+      z-index:50;
+    }
+    .scrub input[type="range"] {
+      width:100%;
+      appearance:none;
+      background:transparent !important;
+    }
+    .labels {
+      position:absolute;
+      left:10px;
+      right:10px;
+      top:10px;
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      color:var(--muted);
+      text-transform:uppercase;
+      pointer-events:none;
+    }
+  </style>
+            <!--  HEADER  -->
+            <div style="text-align:center;margin-bottom:20px;">
+              <h2>RE-DEFINED • AI LISTING ENHANCER</h2>
+              <p class="muted">Analyzing Your Visuals — Powered by The Orozco Realty A.I.</p>
+            </div>
+            <!--  =========================================================
+       GRID: LEFT (INPUT) + RIGHT (PREVIEW)
+  =========================================================  -->
             <div class="row">
-              <label><span>Upload Image (JPG/PNG ≤ 4MB)</span><input id="f-file" type="file" accept="image/*"></label>
-              <label><span>Or paste Image URL (public)</span><input id="f-url" type="url" placeholder="https://…"></label>
+              <!--  INPUT PANEL  -->
+              <div class="panel">
+                <h3 style="margin:0 0 10px;font-weight:800;font-size:15px;">Input Details</h3>
+                <p class="muted">Upload your base image and select an enhancement type.</p>
+                <label><span>Upload Image (≤ 4 MB JPG/PNG)</span>
+                  <input id="f-file" type="file" accept="image/*">
+                </label>
+                <label style="margin-top:10px;"><span>Feature</span>
+                  <select id="f-feature">
+                    <option value="staging">Interior Staging</option>
+                    <option value="landscape">Exterior Landscaping</option>
+                    <option value="paint">Wall Color Change</option>
+                  </select>
+                </label>
+                <label style="margin-top:10px;"><span>Room Type</span>
+                  <select id="f-room">
+                    <option>livingroom</option>
+                    <option>bedroom</option>
+                    <option>kitchen</option>
+                    <option>bathroom</option>
+                    <option>office</option>
+                    <option>diningroom</option>
+                  </select>
+                </label>
+                <label style="margin-top:10px;"><span>Design Style</span>
+                  <div class="style-grid" id="style-grid">
+                    <div class="style-tile active" data-style="modern">
+                      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80">
+                      <span>Modern</span>
+                    </div>
+                    <div class="style-tile" data-style="minimalist">
+                      <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=400&q=80">
+                      <span>Minimalist</span>
+                    </div>
+                    <div class="style-tile" data-style="coastal">
+                      <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=400&q=80">
+                      <span>Coastal</span>
+                    </div>
+                  </div>
+                </label>
+                <label style="margin-top:10px;"><span>Paint Color (HEX)</span>
+                  <input id="f-color" type="text" placeholder="#D6D6D6">
+                </label>
+                <div style="margin-top:16px; display:flex; align-items:center; gap:10px;">
+                  <button id="f-go" class="btn">Generate Enhancement</button>
+                  <span id="f-status" class="muted"></span>
+                </div>
+              </div>
+              <!--  PREVIEW PANEL  -->
+              <div class="panel">
+                <h3 style="margin:0 0 10px;font-weight:800;font-size:15px;">Live Result Preview</h3>
+                <p class="muted">Drag the circle or use the slider to compare before and after.</p>
+                <div id="cmp" class="compare">
+                  <div class="pane back"><img id="img-before"></div>
+                  <div class="pane front"><img id="img-after"></div>
+                  <div class="divider"></div>
+                  <div class="knob">↔</div>
+                  <div class="scrub">
+                    <input id="cmp-range" type="range" min="0" max="100" value="50">
+                  </div>
+                  <div class="labels">
+                    <span>Original</span>
+                    <span>Result</span>
+                  </div>
+                </div>
+                <p class="muted" style="margin-top:6px;">Live generation powered by The Orozco Realty A.I.</p>
+              </div>
             </div>
-            <div class="row3" style="margin-top:10px">
-              <label>
-                <span>Feature</span>
-                <select id="f-feature">
-                  <option value="staging">Virtual Staging</option>
-                  <option value="redesign">Interior Re-Design</option>
-                  <option value="paint">Wall Paint Change</option>
-                  <option value="remove">Remove Objects / Declutter</option>
-                  <option value="upscale">Upscale Image</option>
-                  <option value="custom">Custom Prompt Design</option>
-                  <option value="exterior">Exterior / Landscaping (Beta)</option>
-                </select>
-              </label>
-              <label data-cond="needs-room">
-                <span>Room Type</span>
-                <select id="f-room">
-                  <option>livingroom</option>
-                  <option>bedroom</option>
-                  <option>kitchen</option>
-                  <option>bathroom</option>
-                  <option>office</option>
-                  <option>diningroom</option>
-                </select>
-              </label>
-              <!--  SAFE style options only  -->
-              <label data-cond="needs-style">
-                <span>Design Style</span>
-                <select id="f-style">
-                  <option value="modern">modern</option>
-                  <option value="minimalist">minimalist</option>
-                  <option value="scandinavian">scandinavian</option>
-                  <option value="japandi">japandi</option>
-                  <option value="industrial">industrial</option>
-                  <option value="farmhouse">farmhouse</option>
-                  <option value="midcentury">midcentury</option>
-                  <option value="traditional">traditional</option>
-                  <option value="transitional">transitional</option>
-                  <option value="contemporary">contemporary</option>
-                  <option value="bohemian">bohemian</option>
-                  <option value="coastal">coastal</option>
-                  <option value="rustic">rustic</option>
-                </select>
-              </label>
-            </div>
-            <div class="row3" id="adv-row" style="margin-top:10px">
-              <label data-cond="needs-color"><span>Paint Color (HEX)</span><input id="f-color" type="text" placeholder="#D6D6D6"></label>
-              <label data-cond="needs-mask"><span>Remove Prompt (what to remove)</span><input id="f-mask" type="text" placeholder="clutter on floor, extra chairs"></label>
-              <label data-cond="needs-scale"><span>Upscale ×</span><input id="f-scale" type="number" value="2" min="1" max="4"></label>
-            </div>
-            <div class="row" style="margin-top:10px">
-              <label data-cond="needs-prompt" style="grid-column:1/-1">
-                <span>Custom Prompt (optional)</span>
-                <input id="f-prompt" type="text" placeholder="luxury minimal seating, warm woods, neutral textiles">
-              </label>
-            </div>
-            <div style="margin:12px 0;display:flex;align-items:center;gap:10px">
-              <button id="f-go" class="btn">Generate</button>
-              <span id="f-status" class="status"></span>
-            </div>
-            <!--  Compare  -->
-            <div id="cmp" class="compare" style="aspect-ratio:16/9">
-              <div class="pane back"><img id="img-before" alt="Original"></div>
-              <div class="pane front"><img id="img-after" alt="Result"></div>
-              <div class="divider"></div>
-              <div class="knob">↔</div>
-              <div class="scrub"><input id="cmp-range" type="range" min="0" max="100" value="50" aria-label="Reveal"></div>
-              <div class="labels"><span>Original</span><span>Result</span></div>
-            </div>
-            <div class="muted" style="margin-top:6px">Drag the circle or use the slider.</div>
+            <!--  =========================================================
+       SCRIPT — FULL + CLEAN
+=========================================================  -->
             <script>
-    (function(){
-      const API = "https://theorozcorealty.netlify.app/.netlify/functions/stage";
-      const $ = (id)=>document.getElementById(id);
-      const write = (id,v)=>{ $(id).textContent = v||""; };
-      const busy = (on)=>{ const b=$("f-go"); b.disabled=!!on; b._t??=b.textContent; b.textContent=on?"Generating…":b._t; };
-      // --- Style whitelist + synonym mapping (fix for invalid styles like "luxury") ---
-      const ALLOWED_STYLES = new Set([
-        "modern","minimalist","scandinavian","japandi","industrial","farmhouse",
-        "midcentury","traditional","transitional","contemporary","bohemian","coastal","rustic"
-      ]);
-      const STYLE_MAP = {
-        "luxury":"modern","luxurious":"modern",
-        "mid-century":"midcentury","mid-century modern":"midcentury","mcm":"midcentury",
-        "boho":"bohemian","coastal chic":"coastal","trad":"traditional",
-        "transitional style":"transitional","industrial chic":"industrial"
-      };
-      function normalizeStyle(s){
-        if(!s) return "modern";
-        const k=String(s).toLowerCase().trim();
-        const mapped = STYLE_MAP[k] || k;
-        return ALLOWED_STYLES.has(mapped) ? mapped : "modern";
+(function(){
+  const API = "https://theorozcorealty.netlify.app/.netlify/functions/stage";
+  const $ = id => document.getElementById(id);
+  const write=(id,v)=>$(id).textContent=v||"";
+  const busy = (on)=>{
+    const b=$("f-go");
+    b.disabled=!!on;
+    b._t??=b.textContent;
+    b.textContent=on?"Generating…":b._t;
+    b.style.opacity=on?".6":"1";
+  };
+  // STYLE TILE SWITCHING
+  let currentStyle="modern";
+  document.querySelectorAll(".style-tile").forEach(tile=>{
+    tile.addEventListener("click",()=>{
+      document.querySelectorAll(".style-tile").forEach(t=>t.classList.remove("active"));
+      tile.classList.add("active");
+      currentStyle=tile.dataset.style;
+    });
+  });
+  // Feature Logic
+  const featureSel=$("f-feature");
+  const colorField=$("f-color").closest("label");
+  const roomField=$("f-room").closest("label");
+  function updateUI(){
+    const f=featureSel.value;
+    colorField.style.display=(f==="paint")?"block":"none";
+    roomField.style.display=(f==="paint"||f==="staging")?"block":"none";
+  }
+  featureSel.addEventListener("change",updateUI);
+  updateUI();
+  // Convert File → Base64
+  function fileToDataURL(file){
+    return new Promise((res,rej)=>{
+      if(!file)return res("");
+      if(file.size>4*1024*1024)return rej(new Error("File exceeds 4 MB"));
+      const r=new FileReader();
+      r.onload=()=>res(r.result);
+      r.onerror=()=>rej(new Error("Read failed"));
+      r.readAsDataURL(file);
+    });
+  }
+  // Compare Slider Logic
+  const box=$("cmp"),
+        front=box.querySelector(".front"),
+        divider=box.querySelector(".divider"),
+        knob=box.querySelector(".knob"),
+        range=$("cmp-range");
+  function setPct(p){
+    const pct=Math.max(0,Math.min(100,p));
+    const right=100-pct;
+    front.style.clipPath=`inset(0 ${right}% 0 0)`;
+    divider.style.left=pct+"%";
+    knob.style.left=pct+"%";
+    range.value=pct;
+  }
+  function handlePos(x){
+    const r=box.getBoundingClientRect();
+    setPct(((x-r.left)/r.width)*100);
+  }
+  function onDown(e){
+    e.preventDefault();
+    const move=(ev)=>handlePos(ev.touches?ev.touches[0].clientX:ev.clientX);
+    const up=()=>{
+      window.removeEventListener("mousemove",move);
+      window.removeEventListener("mouseup",up);
+      window.removeEventListener("touchmove",move);
+      window.removeEventListener("touchend",up);
+    };
+    window.addEventListener("mousemove",move);
+    window.addEventListener("touchmove",move,{passive:false});
+    window.addEventListener("mouseup",up);
+    window.addEventListener("touchend",up);
+  }
+  box.addEventListener("mousedown",onDown);
+  box.addEventListener("touchstart",onDown,{passive:false});
+  range.addEventListener("input",()=>setPct(Number(range.value)));
+  setPct(50);
+  // Generate Button
+  $("f-go").addEventListener("click",async()=>{
+    write("f-status","");
+    busy(true);
+    try{
+      const file=$("f-file").files[0];
+      if(!file)throw new Error("Please choose an image first.");
+      const original=await fileToDataURL(file);
+      $("img-before").src=original;
+      const feature=$("f-feature").value;
+      const room=$("f-room").value;
+      const color=$("f-color").value.trim();
+      const payload={feature,input_image_url:original};
+      if(feature==="staging"){
+        payload.room_type=room;
+        payload.design_style=currentStyle;
       }
-      // Conditional field visibility by feature
-      const featureNeeds = {
-        staging:  ["needs-room","needs-style"],
-        redesign: ["needs-room","needs-style","needs-prompt"],
-        paint:    ["needs-color","needs-room"],
-        remove:   ["needs-mask","needs-room"],
-        upscale:  ["needs-scale"],
-        custom:   ["needs-room","needs-style","needs-prompt"],
-        exterior: ["needs-style","needs-prompt"]
-      };
-      const condEls = [...document.querySelectorAll("[data-cond]")];
-      function applyFeatureUI(){
-        const f = $("f-feature").value;
-        const needs = new Set(featureNeeds[f]||[]);
-        condEls.forEach(el=> el.classList.toggle("hidden", !needs.has(el.dataset.cond)));
+      if(feature==="landscape"){
+        payload.design_style=currentStyle;
       }
-      $("f-feature").addEventListener("change", applyFeatureUI);
-      applyFeatureUI();
-      function fileToDataURL(file){
-        return new Promise((res,rej)=>{
-          if(!file) return res("");
-          if(file.size>4*1024*1024) return rej(new Error("File exceeds 4MB"));
-          const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(new Error("Read failed")); r.readAsDataURL(file);
-        });
+      if(feature==="paint"){
+        payload.paint_color_hex=color||"#D6D6D6";
+        payload.room_type=room;
       }
-      // Slider mechanics
-      const box = $("cmp"), front = box.querySelector(".front"), divider = box.querySelector(".divider"),
-            knob = box.querySelector(".knob"), range = $("cmp-range");
-      function setPct(p){ const pct=Math.max(0,Math.min(100,p)); const right=100-pct; front.style.clipPath=`inset(0 ${right}% 0 0)`; divider.style.left=pct+"%"; knob.style.left=pct+"%"; range.value=pct; }
-      function handlePos(x){ const r=box.getBoundingClientRect(); setPct(((x-r.left)/r.width)*100); }
-      function onDown(e){ e.preventDefault(); const move=(ev)=>handlePos(ev.touches?ev.touches[0].clientX:ev.clientX);
-        const up=()=>{ window.removeEventListener("mousemove",move); window.removeEventListener("touchmove",move); window.removeEventListener("mouseup",up); window.removeEventListener("touchend",up); };
-        window.addEventListener("mousemove",move); window.addEventListener("touchmove",move,{passive:false}); window.addEventListener("mouseup",up); window.addEventListener("touchend",up); }
-      box.addEventListener("mousedown", onDown); box.addEventListener("touchstart", onDown, {passive:false}); range.addEventListener("input", ()=>setPct(Number(range.value))); setPct(50);
-      $("f-go").addEventListener("click", async ()=>{
-        write("f-status",""); busy(true);
-        try{
-          const file = $("f-file").files[0];
-          const url  = $("f-url").value.trim();
-          const feature = $("f-feature").value;
-          let original = "";
-          if(url) original = url;
-          else if(file) original = await fileToDataURL(file);
-          else throw new Error("Pick a file or paste a URL");
-          $("img-before").src = original;
-          const room   = $("f-room").value;
-          const rawSty = $("f-style").value;
-          const style  = normalizeStyle(rawSty);
-          if (rawSty !== style) write("f-status", `“${rawSty}” not supported — using “${style}”.`);
-          const color  = $("f-color").value.trim();
-          const mask   = $("f-mask").value.trim();
-          const scale  = Number($("f-scale").value||2);
-          const prompt = $("f-prompt").value.trim();
-          // Build payload by feature
-          const payload = { feature, input_image_url: original };
-          if(["staging","redesign","custom"].includes(feature)){ payload.room_type = room; payload.design_style = style; }
-          if(feature==="custom" || feature==="redesign"){ if(prompt) payload.prompt = prompt; }
-          if(feature==="paint"){ if(color) payload.paint_color_hex = color; payload.room_type = room; }
-          if(feature==="remove"){ if(mask) payload.remove_prompt = mask; payload.room_type = room; }
-          if(feature==="upscale"){ payload.upscale = scale; }
-          if(feature==="exterior"){ payload.design_style = style; if(prompt) payload.prompt = prompt; }
-          const resp = await fetch(API, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload) });
-          const text = await resp.text();
-          let data; try{ data = JSON.parse(text); }catch{ data = { raw:text }; }
-          if(!resp.ok){
-            const body = typeof data==="string" ? data : JSON.stringify(data);
-            console.error("Upstream fail", resp.status, data);
-            alert(`Generation failed: HTTP ${resp.status}\n\n${body.slice(0,800)}`);
-            write("f-status","Error — see console");
-            return;
-          }
-          // Normalize image URL(s)
-          const img = (data?.info?.images?.[0]?.url) ||
-                      (data?.images?.[0]?.url) ||
-                      (data?.result?.images?.[0]?.url) ||
-                      (data?.output?.images?.[0]?.url) ||
-                      (data?.data?.images?.[0]?.url) ||
-                      data?.image_url || data?.url;
-          if(!img) throw new Error("No image returned");
-          $("img-after").src = img;
-          if (data?.info?.images?.[0]?.width && data?.info?.images?.[0]?.height){
-            const w=data.info.images[0].width, h=data.info.images[0].height;
-            $("cmp").style.aspectRatio = `${w}/${h}`;
-          }
-          setPct(50);
-          write("f-status","Live (DECOR8)");
-        }catch(err){
-          console.error(err);
-          write("f-status","Error: " + (err?.message || err));
-          alert("Generation failed: " + (err?.message || err));
-        }finally{ busy(false); }
+      const resp=await fetch(API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
       });
-    })();
-  </script>
+      const text=await resp.text();
+      let data; try{data=JSON.parse(text);}catch{data={raw:text};}
+      if(!resp.ok){
+        write("f-status","Error — see console");
+        console.error("API FAIL",resp.status,data);
+        alert(`Generation failed: HTTP ${resp.status}`);
+        return;
+      }
+      const img=(data?.info?.images?.[0]?.url)
+        ||(data?.images?.[0]?.url)
+        ||(data?.result?.images?.[0]?.url)
+        ||(data?.output?.images?.[0]?.url)
+        ||data?.image_url;
+      if(!img)throw new Error("No image returned");
+      $("img-after").src=img;
+      setPct(50);
+      write("f-status","Enhancement complete ✓");
+    }
+    catch(err){
+      console.error(err);
+      write("f-status","Error: "+(err?.message||err));
+      alert("Generation failed: "+(err?.message||err));
+    }
+    finally{ busy(false); }
+  });
+})();
+</script>
           </div>
         </div>
       </section>
