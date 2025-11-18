@@ -1,6 +1,6 @@
 {
   "version": "2024",
-  "source": "DoD Military Pay Tables, BAS, BAH (simplified monthly bracket format)",
+  "source": "DoD Military Pay Tables, BAS, BAH, VA Disability (2024)",
   "updated": "2024-01-01",
 
   "BASEPAY": {
@@ -27,6 +27,89 @@
   "DISABILITY": {
     "10": 165, "20": 327, "30": 508, "40": 731, "50": 1041,
     "60": 1319, "70": 1663, "80": 1933, "90": 2172, "100": 3870
+  },
+
+  "DISABILITY_FULL": {
+    "10": {
+      "veteran": 171,
+      "veteran_spouse": 171,
+      "veteran_one_child": 171,
+      "veteran_spouse_one_child": 171,
+      "additional_child_under_18": 0,
+      "additional_child_over_18_in_school": 0
+    },
+    "20": {
+      "veteran": 338,
+      "veteran_spouse": 338,
+      "veteran_one_child": 338,
+      "veteran_spouse_one_child": 338,
+      "additional_child_under_18": 0,
+      "additional_child_over_18_in_school": 0
+    },
+    "30": {
+      "veteran": 524,
+      "veteran_spouse": 586,
+      "veteran_one_child": 566,
+      "veteran_spouse_one_child": 628,
+      "additional_child_under_18": 26,
+      "additional_child_over_18_in_school": 85
+    },
+    "40": {
+      "veteran": 755,
+      "veteran_spouse": 840,
+      "veteran_one_child": 810,
+      "veteran_spouse_one_child": 896,
+      "additional_child_under_18": 34,
+      "additional_child_over_18_in_school": 113
+    },
+    "50": {
+      "veteran": 1075,
+      "veteran_spouse": 1187,
+      "veteran_one_child": 1150,
+      "veteran_spouse_one_child": 1263,
+      "additional_child_under_18": 43,
+      "additional_child_over_18_in_school": 142
+    },
+    "60": {
+      "veteran": 1361,
+      "veteran_spouse": 1504,
+      "veteran_one_child": 1467,
+      "veteran_spouse_one_child": 1610,
+      "additional_child_under_18": 52,
+      "additional_child_over_18_in_school": 170
+    },
+    "70": {
+      "veteran": 1716,
+      "veteran_spouse": 1889,
+      "veteran_one_child": 1853,
+      "veteran_spouse_one_child": 2027,
+      "additional_child_under_18": 60,
+      "additional_child_over_18_in_school": 197
+    },
+    "80": {
+      "veteran": 1995,
+      "veteran_spouse": 2198,
+      "veteran_one_child": 2134,
+      "veteran_spouse_one_child": 2338,
+      "additional_child_under_18": 69,
+      "additional_child_over_18_in_school": 226
+    },
+    "90": {
+      "veteran": 2241,
+      "veteran_spouse": 2490,
+      "veteran_one_child": 2385,
+      "veteran_spouse_one_child": 2634,
+      "additional_child_under_18": 78,
+      "additional_child_over_18_in_school": 255
+    },
+    "100": {
+      "veteran": 3873,
+      "veteran_spouse": 4173,
+      "veteran_one_child": 4052,
+      "veteran_spouse_one_child": 4353,
+      "additional_child_under_18": 102,
+      "additional_child_over_18_in_school": 332
+    }
   },
 
   "BAH_TX": {
